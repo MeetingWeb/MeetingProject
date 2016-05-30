@@ -12,6 +12,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="join" parameterType="meeting.team.vo.UserVo">
-		INSERT INTO BOARDS(id,pw,name,email,power) values(#{id},#{pw},#{name},#{email},#{power});
+		insert into users(id,pw,name,email,power) values(#{id},#{pw},#{name},#{email},#{power})
+	</insert>
+	
+	<insert id="joinhabby">
+		insert into users(id,interests) values(#{id},#{interests})
 	</insert>
 </mapper>

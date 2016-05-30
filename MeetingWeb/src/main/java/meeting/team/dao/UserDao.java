@@ -7,6 +7,7 @@ import meeting.team.vo.UserVo;
 
 public interface UserDao {
 	public int join(UserVo uvo);
+	public int joinhabby(String interests, String id);
 	public UserVo login(String id);
 
 }

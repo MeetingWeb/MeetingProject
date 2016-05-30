@@ -41,6 +41,16 @@ public class UserService implements UserDetailsService {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
 		int n = user_dao.join(uvo);
 		boolean tf = n > 0 ? true:false;
+	
+		String[] arr = uvo.getInterests().split(",");
+		if(tf==true)
+		{
+			for(int i=0;i<arr.length;i++)
+			{
+				user_dao.joinhabby(arr[i], uvo.getId());
+			}
+		}
+		
 		JSONObject json = new JSONObject();
 		json.put("ok", tf);
 		

@@ -10,15 +10,20 @@
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
-function joinsava() {
+function joinsave() {
+	var data = $('#joinform').serialize();
+	alert(data);
 	$.ajax({
 		type:'post',
 		dataType:'json',
-		url:'login',
-		data:log,
+		url:'join',
+		data:data,
 		success:function(evt)
 		{
-			
+			if(evt.ok==true)
+			{
+				alert("성공");
+			}
 		},
 		complete:function(data)
 		{
