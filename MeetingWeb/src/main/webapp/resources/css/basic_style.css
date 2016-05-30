@@ -1,0 +1,149 @@
+body {
+	margin: 0px;
+	padding: 0px;
+}
+
+ul {
+	list-style: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.clear_f {
+	clear : both;
+}
+
+#menu {
+	width: 23px;
+	height: 100%;
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background: #eee;
+	padding: 20px;
+}
+
+#menu ul li {
+	width: 100%;
+	height: 100px;
+	text-align: center;
+}
+
+#contents {
+	width: 100%;
+	background: #000;
+	float: right;
+}
+
+footer {
+	background: #ddd;
+	float: right;
+}
+
+
+
+
+
+
+
+
+
+#headernavi {
+	width:100%;
+	height:64px;
+	
+}
+
+#title_name {
+	width:320px;
+	height:64px;
+	float:left;
+	background:#33B573;
+}
+
+#buttonclass {
+	float:right;
+		
+}
+
+#joinbtn{
+	width:140px;
+	height:64px;
+	float:right;
+	background:#fff;
+	cursor: pointer;
+}
+
+#loginbtn{
+	width:140px;
+	height:64px;
+	float:right;
+	background:#129994;
+	cursor: pointer;
+}
+
+#loginform{
+	background-color: rgba(33,61,78,.7);
+	width:560px;
+	height:100%;
+	position: absolute;
+	top:65px;	
+	right:0px;
+	display: none;
+	
+
+}
+
+#joinform{
+	background:#4374D9;
+	width:560px;
+	height:100%;
+	position: absolute;
+	top:65px;	
+	left:64px;
+	display: none;
+
+}
+
+
+#logintable{
+	width:560px;
+	margin:auto;
+	position: absolute;
+	top:100px;
+	
+}
+
+#logingroup{
+	top:280px;
+	height: 8.5%;
+	width: 560px;
+	display:table;
+}
+
+
+#facebookLogin{
+	background:#33B573;
+	width:180px;
+	height:8.5%;
+	position: absolute;
+	top:280px;
+	left:0px;
+	text-align: center;
+	
+}
+
+
+#sign_In{
+	background:#129994;
+	width:380px;
+	height:8.5%;
+	position: absolute;
+	top:280px;	
+	right:0px;
+	text-align: center;
+}
+
+
+
+
