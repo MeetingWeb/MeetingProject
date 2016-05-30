@@ -14,13 +14,12 @@ ul {
 }
 
 #menu {
-	width: 23px;
+	width: 68px;
 	height: 100%;
 	position: fixed;
 	top: 0px;
 	left: 0px;
 	background: #eee;
-	padding: 20px;
 }
 
 #menu ul li {
@@ -49,9 +48,8 @@ footer {
 
 
 #headernavi {
-	width:100%;
 	height:64px;
-	
+	float: right;
 }
 
 #title_name {
