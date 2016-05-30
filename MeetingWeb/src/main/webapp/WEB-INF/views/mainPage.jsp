@@ -41,7 +41,8 @@
 						<a href="#">
 							FORGOT
 							<br>
-							PASSWORD?
+							PASSWORD
+							가지치키
 						</a>
 					</td>
 				</tr>
