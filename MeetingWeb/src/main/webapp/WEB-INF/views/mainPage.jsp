@@ -15,13 +15,14 @@
 	<jsp:include page="header.jsp" />
 	<section id="contents">
 		<div class="chat-btn">채팅방참여</div>
-		<form id="loginform">
+		<form id="loginform" action="<c:url value='/user/login' />" method="post">
+			<input type="hidden" name="_csrf" value="${_csrf.token }">
 			<table id="logintable">
 				<caption>Enter 여기여기 붙어라</caption>
 				<tr>
 					<td>ID</td>
 					<td>
-						<input type="text" size="30px" style="height: 30px;">
+						<input type="text" size="30px" style="height: 30px;" name="id">
 					</td>
 					<td>
 						<a href="#">
@@ -34,7 +35,7 @@
 				<tr>
 					<td>PASSWORD</td>
 					<td>
-						<input type="password" size="30px" style="height: 30px;">
+						<input type="password" size="30px" style="height: 30px;" name="pw">
 					</td>
 					<td>
 						<a href="#">

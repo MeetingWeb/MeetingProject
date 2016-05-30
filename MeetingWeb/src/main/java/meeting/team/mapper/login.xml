@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="id" column="id" />
 		<result property="pw" column="pw" />
 	</resultMap>
-	<select id="login" resultMap="loginMap" parameterType="jun.kdea.vo.LoginVo">
+	<select id="login" resultMap="loginMap" parameterType="meeting.team.vo.LoginVo">
 		select id, pw, power from meetinguser where pw=#{pw} AND id=#{id}
 	</select>
 </mapper>

@@ -14,13 +14,7 @@
 	<annotation-driven />
 	<default-servlet-handler />
 
-	<mvc:view-controller path="/index" view-name="security/index" />
-	<mvc:view-controller path="/home/main" view-name="security/homeMain" />
-	<mvc:view-controller path="/manager/main" view-name="security/managerMain" />
-	<mvc:view-controller path="/admin/main" view-name="security/adminMain" />
-	<mvc:view-controller path="/member/main" view-name="security/memberMain" />
 	<view-controller path="/index" view-name="security/index" />
-	<view-controller path="/admin/usermanager/main" view-name="security/adminMain" />
 
 	<context:component-scan base-package="meeting.team.controller" />
 
@@ -50,9 +44,13 @@
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
 
-	<!-- <beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"> <beans:property name="mapperLocations" value="classpath:jun/kdea/mybatis/*.xml" 
-		/> <beans:property name="dataSource" ref="dataSource" /> </beans:bean> <beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate"> 
-		<beans:constructor-arg index="0" ref="sqlSessionFactory" /> </beans:bean> -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="mapperLocations" value="classpath:meeting/team/mapper/*.xml" />
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
+	</beans:bean>
 
 	<!-- <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> <beans:property name="host" value="smtp.gmail.com" /> <beans:property 
 		name="port" value="25" /> <beans:property name="username" value="junkim0312@gmail.com" /> <beans:property name="password" value="dmsxhsla03" /> <beans:property 

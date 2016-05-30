@@ -147,6 +147,19 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>4.1.0.RELEASE</version>
 		</dependency>
+		
+		<!-- http://mvnrepository.com/artifact/com.sun.mail/javax.mail -->
+		<dependency>
+			<groupId>com.sun.mail</groupId>
+			<artifactId>javax.mail</artifactId>
+			<version>1.5.5</version>
+		</dependency>
+		<!-- http://mvnrepository.com/artifact/org.springframework/spring-context-support -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>4.2.6.RELEASE</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>NowMeetingWeb</finalName>
