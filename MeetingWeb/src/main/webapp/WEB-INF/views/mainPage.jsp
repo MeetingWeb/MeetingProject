@@ -49,7 +49,7 @@
 
 			<div id="logingroup">
 				<div id="facebookLogin">FACEBOOK LOGIN</div>
-				<div id="sign_In">SIGN IN</div>
+				<div id="login-btn">LOGIN</div>
 			</div>
 
 		</form>

@@ -7,34 +7,37 @@ $(function() {
 		"width" : body_width - c_width,
 		"height" : "90px"
 	});
-	$("#headernavi").css({"width":body_width - c_width});
-	
-});
+	$("#headernavi").css({
+		"width" : body_width - c_width
+	});
 
-
-$(function(){
+	// ///////////////////////////////////////////////////////////
 	var flip = 0;
 	var flip2 = 0;
-	$("#loginbtn").click(function () {
-	$("#loginform").toggle( flip++ % 2 == 0 );
-	$("#joinform").css('display','none');
-	flip2=0;
-	
-	});  
-	
-	$("#joinbtn").click(function () {
-	$("#joinform").toggle( flip2++ % 2 == 0 );
-	$("#loginform").css('display','none');
-	flip=0;
-	});  
+	$("#loginbtn").click(function() {
+		$("#loginform").toggle(flip++ % 2 == 0);
+		$("#joinform").css('display', 'none');
+		flip2 = 0;
+
+	});
+
+	$("#joinbtn").click(function() {
+		$("#joinform").toggle(flip2++ % 2 == 0);
+		$("#loginform").css('display', 'none');
+		flip = 0;
+	});
+
+	$("#login-btn").on("click", function() {
+		//location.href="/user/login";
+		$("#loginform").submit();
+	});
 
 });
-/*
-$(function(){
-	var flip = 0;
-	$("#joinbtn").click(function () {
-	$("#joinform").toggle( flip++ % 2 == 0 );
-	//$("#loginform").css('display','none');
-	});  
 
-});*/
+/*
+ * $(function(){ var flip = 0; $("#joinbtn").click(function () {
+ * $("#joinform").toggle( flip++ % 2 == 0 );
+ * //$("#loginform").css('display','none'); });
+ * 
+ * });
+ */

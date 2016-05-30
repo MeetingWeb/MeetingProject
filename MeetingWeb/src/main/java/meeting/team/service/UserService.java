@@ -18,11 +18,11 @@ import meeting.team.vo.UserVo;
 
 @Service("userservice")
 public class UserService implements UserDetailsService {
-	/*@Autowired
-	private SqlSessionTemplate sqlSessionTemplate;*/
+	@Autowired
+	private SqlSessionTemplate sqlSessionTemplate;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		/*UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
 		UserVo login = user_dao.login(username);
 		if (login != null) {
 			GrantedAuthority role = new SimpleGrantedAuthority(login.getPower());
@@ -32,7 +32,7 @@ public class UserService implements UserDetailsService {
 			User user = new User(login.getId(), login.getPw(), roles);
 
 			return user;
-		}*/
+		}
 		return null;
 	}
 

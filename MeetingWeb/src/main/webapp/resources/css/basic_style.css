@@ -152,7 +152,7 @@ footer {
 }
 
 
-#sign_In{
+#login-btn{
 	background:#129994;
 	width:380px;
 	height:8.5%;
@@ -160,6 +160,7 @@ footer {
 	top:280px;	
 	right:0px;
 	text-align: center;
+	cursor:pointer;
 }
 
 
