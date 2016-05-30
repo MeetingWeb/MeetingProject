@@ -45,7 +45,7 @@
 
 	<beans:bean id="simpleChatHandler" class="jun.kdea.websocket.ChatWebSocketHandler" />
 	<websocket:handlers>
-		<websocket:mapping path="/simpleChat" handler="simpleChatHandler" />
+		<websocket:mapping path="/chat" handler="simpleChatHandler" />
 		<websocket:handshake-interceptors>
 			<beans:bean class="jun.kdea.interceptor.HandshakeInterceptor" />
 		</websocket:handshake-interceptors>
