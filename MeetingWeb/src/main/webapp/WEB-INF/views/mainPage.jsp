@@ -66,6 +66,7 @@ function joinsava() {
 							FORGOT
 							<br>
 							PASSWORD
+							가지치키
 						</a>
 					</td>
 				</tr>
