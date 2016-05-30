@@ -11,7 +11,7 @@ public class UserVo {
 	private String email;
 	private String power;
 	private String interests; 
-	
+	 
 	
 
 	public String getInterests() {
