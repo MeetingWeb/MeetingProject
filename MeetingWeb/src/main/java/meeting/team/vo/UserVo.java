@@ -10,7 +10,7 @@ public class UserVo {
 	private String name;
 	private String email;
 	private String power;
-	private String interests;
+	private String interests; 
 	
 	
 
