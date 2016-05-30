@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import meeting.team.service.JoinService;
 import meeting.team.service.UserService;
 import meeting.team.vo.UserVo;
 
