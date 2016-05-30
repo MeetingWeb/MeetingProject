@@ -43,16 +43,6 @@
 
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 
-	<!-- <interceptors>
-		<interceptor>
-			<mapping path="/emp/**" />
-			<mapping path="/chat/**" />
-			<mapping path="/upload/**" />
-			<mapping path="/board/**" />
-			<beans:bean class="jun.kdea.interceptor.LoginInterceptor" />
-		</interceptor>
-	</interceptors>
-
 	<beans:bean id="simpleChatHandler" class="jun.kdea.websocket.ChatWebSocketHandler" />
 	<websocket:handlers>
 		<websocket:mapping path="/simpleChat" handler="simpleChatHandler" />
@@ -68,7 +58,7 @@
 
 	<beans:bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
-	</beans:bean> -->
+	</beans:bean>
 
 	<!-- <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<beans:property name="host" value="smtp.gmail.com" />
