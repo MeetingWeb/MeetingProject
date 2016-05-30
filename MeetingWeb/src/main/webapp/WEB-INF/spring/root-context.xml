@@ -8,24 +8,18 @@
     http://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- permitAll 은 로그인을 하지 않아도 들어갈수 있게 한다 위 에서 부터 순서대로 실행, 로그인을 안한 사람이 페이지에 접근하면 순서대로 실행되기 때문에 접근이 불가능해진다 허용 범위가 넓은 것을 아래에 작성한다 -->
-	<!-- <context:component-scan base-package="jun.kdea.security" />
+	<context:component-scan base-package="jun.kdea.security" />
 
 	<sec:http auto-config='true' use-expressions="true">
-		<sec:intercept-url pattern="/admin/usermanager/**" access="hasAuthority('USER_ADMIN')" />
-		<sec:intercept-url pattern="/manager/**" access="hasAuthority('USER_MANAGER')" />
-		<sec:intercept-url pattern="/member/**" access="isAuthenticated()" />
+		<sec:intercept-url pattern="/admin/usermanager/**" access="hasAuthority('ADMIN')" />
+		<sec:intercept-url pattern="/member/**" access="hasAuthority('MEMBER')" />
+		<sec:intercept-url pattern="/blackUser/**" access="hasAuthority('BLACKUSER')" />
 		<sec:intercept-url pattern="/**" access="permitAll" />
 		<sec:form-login login-page="/security/loginForm" login-processing-url="/user/login" username-parameter="id" password-parameter="pwd"
 			default-target-url="/index" authentication-failure-url="/sec/login?error=true" />
 		<sec:logout logout-success-url="/index" />
 		<sec:csrf disabled="true" />
-	</sec:http> -->
-
-	<!-- <bean id="userDao" class="jun.kdea.security.UserDao">
-		<constructor-arg>
-			<ref bean="dataSource" />
-		</constructor-arg>
-	</bean> -->
+	</sec:http>
 
 	<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
 		<property name="dataSourceName" value="ds" />

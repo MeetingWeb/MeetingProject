@@ -39,6 +39,26 @@ footer {
 	float: right;
 }
 
+.chat-btn {
+	background : #0df;
+	width: 200px;
+	height: 50px;
+	cursor: pointer;
+}
+
+.chat-list {
+	width: 200px;
+	position: absolute;
+	top: 100px;
+	right: 100px;
+	display: none;
+}
+
+.chat-list-in {
+	width: 200px;
+	height: 200px;
+	background: #fff;
+}
 
 
 
