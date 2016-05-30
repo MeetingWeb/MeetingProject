@@ -3,6 +3,7 @@ package meeting.team.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -34,6 +35,16 @@ public class UserService implements UserDetailsService {
 			return user;
 		}
 		return null;
+	}
+	
+	public String join(UserVo uvo){
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		int n = user_dao.join(uvo);
+		boolean tf = n > 0 ? true:false;
+		JSONObject json = new JSONObject();
+		json.put("ok", tf);
+		
+		return json.toJSONString();
 	}
 
 }

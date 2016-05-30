@@ -1,11 +1,25 @@
 package meeting.team.vo;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class UserVo {
 	private String id;
 	private String pw;
+	private String pwc;
 	private String name;
 	private String email;
 	private String power;
+	
+	
+
+	public String getPwc() {
+		return pwc;
+	}
+
+	public void setPwc(String pwc) {
+		this.pwc = pwc;
+	}
 
 	public String getId() {
 		return id;

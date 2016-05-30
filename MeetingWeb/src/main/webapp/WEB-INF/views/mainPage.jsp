@@ -9,6 +9,30 @@
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <title>여기여기 붙어라</title>
+<script type="text/javascript">
+function joinsava() {
+	$.ajax({
+		type:'post',
+		dataType:'json',
+		url:'login',
+		data:log,
+		success:function(evt)
+		{
+			
+		},
+		complete:function(data)
+		{
+			
+		},
+		error:function(xhr,status,error)
+		{
+			alert(error);
+		}
+	});
+	
+}
+
+</script>
 </head>
 <body>
 	<jsp:include page="navi.jsp" />
@@ -58,7 +82,7 @@
 		<caption>join</caption>
 		<tr><td>ID</td><td><input type="text" name="id"></td></tr>
 		<tr><td>PassWord</td><td><input type="password" name="pw"></td></tr>
-		<tr><td>PassWordCheck</td><td><input type="password" name="passwordcheck"></td></tr>
+		<tr><td>PassWordCheck</td><td><input type="password" name="pwc"></td></tr>
 		<tr><td>이름</td><td><input type="text" name="name"></td></tr>
 		<tr><td>E-mail</td><td><input type="text" name="email"></td></tr>
 		<tr><td>관심분야</td><td><input type="checkbox" name="interests" value="exercise">운동 <input type="checkbox" name="interests" value="travle">여행 <input type="checkbox" name="interests" value="fishing">낚시</td></tr>

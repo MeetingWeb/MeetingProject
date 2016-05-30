@@ -10,4 +10,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultMap="loginMap">
 		select id, pw, power from users where id=#{id}
 	</select>
+	
+	<insert id="join" parameterType="meeting.team.Vo.UserVo">
+		INSERT INTO BOARDS(id,pw,name,email,power) values(#{id},#{pw},#{name},#{email},#{power});
+	</insert>
 </mapper>
