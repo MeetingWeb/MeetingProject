@@ -6,6 +6,8 @@ public class Test {
 		System.out.println("확인했음-혁ddd");
 		System.out.println("확인했음-준ddd");
 		System.out.println("확인했음-뀨dd");
+		System.out.println("확인했음-뀨2dd");
+		System.out.println("확인했음-뀨3dd");
 	}
 
 }
