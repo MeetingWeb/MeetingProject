@@ -10,7 +10,7 @@
 		</sec:authorize>
 		<sec:authorize access="isAuthenticated()">
 			<div id="logoutbtn"><span>Logout</span></div>
-			<div id="member-info-btn"><span><sec:authentication property="name"/></span><span class="glyphicon glyphicon-user"></span></div>
+			<div id="member-info-btn"><span id="member-id"><sec:authentication property="name"/></span><span class="glyphicon glyphicon-user"></span></div>
 		</sec:authorize>
 	</div>
 </div>

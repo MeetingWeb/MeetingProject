@@ -8,7 +8,6 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 @Controller
-@RequestMapping("chat")
 public class ChatController extends TextWebSocketHandler{
 
 	@Override

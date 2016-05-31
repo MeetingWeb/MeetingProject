@@ -9,13 +9,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import meeting.team.service.UserService;
 import meeting.team.vo.UserVo;
 
-@RequestMapping("/meeting/")
+@RequestMapping({"/"})
 @Controller
 public class WebController {
 	@Autowired
 	private UserService us;
 	
-	@RequestMapping(value="main", method = RequestMethod.GET)
+	@RequestMapping({"main",""})
 	public String mainPage() {
 		return "mainPage";
 	}

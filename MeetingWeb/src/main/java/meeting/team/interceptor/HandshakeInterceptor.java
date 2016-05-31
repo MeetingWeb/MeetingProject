@@ -29,11 +29,12 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 		req.getServletContext().setAttribute("user_list", user_list);
 		
 		if (req.getSession().getAttribute("id") != null) {
+			
 			attributes.put("userId", id);
 			attributes.put("user_list", user_list);
 			return true;
 		}
-
+		System.out.println(id);
 		return false;
 	}
 

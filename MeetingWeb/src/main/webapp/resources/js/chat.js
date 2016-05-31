@@ -12,7 +12,7 @@ $(function() {
 		console.log(check);
 	});
 	// var ws = new WebSocket("ws://localhost:8888/MavenWeb/wsinit");
-	var ws = new WebSocket("ws://192.168.8.19:7777/SpringWeb/simpleChat");
+	var ws = new WebSocket("ws://192.168.8.19:7777/NowMeetingWeb/chat");
 
 	ws.onopen = function() {
 		var list_ok = connect_cre_list();
@@ -102,7 +102,6 @@ $(function() {
 	});
 	var bool = false;
 	$(document).on("click", ".chat-lid-in-title", function() {
-		console.log(bool);
 		if (bool == false) {
 			$(this).parent().animate({
 				top : 0,
