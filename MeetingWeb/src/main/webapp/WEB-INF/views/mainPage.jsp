@@ -82,7 +82,7 @@
 	<jsp:include page="navi.jsp" />
 	<jsp:include page="header.jsp" />
 	<section id="contents">
-		<div class="chat-btn">채팅방참여</div>
+		<div class="chat-btn">채팅방참여<input type="hidden" value="JUN"></div>
 		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="loginForm.jsp" />
 		<form id="joinform">
@@ -132,7 +132,6 @@
 			</table>
 			<input type="hidden" name="power" value="MEMBER">
 			<div onclick="javacript:joinsave()" style="cursor: pointer;">저 장</div>
-
 		</form>
 		<jsp:include page="chat_view.jsp" />
 	</section>
