@@ -19,9 +19,32 @@
         async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
+	function id_check() {
+		var data = $('#id');
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'id_check',
+			data : {data:data},
+			success : function(evt) {
+				if (evt.ok == true) {
+					alert("성공");
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+		
+	}
+
+
+
 	function joinsave() {
 		var data = $('#joinform').serialize();
-		alert(data);
 		$.ajax({
 			type : 'post',
 			dataType : 'json',
@@ -92,7 +115,9 @@
 					<td>ID</td>
 					<td>
 						<input type="text" name="id">
+						
 					</td>
+					
 				</tr>
 				<tr>
 					<td>PassWord</td>
