@@ -211,7 +211,7 @@ footer {
 	box-sizing: initial;
 }
 
-#login-form #info-group input[name=id], input[name=pw] {
+#login-form #info-group input[name=id], #login-form #info-group input[name=pw] {
 	display: block;
 	float: left;
 	margin: 0 0 16px;
