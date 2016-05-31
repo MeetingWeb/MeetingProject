@@ -8,34 +8,35 @@
 <script type="text/javascript" src='<c:url value="/resources/js/style_comm.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
+	function joinsave() {
+		var data = $('#joinform').serialize();
+		alert(data);
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'join',
+			data : data,
+			success : function(evt) {
+				if (evt.ok == true) {
+					alert("성공");
+				}
+			},
+			complete : function(data) {
 
-function joinsave() {
-	var data = $('#joinform').serialize();
-	alert(data);
-	$.ajax({
-		type:'post',
-		dataType:'json',
-		url:'join',
-		data:data,
-		success:function(evt)
-		{
-			if(evt.ok==true)
-			{
-				alert("성공");
+			},
+			error : function(xhr, status, error) {
+				alert(error);
 			}
-		},
-		complete:function(data)
-		{
-			
-		},
-		error:function(xhr,status,error)
-		{
-			alert(error);
-		}
-	});
-	
+		});
 
 	}
 </script>

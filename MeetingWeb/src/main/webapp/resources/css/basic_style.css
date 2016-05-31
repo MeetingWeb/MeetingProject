@@ -127,6 +127,7 @@ footer {
 	font-weight: 700;
 	font-size: 12px;
 	line-height: 40px;
+	box-sizing: initial;
 }
 
 #login-form #info-group input[name=id], input[name=pw] {
@@ -145,6 +146,7 @@ footer {
 	box-shadow: none;
 	-moz-appearance: none;
 	-webkit-appearance: none;
+	box-sizing: initial;
 }
 
 #login-title {
@@ -191,6 +193,7 @@ footer {
 	line-height: 21px;
 	transition: background-color .2s, color .2s;
 	cursor: pointer;
+	box-sizing: initial;
 }
 
 #facebookLogin:hover {
@@ -214,6 +217,7 @@ footer {
 	line-height: 88px;
 	transition: background-color .2s;
 	cursor: pointer;
+	box-sizing: initial;
 }
 
 #login-btn:hover {
