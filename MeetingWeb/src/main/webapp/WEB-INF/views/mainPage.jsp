@@ -47,7 +47,7 @@
 	<section id="contents">
 		<div class="chat-btn">채팅방참여</div>
 		
-		<div>사건사고 게시판</div>
+		 <a href="http://localhost:8088/NowMeetingWeb/report/list">사건사고 게시판</a>
 		
 		<jsp:include page="loginForm.jsp"/>
 		<form id="joinform">
