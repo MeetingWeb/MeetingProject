@@ -33,7 +33,7 @@ ul {
 	position: fixed;
 	top: 0px;
 	left: 0px;
-	background: #eee;
+	background: #fff;
 }
 
 #menu ul li {
@@ -86,24 +86,46 @@ footer {
 	background: #33B573;
 }
 
-#buttonclass {
+#headernavi #buttonclass {
 	float: right;
 }
 
-#joinbtn {
-	width: 140px;
+#headernavi #joinbtn, #headernavi #member-info-btn {
+	width: 126px;
 	height: 64px;
 	float: right;
 	background: #fff;
 	cursor: pointer;
 }
 
-#loginbtn {
-	width: 140px;
+#headernavi #joinbtn span, #member-info-btn span  {
+	float: left;
+    color: #129994;
+    text-transform: uppercase;
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 16px;
+}
+
+#loginbtn, #logoutbtn {
+	width: 126px;
 	height: 64px;
 	float: right;
 	background: #129994;
 	cursor: pointer;
+}
+
+#loginbtn span, #logoutbtn span {
+	float: left;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 15px;
+    line-height: 18px;
+    font-weight: 500;
+    text-align: left;
+    padding-left: 16px;
 }
 
 #login-form {

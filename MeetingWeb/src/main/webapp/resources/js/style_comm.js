@@ -31,6 +31,10 @@ $(function() {
 		//location.href="/user/login";
 		$("form[name=loginForm]").submit();
 	});
+	
+	$("#logoutbtn").on("click",function() {
+		location.href="../logout";
+	});
 
 });
 
