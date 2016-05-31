@@ -59,7 +59,6 @@ public class UserService implements UserDetailsService {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("a", id);
 				map.put("b",arr[i]);
-				
 				user_dao.joinhabby(map);
 				
 			}
