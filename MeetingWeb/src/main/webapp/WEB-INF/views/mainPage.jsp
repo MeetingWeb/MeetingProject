@@ -46,6 +46,9 @@
 	<jsp:include page="header.jsp" />
 	<section id="contents">
 		<div class="chat-btn">채팅방참여</div>
+		
+		<div>사건사고 게시판</div>
+		
 		<jsp:include page="loginForm.jsp"/>
 		<form id="joinform">
 			<table>
@@ -98,6 +101,7 @@
 		</form>
 		<jsp:include page="chat_view.jsp" />
 	</section>
+	
 	<div class="clear_f"></div>
 	<jsp:include page="footer.jsp" />
 </body>
