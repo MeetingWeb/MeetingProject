@@ -32,14 +32,14 @@ $(function(){
 		    }
 		});
 	 
-})
+});
 
 	function email_check() {
 	 var email = $('#email').val();
 	 $.ajax({
-			type : 'post',
+			type : 'get',
 			dataType : 'json',
-			url : 'email_check',
+			url : 'eamil_check',
 			data : {email:email},
 			success : function(evt) {
 				if(evt.ok==true)
