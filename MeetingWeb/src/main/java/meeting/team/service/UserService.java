@@ -4,9 +4,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -17,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import meeting.team.dao.UserDao;
+import meeting.team.vo.EmailVo;
 import meeting.team.vo.UserVo;
 
 @Service("userservice")
@@ -26,11 +33,10 @@ public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+
+	@Autowired
+	protected JavaMailSender mailSender;
 	
-	/*
-	 @Autowired
-	 protected JavaMailSender  mailSender;
-	 */
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
@@ -94,13 +100,14 @@ public class UserService implements UserDetailsService {
 		
 		return json.toJSONString();
 	}
+	
 /*
 	public String email_check(String email,HttpSession session) throws Exception {
 		EmailVo emails = new EmailVo();
         session.setAttribute("email", email);
         emails.setReceiver(email);
         emails.setSubject("이메일 확인입니다.");
-        emails.setContent("<a href='http://192.168.8.27:8088/SpringWeb/email/join?sess="+session.getId()+"' target='uf'>인증 완료</a>");
+        emails.setContent("<a href='http://121.190.3.95:7777/MettingWeb/email_join?sess="+session.getId()+"' target='uf'>인증 완료</a>");
         boolean result = false;
 		
         try{
@@ -125,7 +132,7 @@ public class UserService implements UserDetailsService {
         
         
     }
-
+*/
 	public boolean email_check(EmailVo email) throws Exception {
         try{
 	        MimeMessage msg = mailSender.createMimeMessage();
@@ -141,7 +148,7 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
-	
-	*/
+
+
 
 }

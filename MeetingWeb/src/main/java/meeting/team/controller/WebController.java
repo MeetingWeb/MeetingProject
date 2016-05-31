@@ -1,5 +1,11 @@
 package meeting.team.controller;
 
+import java.util.HashMap;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import meeting.team.service.UserService;
+import meeting.team.vo.EmailVo;
 import meeting.team.vo.UserVo;
 
 @RequestMapping({"/"})
@@ -38,29 +45,32 @@ public class WebController {
 	public String email_check(@RequestParam("email") String email,HttpSession session) throws Exception{
 		return us.email_check(email,session);
 	}
+	*/
 	
-    @RequestMapping(value="/eamil_check" ,method = RequestMethod.POST)
+    @RequestMapping(value="eamil_check" ,method = RequestMethod.GET)
     @ResponseBody
-    public HashMap<String, Object> email_check(@RequestParam("email")String email2,HttpSession session) throws Exception {
+    public String email_check(@RequestParam("email")String email2,HttpSession session) throws Exception {
 
-    	
+    	System.out.println(email2);
         EmailVo email = new EmailVo();
         session.setAttribute("email", email2);
         email.setReceiver(email2);
         email.setSubject("이메일 확인입니다.");
-        email.setContent("<a href='http://192.168.8.27:8088/SpringWeb/email/join?sess="+session.getId()+"' target='uf'>인증 완료</a>");
+        email.setContent("<a href='http://121.190.3.95:7777/MettingWeb/email_join?sess="+session.getId()+"' target='uf'>인증 완료</a>");
     
     	
     	
         boolean result = us.email_check(email);
+        JSONObject json = new JSONObject();
+        /*
         HashMap<String,Object> hsm = new HashMap<String, Object>();
 		hsm.put("ok", result);
-		
-        
-        return hsm;
+		*/
+        json.put("ok", result);
+        return json.toJSONString();
     }
     
-    @RequestMapping(value="/email_join")
+    @RequestMapping(value="email_join")
     public String email_join(@RequestParam("sess") String sessionid,HttpSession session,HttpServletRequest request)
     {
     	System.out.println("ggggggggggggg");
@@ -73,5 +83,6 @@ public class WebController {
     	request.getServletContext().removeAttribute(session.getId()); 
 		
     	return "views/mainPage";
-    }*/
+    }
+    
 }
