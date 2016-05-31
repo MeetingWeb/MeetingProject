@@ -38,8 +38,22 @@ ul {
 
 #menu ul li {
 	width: 100%;
-	height: 100px;
+	height: 64px;
 	text-align: center;
+	cursor: pointer;
+}
+
+#menu ul li span {
+	margin-top: 18px;
+	font-size: 25px;
+}
+
+#menu #home-btn {
+	background: #33B573;
+}
+
+#menu #home-btn span {
+	color: #fff;
 }
 
 #contents {
@@ -98,15 +112,16 @@ footer {
 	cursor: pointer;
 }
 
-#headernavi #joinbtn span, #member-info-btn span  {
+#headernavi #joinbtn span, #member-info-btn span {
 	float: left;
-    color: #129994;
-    text-transform: uppercase;
-    font-size: 15px;
-    line-height: 18px;
-    font-weight: 500;
-    text-align: left;
-    padding-left: 16px;
+	color: #129994;
+	text-transform: uppercase;
+	font-size: 15px;
+	line-height: 18px;
+	font-weight: 500;
+	text-align: left;
+	padding-left: 16px;
+	margin-top:25px;
 }
 
 #loginbtn, #logoutbtn {
@@ -119,13 +134,13 @@ footer {
 
 #loginbtn span, #logoutbtn span {
 	float: left;
-    color: #fff;
-    text-transform: uppercase;
-    font-size: 15px;
-    line-height: 18px;
-    font-weight: 500;
-    text-align: left;
-    padding-left: 16px;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 15px;
+	line-height: 18px;
+	font-weight: 500;
+	text-align: left;
+	padding-left: 16px;
 }
 
 #login-form {

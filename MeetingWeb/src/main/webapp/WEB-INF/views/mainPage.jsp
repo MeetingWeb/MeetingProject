@@ -15,6 +15,8 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap"
+        async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 	function joinsave() {
@@ -37,8 +39,43 @@
 				alert(error);
 			}
 		});
-
+		
+		
 	}
+	function initMap() {
+
+		  // Specify features and elements to define styles.
+		  var styleArray = [
+		    {
+		      featureType: "all",
+		      stylers: [
+		       { saturation: -80 }
+		      ]
+		    },{
+		      featureType: "road.arterial",
+		      elementType: "geometry",
+		      stylers: [
+		        { hue: "#00ffee" },
+		        { saturation: 50 }
+		      ]
+		    },{
+		      featureType: "poi.business",
+		      elementType: "labels",
+		      stylers: [
+		        { visibility: "off" }
+		      ]
+		    }
+		  ];
+
+		  // Create a map object and specify the DOM element for display.
+		  var map = new google.maps.Map(document.getElementById('map'), {
+		    center: {lat: -34.397, lng: 150.644},
+		    scrollwheel: false,
+		    // Apply the map style array to the map.
+		    styles: styleArray,
+		    zoom: 8
+		  });
+		}
 </script>
 </head>
 <body>
@@ -46,7 +83,8 @@
 	<jsp:include page="header.jsp" />
 	<section id="contents">
 		<div class="chat-btn">채팅방참여</div>
-		<jsp:include page="loginForm.jsp"/>
+		<div id="map" style="width: 100%; height: 100%;"></div>
+		<jsp:include page="loginForm.jsp" />
 		<form id="joinform">
 			<table>
 				<caption>join</caption>
