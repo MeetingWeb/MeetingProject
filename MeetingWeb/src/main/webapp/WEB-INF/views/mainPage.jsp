@@ -18,18 +18,63 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
+
+$(function(){
+	
+	 $("#pwc").keyup (function() {
+		    if($('input#pw').val()==$('input#pwc').val())
+		    {
+		    	$('#pw_checktext').text("맞다.");	
+		    }
+		    else if($('input#pw').val()!=$('input#pwc').val())
+		    {
+		    	$('#pw_checktext').text("아니야.");	
+		    }
+		});
+	 
+})
+
+	function email_check() {
+	 var email = $('#email').val();
+	 $.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'email_check',
+			data : {email:email},
+			success : function(evt) {
+				if(evt.ok==true)
+				{
+					alert("확인되었ㅅ브니다.")
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+		
+	}
+
+
 	function id_check() {
-		var data = $('#id');
+		var id = $('input#id').val();
 		$.ajax({
 			type : 'post',
 			dataType : 'json',
 			url : 'id_check',
-			data : {
-				data : data
-			},
+			data : {id:id},
 			success : function(evt) {
-				if (evt.ok == true) {
-					alert("성공");
+				if(evt.ok==true)
+				{
+					$('#id_checktext').text("사용 가능한 아이디 입니다.");
+					//alert("사용 가능한 아이디 입니다.");
+				}
+				else if(evt.ok==false)
+				{
+					$('#id_checktext').text("사용 중인 아이디 입니다.");
+					//alert("사용 중인 아이디 입니다.");
 				}
 			},
 			complete : function(data) {
@@ -112,58 +157,8 @@
 		</div>
 		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="loginForm.jsp" />
-
-		<form id="joinform">
-			<table>
-				<caption>join</caption>
-				<tr>
-					<td>ID</td>
-
-					<td>
-						<input type="text" name="id">
-
-					</td>
-
-				</tr>
-				<tr>
-					<td>PassWord</td>
-					<td>
-						<input type="password" name="pw">
-					</td>
-				</tr>
-				<tr>
-					<td>PassWordCheck</td>
-					<td>
-						<input type="password" name="pwc">
-					</td>
-				</tr>
-				<tr>
-					<td>이름</td>
-					<td>
-						<input type="text" name="name">
-					</td>
-				</tr>
-				<tr>
-					<td>E-mail</td>
-					<td>
-						<input type="text" name="email">
-					</td>
-				</tr>
-				<tr>
-					<td>관심분야</td>
-					<td>
-						<input type="checkbox" name="interests" value="exercise">
-						운동
-						<input type="checkbox" name="interests" value="travle">
-						여행
-						<input type="checkbox" name="interests" value="fishing">
-						낚시
-					</td>
-				</tr>
-			</table>
-			<input type="hidden" name="power" value="MEMBER">
-			<div onclick="javacript:joinsave()" style="cursor: pointer;">저 장</div>
-		</form>
+		<jsp:include page="joinForm.jsp" />
+		
 		<jsp:include page="chat_view.jsp" />
 	</section>
 

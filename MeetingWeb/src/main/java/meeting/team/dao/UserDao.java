@@ -11,5 +11,6 @@ public interface UserDao {
 	public int join(UserVo uvo);
 	public int joinhabby(HashMap<String, Object> map);
 	public UserVo login(String id);
+	public UserVo id_check(String id);
 
 }

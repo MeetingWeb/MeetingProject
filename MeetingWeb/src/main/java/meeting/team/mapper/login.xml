@@ -14,4 +14,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="joinhabby" parameterType="hashmap">
 		insert into interests(id,interest) values(#{a},#{b})
 	</insert>
+	
+	<select id="id_check" resultType="meeting.team.vo.UserVo">
+		select * from users where id=#{id}
+	</select>
 </mapper>
