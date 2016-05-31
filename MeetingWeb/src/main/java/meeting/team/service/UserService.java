@@ -1,6 +1,7 @@
 package meeting.team.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.json.simple.JSONObject;
@@ -42,20 +43,27 @@ public class UserService implements UserDetailsService {
 	}
 	
 	public String join(UserVo user){
+		String id = user.getId();
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
 		String encodedPw = encoder.encode(user.getPw());
 		user.setPw(encodedPw);
 		int n = user_dao.join(user);
 		boolean tf = n > 0 ? true:false;
 	
-		/*String[] arr = user.getInterests().split(",");
+		String[] arr = user.getInterests().split(",");
+		
 		if(tf==true)
 		{
 			for(int i=0;i<arr.length;i++)
 			{
-				user_dao.joinhabby(arr[i], user.getId());
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("a", id);
+				map.put("b",arr[i]);
+				
+				user_dao.joinhabby(map);
+				
 			}
-		}*/
+		}
 		
 		JSONObject json = new JSONObject();
 		json.put("ok", tf);
