@@ -18,8 +18,8 @@
 		<sec:intercept-url pattern="/blackUser/**" access="hasAuthority('BLACKUSER')" />
 		<sec:intercept-url pattern="/**" access="permitAll" />
 		<sec:form-login login-page="/mainPage" login-processing-url="/user/login" username-parameter="id" password-parameter="pw"
-			default-target-url="/main" authentication-failure-url="/sec/login?error=true" />
-		<sec:logout logout-success-url="/main" />
+			default-target-url="/meeting/main" authentication-failure-url="/sec/login?error=true" />
+		<sec:logout logout-success-url="/meeting/main" />
 		<sec:csrf disabled="true" />
 	</sec:http>
 
@@ -27,7 +27,7 @@
 		<property name="dataSourceName" value="ds" />
 		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="user" value="scott" />
-		<property name="password" value="tiger" />
+		<property name="password" value="TIGER" />
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

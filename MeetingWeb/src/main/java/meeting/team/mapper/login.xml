@@ -3,11 +3,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="meeting.team.dao.UserDao"> <!--이 sql 문장과 매핑될 인터페이스의 완전한 경로 -->
-	<resultMap id="loginMap" type="meeting.team.vo.UserVo">
-		<result property="id" column="id" />
-		<result property="pw" column="pw" />
-	</resultMap>
-	<select id="login" resultMap="loginMap">
+	<select id="login" resultType="meeting.team.vo.UserVo">
 		select id, pw, power from users where id=#{id}
 	</select>
 	

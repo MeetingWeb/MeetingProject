@@ -46,26 +46,7 @@
 	<jsp:include page="header.jsp" />
 	<section id="contents">
 		<div class="chat-btn">채팅방참여</div>
-		<input type="hidden" name="_csrf" value="${_csrf.token }">
-		<div id="login-form">
-			<form name="loginForm">
-				<div id="login-title">
-					Enter <b>여기여기 붙어라</b>
-				</div>
-				<div id="info-group">
-					<label>id</label>
-					<input type="text" name="id">
-					<label>password</label>
-					<input type="password" name="pw">
-					<div class="clear_f"></div>
-				</div>
-
-				<div id="login-btn-group">
-					<div id="facebookLogin">FACEBOOK LOGIN</div>
-					<div id="login-btn">LOGIN</div>
-				</div>
-			</form>
-		</div>
+		<jsp:include page="loginForm.jsp"/>
 		<form id="joinform">
 			<table>
 				<caption>join</caption>
@@ -111,7 +92,7 @@
 					</td>
 				</tr>
 			</table>
-			<input type="hidden" name="power" value="user">
+			<input type="hidden" name="power" value="MEMBER">
 			<div onclick="javacript:joinsave()" style="cursor: pointer;">저 장</div>
 
 		</form>

@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import meeting.team.dao.UserDao;
@@ -21,6 +22,9 @@ import meeting.team.vo.UserVo;
 public class UserService implements UserDetailsService {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
@@ -37,19 +41,21 @@ public class UserService implements UserDetailsService {
 		return null;
 	}
 	
-	public String join(UserVo uvo){
+	public String join(UserVo user){
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
-		int n = user_dao.join(uvo);
+		String encodedPw = encoder.encode(user.getPw());
+		user.setPw(encodedPw);
+		int n = user_dao.join(user);
 		boolean tf = n > 0 ? true:false;
 	
-		String[] arr = uvo.getInterests().split(",");
+		/*String[] arr = user.getInterests().split(",");
 		if(tf==true)
 		{
 			for(int i=0;i<arr.length;i++)
 			{
-				user_dao.joinhabby(arr[i], uvo.getId());
+				user_dao.joinhabby(arr[i], user.getId());
 			}
-		}
+		}*/
 		
 		JSONObject json = new JSONObject();
 		json.put("ok", tf);

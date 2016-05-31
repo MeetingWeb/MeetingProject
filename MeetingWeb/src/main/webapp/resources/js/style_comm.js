@@ -29,7 +29,7 @@ $(function() {
 
 	$("#login-btn").on("click", function() {
 		//location.href="/user/login";
-		$("#loginform").submit();
+		$("form[name=loginForm]").submit();
 	});
 
 });
