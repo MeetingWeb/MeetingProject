@@ -2,6 +2,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <sec:authorize access="isAuthenticated()">
 	<script>
-		location.href="../meeting/meetingList?id=<sec:authentication property="name"/>";
+		location.href="main?id=<sec:authentication property="name"/>";
 	</script>
 </sec:authorize>
