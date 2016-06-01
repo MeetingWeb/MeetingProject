@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/style_comm.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/map.js"/>'></script>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
@@ -18,6 +21,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
+var user_id = '<c:out value="${sessionScope.id}"/>';
 
 $(function(){
 	
@@ -108,49 +112,12 @@ $(function(){
 		});
 
 	}
-	function initMap() {
-
-		// Specify features and elements to define styles.
-		var styleArray = [ {
-			featureType : "all",
-			stylers : [ {
-				saturation : -80
-			} ]
-		}, {
-			featureType : "road.arterial",
-			elementType : "geometry",
-			stylers : [ {
-				hue : "#00ffee"
-			}, {
-				saturation : 50
-			} ]
-		}, {
-			featureType : "poi.business",
-			elementType : "labels",
-			stylers : [ {
-				visibility : "off"
-			} ]
-		} ];
-
-		// Create a map object and specify the DOM element for display.
-		var map = new google.maps.Map(document.getElementById('map'), {
-			center : {
-				lat : -34.397,
-				lng : 150.644
-			},
-			scrollwheel : false,
-			// Apply the map style array to the map.
-			styles : styleArray,
-			zoom : 8
-		});
-	}
 </script>
 </head>
 <body>
 	<jsp:include page="navi.jsp" />
 	<jsp:include page="header.jsp" />
 	<section id="contents">
-
 		<div class="chat-btn">
 			채팅방참여
 			<input type="hidden" value="JUN">

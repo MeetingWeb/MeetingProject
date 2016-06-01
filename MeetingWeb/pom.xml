@@ -161,6 +161,13 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>4.2.6.RELEASE</version>
 		</dependency>
+		<!-- http://mvnrepository.com/artifact/com.maxmind.geoip2/geoip2 -->
+		<dependency>
+			<groupId>com.maxmind.geoip2</groupId>
+			<artifactId>geoip2</artifactId>
+			<version>2.7.0</version>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<finalName>NowMeetingWeb</finalName>

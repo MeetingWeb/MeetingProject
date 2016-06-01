@@ -17,7 +17,7 @@ import meeting.team.service.UserService;
 import meeting.team.vo.EmailVo;
 import meeting.team.vo.UserVo;
 
-@RequestMapping({"/"})
+@RequestMapping({"/web/"})
 @Controller
 public class WebController {
 	@Autowired
@@ -32,6 +32,11 @@ public class WebController {
 	@ResponseBody
 	public String join(UserVo uvo){
 		return us.join(uvo);
+	}
+	
+	@RequestMapping("loginSuccess")
+	public String loginSuccess() {
+		return "loginSuccess";
 	}
 	
 	@RequestMapping(value="id_check", method = RequestMethod.POST)

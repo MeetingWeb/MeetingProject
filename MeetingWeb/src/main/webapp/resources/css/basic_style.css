@@ -34,6 +34,16 @@ ul {
 	top: 0px;
 	left: 0px;
 	background: #fff;
+	z-index: 100;
+}
+
+#menu #menu-in {
+	width: 100%;
+	height: 100%;
+	background: #fff;
+	position: absolute;
+	top: 0px;
+	left: 0px;
 }
 
 #menu ul li {
@@ -41,9 +51,45 @@ ul {
 	height: 64px;
 	text-align: center;
 	cursor: pointer;
+	background: #fff;
 }
 
-#menu ul li span {
+#menu ul li:hover {
+	background: #dfe7ed;
+}
+
+#menu ul li:hover .menu-btn-name {
+	/* animation-name: move;
+    animation-duration: 4s; */
+    left: 64px;
+    opacity: 1;
+    background: #dfe7ed;
+}
+
+/* Chrome, Safari, Opera */
+@-webkit-keyframes move {
+ 	from{left:0, opacity:0} 
+ 	tp{left:64px, opacity:1} 
+}
+
+/* Standard syntax */
+@keyframes move {
+    from{left:0} 
+ 	tp{left:64px, opcaity:1}
+}
+
+#menu .menu-btn-name {
+	width: 100%;
+	height: 64px;
+	position: relative;
+	top: -47px;
+	left: 0px;
+	background: #fff;
+	opacity: 0;
+	padding-top: 22px;
+}
+
+#menu ul li .menu-btn-icon {
 	margin-top: 18px;
 	font-size: 25px;
 }
@@ -52,7 +98,7 @@ ul {
 	background: #33B573;
 }
 
-#menu #home-btn span {
+#menu #home-btn .menu-btn-icon, #home-btn .menu-btn-name {
 	color: #fff;
 }
 
@@ -72,6 +118,7 @@ footer {
 	width: 200px;
 	height: 50px;
 	cursor: pointer;
+	display: none;
 }
 
 .chat-lid {

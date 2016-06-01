@@ -15,10 +15,10 @@ $(function() {
 	var ws = new WebSocket("ws://192.168.8.19:7777/NowMeetingWeb/chat");
 
 	ws.onopen = function() {
-		var list_ok = connect_cre_list();
+		/*var list_ok = connect_cre_list();
 		if (!list_ok) {
 			send_message("list");
-		}
+		}*/
 		$('#chatStatus').text('Info: connection opened.');
 		$('input[name=chatInput]').on('keydown', function(evt) {
 			if (evt.keyCode == 13) {

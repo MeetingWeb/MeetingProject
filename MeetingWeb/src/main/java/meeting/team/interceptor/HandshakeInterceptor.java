@@ -34,7 +34,6 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 			attributes.put("user_list", user_list);
 			return true;
 		}
-		System.out.println(id);
 		return false;
 	}
 
