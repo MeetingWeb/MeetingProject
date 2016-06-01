@@ -188,6 +188,11 @@ footer {
 	height: 64px;
 	float: left;
 	background: #33B573;
+	padding: 20px;
+    font-size: 15pt;
+    font-weight: bold;
+    color: #fff;
+    text-transform: uppercase;
 }
 
 #headernavi #buttonclass {
@@ -235,11 +240,11 @@ footer {
 }
 
 #login-form {
-	background-color: rgba(33, 61, 78, 0.7);
+	background-color: rgba(33, 61, 78, 0.85);
 	width: 580px;
 	height: 100%;
 	position: absolute;
-	top: 65px;
+	top: 64px;
 	right: 0px;
 	display: none;
 }
@@ -293,7 +298,7 @@ footer {
 	width: 560px;
 	height: 100%;
 	position: absolute;
-	top: 65px;
+	top: 64px;
 	left: 64px;
 	display: none;
 }

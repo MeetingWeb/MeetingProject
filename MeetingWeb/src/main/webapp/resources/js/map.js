@@ -26,8 +26,8 @@ function initMap() {
 	// Create a map object and specify the DOM element for display.
 	var map = new google.maps.Map(document.getElementById('map'), {
 		center : {
-			lat : 37,
-			lng : 126
+			lat : 37.57,
+			lng : 126.98
 		},
 		// Apply the map style array to the map.
 		styles : styleArray,
