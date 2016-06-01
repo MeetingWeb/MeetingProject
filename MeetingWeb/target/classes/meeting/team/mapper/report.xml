@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meeting.team.dao.ReportDao">
+    <!-- 글 등록 -->
+    <insert id="insertReport" parameterType="meeting.team.vo.BoardVo">
+        INSERT INTO REPORT 
+        	(NUM, ID, TITLE, CRE_DATE, CONTENTS) 
+        VALUES 
+        	( (SELECT NVL(MAX(TO_NUMBER(NUM), 0)+1) FROM REPORT), 
+        		#{id}, #{title}, #{cre_date}, #{contents} )
+    </insert>
+    
+</mapper>
