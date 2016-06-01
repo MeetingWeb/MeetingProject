@@ -158,7 +158,6 @@ $(function(){
 		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="loginForm.jsp" />
 		<jsp:include page="joinForm.jsp" />
-		
 		<jsp:include page="chat_view.jsp" />
 	</section>
 
