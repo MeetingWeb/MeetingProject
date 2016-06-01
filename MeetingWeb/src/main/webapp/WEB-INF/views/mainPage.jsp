@@ -24,7 +24,7 @@
 var user_id = '<c:out value="${sessionScope.id}"/>';
 
 $(function(){
-	
+	window.name="my";
 	 $("#pwc").keyup (function() {
 		    if($('input#pw').val()==$('input#pwc').val())
 		    {

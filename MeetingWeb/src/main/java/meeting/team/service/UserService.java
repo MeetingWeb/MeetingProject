@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMessage.RecipientType;
@@ -13,6 +14,8 @@ import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -101,54 +104,26 @@ public class UserService implements UserDetailsService {
 		return json.toJSONString();
 	}
 	
-/*
-	public String email_check(String email,HttpSession session) throws Exception {
-		EmailVo emails = new EmailVo();
-        session.setAttribute("email", email);
-        emails.setReceiver(email);
-        emails.setSubject("이메일 확인입니다.");
-        emails.setContent("<a href='http://121.190.3.95:7777/MettingWeb/email_join?sess="+session.getId()+"' target='uf'>인증 완료</a>");
-        boolean result = false;
-		
+
+	public boolean email_check(final EmailVo email) throws Exception {
         try{
-	        MimeMessage msg = mailSender.createMimeMessage();
-	 	msg.setFrom("aorder1234@gmail.com"); // 송신자를 설정해도 소용없지만 없으면 오류가 발생한다
-	        msg.setSubject(emails.getSubject());
-	        msg.setText(emails.getContent());
-	        msg.setRecipient(RecipientType.TO , new InternetAddress(emails.getReceiver()));
-	         
-	        mailSender.send(msg);
-	        result = true;
+	        mailSender.send(new MimeMessagePreparator() {            
+	            public void prepare(MimeMessage mimeMessage) throws MessagingException {
+	               MimeMessageHelper message=new MimeMessageHelper(mimeMessage,true,"UTF-8");
+	               message.setFrom("red5423@naver.com");
+	               message.setTo(email.getReceiver());
+	               message.setSubject(email.getSubject());
+	               message.setText(email.getContent(),true);
+	            
+	            }
+	         });
 	        
-	        JSONObject json = new JSONObject();
-	        json.put("ok", result);
-	        
-	        return json.toJSONString();
-        }catch(Exception ex) {
-        	ex.printStackTrace();
-        }
-		return null;
-        
-        
-        
-    }
-*/
-	public boolean email_check(EmailVo email) throws Exception {
-        try{
-	        MimeMessage msg = mailSender.createMimeMessage();
-	 	msg.setFrom("aorder1234@gmail.com"); // 송신자를 설정해도 소용없지만 없으면 오류가 발생한다
-	        msg.setSubject(email.getSubject());
-	        msg.setText(email.getContent());
-	        msg.setRecipient(RecipientType.TO , new InternetAddress(email.getReceiver()));
-	         
-	        mailSender.send(msg);
 	        return true;
         }catch(Exception ex) {
         	ex.printStackTrace();
         }
         return false;
     }
-
 
 
 }
