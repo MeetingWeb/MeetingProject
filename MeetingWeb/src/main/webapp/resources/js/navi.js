@@ -24,15 +24,14 @@ $(function() {
 	
 	var bool = false;
 	$("#menu #menu-btn").on("click",function(){
-		$("#menu .menu-btn-name").css({"opacity":"1","left":"64px","width":"144px"});
+		//$("#menu .menu-btn-name").css({"opacity":"1","left":"64px","width":"144px"});
 		if(bool == false) {
-			$("#menu #menu-in").animate({width:"208px"});
+			$("#menu #menu-in").animate({width:"208px"},500);
+			$("#menu .menu-btn-name").addClass("menu-btn-name-active");
 			bool = true;
 		} else {
-			$("#menu .menu-btn-name").animate({width:"64px",left:"0px",opacity:"0"},function(){
-				
-			});
-			$("#menu #menu-in").animate({width:"64px"});
+			$("#menu #menu-in").animate({width:"64px"},250);
+			$("#menu .menu-btn-name").removeClass("menu-btn-name-active");
 			bool = false;
 		}
 	});

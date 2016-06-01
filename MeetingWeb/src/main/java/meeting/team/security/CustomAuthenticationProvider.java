@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import meeting.team.service.UserService;
 
-@Component
 public class CustomAuthenticationProvider implements AuthenticationProvider {
 	@Autowired
 	UserService userService;

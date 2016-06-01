@@ -31,7 +31,7 @@
 		<property name="dataSourceName" value="ds" />
 		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="user" value="scott" />
-		<property name="password" value="TIGER" />
+		<property name="password" value="tiger" />
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

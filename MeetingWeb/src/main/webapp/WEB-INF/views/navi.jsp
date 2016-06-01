@@ -15,7 +15,7 @@
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
-					<div class="menu-btn-name">ADD MEETING</div>
+					<div class="menu-btn-name">MEETING</div>
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>

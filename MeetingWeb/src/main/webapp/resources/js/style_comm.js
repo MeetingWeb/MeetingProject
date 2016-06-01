@@ -4,8 +4,7 @@ $(function() {
 
 	$("#contents").css("height", window.innerHeight).css("width", body_width - c_width);
 	$("footer").css({
-		"width" : body_width - c_width,
-		"height" : "90px"
+		"width" : body_width - c_width
 	});
 	$("#headernavi").css({
 		"width" : body_width - c_width
