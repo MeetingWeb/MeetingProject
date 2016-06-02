@@ -27,13 +27,13 @@
 	top: 64px;
 	width: 85%;
 	height: 85%;
-	background: #fff;
+	background-color: rgba(251, 251, 251,0.8);
 	left: 50%;
-	//border: 1px solid #ddd;
 	z-index: 11;
 	border-radius: 5px;
 	overflow: hidden;
 	display: block;
+	border: 1px solid #eee;
 }
 
 #meeting-form-lid-in {
@@ -52,6 +52,36 @@
 	background: #129994;
 }
 
-#title {
-	margin-top:20px;
+
+#meeting-location {
+	width: 200px;
+}
+
+#meeting-title {
+	width: 85%;
+}
+
+#meeting-contents {
+	width: 85%;
+}
+
+#close {
+	font-size: 3em;
+}
+
+#add-meeting-form {
+	margin-top: 70px;
+}
+
+.meeting-title {
+	width: 318px;
+	margin-top: 50px;
+}
+
+#map {
+	position: fixed;
+	top: -1000px;
+	left: 100px;
+	visibility: hidden;
+	z-index: 200;
 }
