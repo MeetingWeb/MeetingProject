@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
-<script type="text/javascript" src='<c:url value="/resources/js/style_comm.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <%-- <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script> --%>
 <script type="text/javascript" src='<c:url value="/resources/js/map.js"/>'></script>
@@ -27,17 +26,48 @@
 <body>
 	<jsp:include page="navi.jsp" />
 	<jsp:include page="header.jsp" />
-	<section id="contents">
+	<section id="contents" class="contents">
 		<div id="meeting-form-background"></div>
 		<div id="meeting-form-map"></div>
 		<div id="meeting-form-lid">
-		<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<form name="addMeetingForm">
+			<button type="button" class="close" aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			<!-- <form name="addMeetingForm">
 				<div id="meeting-form-lid-in">
 					<div id="meeting-form-lid-in-top">
 						<span>COME TOGETHER</span>
 					</div>
 					<h1>CREATE MEETING</h1>
+				</div>
+			</form> -->
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label" id="title">Title</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="제목" name="title">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">Contents</label>
+					<div class="col-sm-10">
+						<textarea class="form-control" id="inputPassword3" placeholder="내용"></textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox">
+								Remember me
+							</label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default">CREATE</button>
+					</div>
 				</div>
 			</form>
 		</div>

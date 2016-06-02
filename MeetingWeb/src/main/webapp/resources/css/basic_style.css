@@ -121,7 +121,22 @@ ul {
 	background: #F0F9F5;
 	float: right;
 	padding-left: 64px;
-	height: 1000px;
+	height: 100%;
+	overflow:hidden;
+}
+
+/* @media (max-width: 991px) and (min-width: 768px) {
+	#contents {
+		padding-left: 0px;
+	}
+} */
+
+@media (max-width: 991px) {
+#contents {
+		padding-left: 0px;
+
+	}
+>>>>>>> branch 'master' of https://github.com/MeetingWeb/MeetingProject.git
 }
 
 footer {
@@ -201,6 +216,16 @@ footer {
 	height: 64px;
 	float: right;
 	width: 100%;
+	padding-left: 64px;
+}
+
+@media (max-width: 991px) {
+#headernavi {
+		padding-left: 0px;
+		position: fixed;
+		background: #fff;
+		z-index: 200;
+	}
 }
 
 #title_name {
@@ -213,6 +238,20 @@ footer {
     font-weight: bold;
     color: #fff;
     text-transform: uppercase;
+}
+
+@media (max-width: 991px) {
+	#title_name {
+		width: 220px;
+		height: 64px;
+		float: left;
+		background: #33B573;
+		padding: 20px;
+	    font-size: 15pt;
+	    font-weight: bold;
+	    color: #fff;
+	    text-transform: uppercase;
+	}
 }
 
 #headernavi #buttonclass {
