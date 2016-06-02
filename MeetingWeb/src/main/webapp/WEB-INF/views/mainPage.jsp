@@ -34,11 +34,35 @@ $(function(){
 		    {
 		    	$('#pw_checktext').text("아니야.");	
 		    }
-		});
-	 
+		});	
+	if("${requestScope.id}"!=null)
+	{
+		drawMeetings();	
+	}	
+	
 });
 
-	function email_check() {
+function drawMeetings(){	
+	
+	$.ajax({
+		type : 'post',
+		dataType : 'json',
+		url : 'getAllMeeting',		
+		success : function(data) {
+			alert("성공");
+			alert(data[i].loc);
+		},
+		complete : function(data) {
+
+		},
+		error : function(xhr, status, error) {
+			alert(error);
+		}		
+	});		
+}
+
+
+	/* function email_check() {
 	 var email = $('#email').val();
 	 $.ajax({
 			type : 'get',
@@ -60,7 +84,7 @@ $(function(){
 		});
 		
 	}
-
+ */
 
 	function id_check() {
 		var id = $('input#id').val();

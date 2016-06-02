@@ -7,5 +7,6 @@ import meeting.team.vo.MeetingVo;
 public interface MeetingDao {
 
 	List<MeetingVo> getMeetingList(String id);
+	List<MeetingVo> getAllMeeting();
 
 }

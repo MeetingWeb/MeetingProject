@@ -1,5 +1,7 @@
 package meeting.team.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -12,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import meeting.team.service.MeetingService;
 import meeting.team.service.UserService;
 import meeting.team.vo.EmailVo;
+import meeting.team.vo.MeetingVo;
 import meeting.team.vo.UserVo;
 
 @RequestMapping({"/web/"})
@@ -21,6 +25,9 @@ import meeting.team.vo.UserVo;
 public class WebController {
 	@Autowired
 	private UserService us;
+	
+	@Autowired
+	private MeetingService ms;
 	
 	@RequestMapping(value="addForm", method = RequestMethod.GET)
 	public String addMeetingForm() {
@@ -73,30 +80,19 @@ public class WebController {
 		public String mainPage(HttpSession session,HttpServletRequest request, Model model) {
 	    	
 	    	String sessionid = request.getParameter("sess");
-	    	String userId = request.getParameter("id");
-	    	if(sessionid!=null)
-	    	{
-	    		HttpSession sessions = request.getServletContext().getAttribute(sessionid)==null ? 		
-	        	    	request.getSession() : (HttpSession)request.getServletContext().getAttribute(sessionid);	
-	        	    	
-	        	    	request.setAttribute("email", sessions.getAttribute("email"));
-	        	    	request.setAttribute("session_id", sessions.getId());
-	        	    	
-	        	    	request.getServletContext().removeAttribute(session.getId()); 
-	    	}
-	    	else if(sessionid==null)
-	    	{
-	    		return "mainPage";
-	    	}
-	    	
+	    	String userId = request.getParameter("id");	    	
 	    	if(userId != null) {
 	    		session.setAttribute("id", userId);
-	    		model.addAttribute("id", userId);
-	    	}
-	    	
-	    	    	
+	    		model.addAttribute("id", userId);		    		    		
+	    	}	  	    	    	
 	    	return "mainPage";
 		}
+	 
+	 @RequestMapping(value="getAllMeeting")
+	 @ResponseBody
+	 public String getAllMeeting(){
+		 return ms.getAllMeeting();
+	 }
     
     
     

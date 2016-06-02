@@ -10,7 +10,7 @@ $(function() {
 		c_width = document.getElementById("menu").getBoundingClientRect().width;
 	}
 	
-	$("#contents").css("height", body_height - 64).css("width", body_width - 64);
+	//$("#contents").css("height", body_height - 64).css("width", body_width - 64);
 	$("#headernavi").css({
 		"width" : body_width - 64
 		/*"padding-left":"64px"*/
