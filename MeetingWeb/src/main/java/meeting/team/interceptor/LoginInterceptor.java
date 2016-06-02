@@ -14,9 +14,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession();
 		if (session.getAttribute("id") == null) {
 			request.setAttribute("login", false);
-			String url = request.getRequestURI().split("/SpringWeb/")[1];
+			String url = request.getRequestURI().split("/NowMeetingWeb/")[1];
 			session.setAttribute("from", url);
-			RequestDispatcher rd = request.getRequestDispatcher("/login/form");
+			RequestDispatcher rd = request.getRequestDispatcher("/meeting/main");
 			rd.forward(request, response);
 			// response.sendRedirect("../login/form?login=" + false);
 			return false;

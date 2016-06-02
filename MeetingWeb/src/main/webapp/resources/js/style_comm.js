@@ -1,8 +1,15 @@
 $(function() {
-	var c_width = document.getElementById("menu").getBoundingClientRect().width;
-	var body_width = document.body.scrollWidth - 17;
+	var link =  document.location.href;
+	var c_width;
+	if(link != "http://192.168.8.19:7777/NowMeetingWeb/web/main") {
+		c_width = document.getElementById("menu").getBoundingClientRect().width;
+	} else {
+		c_width = document.getElementById("menu").getBoundingClientRect().width + 17;
+	}
+	
+	var body_width = document.body.scrollWidth;
 
-	$("#contents").css("height", window.innerHeight).css("width", body_width - c_width);
+	$("#contents").css("height", window.innerHeight - 100).css("width", body_width - c_width);
 	$("footer").css({
 		"width" : body_width - c_width
 	});
@@ -34,13 +41,5 @@ $(function() {
 	$("#logoutbtn").on("click",function() {
 		location.href="../logout";
 	});
-
+	
 });
-
-/*
- * $(function(){ var flip = 0; $("#joinbtn").click(function () {
- * $("#joinform").toggle( flip++ % 2 == 0 );
- * //$("#loginform").css('display','none'); });
- * 
- * });
- */

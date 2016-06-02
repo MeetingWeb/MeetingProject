@@ -22,7 +22,10 @@ public class WebController {
 	@Autowired
 	private UserService us;
 	
-	
+	@RequestMapping(value="addForm", method = RequestMethod.GET)
+	public String addMeetingForm() {
+		return "addMeetingForm";
+	}
 	
 	@RequestMapping(value="join", method = RequestMethod.POST)
 	@ResponseBody
