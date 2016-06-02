@@ -19,7 +19,8 @@
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>
-					<div class="menu-btn-name">BOARD</div>
+					<div class="menu-btn-name">NOTICE</div>
+					<div class="menu-btn-name">REVIEWS</div>
 				</li>
 			</ul>
 		</nav>
