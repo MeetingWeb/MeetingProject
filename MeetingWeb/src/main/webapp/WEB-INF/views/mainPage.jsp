@@ -128,7 +128,7 @@ $(function(){
 		<jsp:include page="chat_view.jsp" />
 	</section>
 
-	<div class="clear_f"></div>
+	
 	<jsp:include page="footer.jsp" />
 </body>
 </html>
