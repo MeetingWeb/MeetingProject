@@ -11,7 +11,6 @@
 	<context:component-scan base-package="meeting.team.security" />
 	<context:component-scan base-package="meeting.team.service" />
 	
-	
 
 	<sec:http auto-config='true' use-expressions="true">
 		<sec:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')" />
@@ -19,8 +18,8 @@
 		<sec:intercept-url pattern="/blackUser/**" access="hasAuthority('BLACKUSER')" />
 		<sec:intercept-url pattern="/**" access="permitAll" />
 		<sec:form-login login-page="/mainPage" login-processing-url="/user/login" username-parameter="id" password-parameter="pw"
-			default-target-url="/web/loginSuccess" authentication-failure-url="/sec/login?error=true" />
-		<sec:logout logout-success-url="/web/main" />
+			default-target-url="/meeting/main" authentication-failure-url="/sec/login?error=true" />
+		<sec:logout logout-success-url="/meeting/main" />
 		<sec:csrf disabled="true" />
 		<sec:session-management>
 			<sec:concurrency-control max-sessions="1" expired-url="/login_duplicate"/>
@@ -48,23 +47,4 @@
 	<sec:authentication-manager>
 		<sec:authentication-provider ref="customAuthenticationProvider" />
 	</sec:authentication-manager>
-	
-	
-	   <bean id="mailSender" class ="org.springframework.mail.javamail.JavaMailSenderImpl" >
-	    <property name="host" value="smtp.gmail.com" />
-	    <property name="port" value="25" />
-	    <property name="username" value="aorder1234@gmail.com" />
-	    <property name="password" value="dudrb0951" />
-	    <property name="defaultEncoding" value="utf-8"/>
-	    <property name="javaMailProperties">
-	    <props>
-	        <prop key="mail.smtp.starttls.enable">true</prop>
-	        <prop key="mail.transport.protocol">smtp</prop>
-			<prop key="mail.smtp.auth">true</prop>
-			<prop key="mail.debug">true</prop>
-	    </props>
-	    </property>
-	</bean>
-	
-	
 </beans>

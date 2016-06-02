@@ -6,6 +6,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/style_comm.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/map.js"/>'></script>
@@ -19,8 +20,14 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
 <title>여기여기 붙어라</title>
+<style type="text/css">
+input.title{width:720px;}
+
+</style>
 <script type="text/javascript">
 var user_id = '<c:out value="${sessionScope.id}"/>';
+
+
 
 $(function(){
 	window.name="my";
@@ -111,21 +118,62 @@ $(function(){
 		});
 
 	}
+	
+	function insert(){
+		$.ajax({
+			type:"get",
+			url:"write",
+			data:$('form').serialize(),	
+			dataType:"json",
+			success:function(data)
+			{
+				if(data.ok){
+					alert("글이 성공적으로 등록되었습니다.");
+					location.href="latelyRead";
+				}else alert("글쓰기에 실패하였습니다.");				
+			},
+			complete:function(data)
+			{			
+			},
+			error:function(xhr,status,error)
+			{
+				alert("글쓰기에 실패하였습니다.");
+			}
+
+			
+		});
+	}
+	
+	function cancel(){
+		if(confirm('리스트로 돌아가시겠습니까?'))
+		{
+			location.href="getList";			
+		}		
+	}
+	
+	
+	
+	
+	
 </script>
 </head>
 <body>
-	<jsp:include page="navi.jsp" />
-	<jsp:include page="header.jsp" />
+	<jsp:include page="../navi.jsp" />
+	<jsp:include page="../header.jsp" />
 	<section id="contents">
-		<div class="chat-btn">
-			채팅방참여
-			<input type="hidden" value="JUN">
-		</div>
-		<div id="map" style="width: 100%; height: 100%;"></div>
-		<jsp:include page="loginForm.jsp" />
-		<jsp:include page="joinForm.jsp" />
-		<jsp:include page="chat_view.jsp" />
+		<form>
+<table>
+<caption>글 쓰기</caption>
+<tr><th>제목</th><td><input type="text" name="title" class="title"></td></tr>
+<tr><th>내용</th><td><textarea rows="40" cols="100" name="contents"></textarea></td></tr>
+</table>
+<button type="button" onclick="insert()">글쓰기</button> 
+<button type="button" onclick="cancel()">취소</button>
+</form>
+		<jsp:include page="../loginForm.jsp" />
+		<jsp:include page="../joinForm.jsp" />
+		<jsp:include page="../chat_view.jsp" />
 	</section>
-	<jsp:include page="footer.jsp" />
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>

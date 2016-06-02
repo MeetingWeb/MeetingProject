@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<section id="menu">
+<section id="menu" class="hidden-sm hidden-xs">
 	<div id="menu-in">
 		<nav style="position: relative; z-index: 50; left: 0px; width: 64px;">
 			<ul>
@@ -11,21 +11,26 @@
 				</li>
 				<li id="home-btn">
 					<div class="glyphicon glyphicon-th menu-btn-icon"></div>
-					<div class="menu-btn-name" style="background: #33B573">HOME</div>
+					<div class="menu-btn-name" style="background: #33B573">
+						<a href="main">HOME</a>
+					</div>
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
-					<div class="menu-btn-name">MEETING</div>
+					<div class="menu-btn-name">
+						<a href="addForm">MEETING</a>
+					</div>
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>
-					<div class="menu-btn-name">BOARD</div>
+					<div class="menu-btn-name">
+						<a href="#">NOTICE</a>
+					</div>
+					<div class="menu-btn-name">
+						<a href="#">REVIEWS</a>
+					</div>
 				</li>
 			</ul>
 		</nav>
-		<!-- <div class="menu-btn-name" style="background: #33B573">HOME</div>
-	<div class="menu-btn-name">ADD MEETING</div>
-	<div class="menu-btn-name">BOARD</div> -->
-	
 	</div>
 </section>

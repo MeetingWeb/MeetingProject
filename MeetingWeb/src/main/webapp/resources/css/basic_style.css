@@ -15,6 +15,7 @@
 body {
 	margin: 0px;
 	padding: 0px;
+	background: #ddd;
 }
 
 ul {
@@ -27,6 +28,12 @@ ul {
 	clear: both;
 }
 
+#m-menu-btn {
+	font-size: 64px;
+	color: #ddd;
+	cursor: pointer;
+}
+
 #menu {
 	width: 64px;
 	height: 100%;
@@ -35,6 +42,15 @@ ul {
 	left: 0px;
 	background: #fff;
 	z-index: 100;
+}
+
+#menu a{
+	color: #000;
+	font-size: 9pt;
+}
+
+#menu #home-btn a{
+	color: #fff;
 }
 
 #menu #menu-in {
@@ -102,13 +118,30 @@ ul {
 
 #contents {
 	width: 100%;
-	background: #000;
+	background: #F0F9F5;
 	float: right;
+	padding-left: 64px;
+	height: 100%;
+	overflow:hidden;
+}
+
+/* @media (max-width: 991px) and (min-width: 768px) {
+	#contents {
+		padding-left: 0px;
+	}
+} */
+
+@media (max-width: 991px) {
+#contents {
+		padding-left: 0px;
+
+	}
 }
 
 footer {
 	background: #ddd;
 	height: 50px;
+	width: 100%;
 	float: right;
 }
 
@@ -181,6 +214,17 @@ footer {
 #headernavi {
 	height: 64px;
 	float: right;
+	width: 100%;
+	padding-left: 64px;
+}
+
+@media (max-width: 991px) {
+#headernavi {
+		padding-left: 0px;
+		position: fixed;
+		background: #fff;
+		z-index: 200;
+	}
 }
 
 #title_name {
@@ -193,6 +237,20 @@ footer {
     font-weight: bold;
     color: #fff;
     text-transform: uppercase;
+}
+
+@media (max-width: 991px) {
+	#title_name {
+		width: 220px;
+		height: 64px;
+		float: left;
+		background: #33B573;
+		padding: 20px;
+	    font-size: 15pt;
+	    font-weight: bold;
+	    color: #fff;
+	    text-transform: uppercase;
+	}
 }
 
 #headernavi #buttonclass {
@@ -237,6 +295,10 @@ footer {
 	text-align: left;
 	padding-left: 32px;
 	padding-top: 22px;
+}
+
+#loginbtn span {
+	padding-left: 38px;
 }
 
 #login-form {
