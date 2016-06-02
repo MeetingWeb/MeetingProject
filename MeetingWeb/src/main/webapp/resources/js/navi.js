@@ -32,6 +32,7 @@ $(function() {
 		} else {
 			$("#menu #menu-in").animate({width:"64px"},250);
 			$("#menu .menu-btn-name").removeClass("menu-btn-name-active");
+
 			bool = false;
 		}
 	});

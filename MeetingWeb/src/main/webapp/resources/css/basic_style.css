@@ -235,7 +235,11 @@ footer {
 	line-height: 18px;
 	font-weight: 500;
 	text-align: left;
+<<<<<<< Upstream, based on origin/JUN
 	padding-left: 32px;
+=======
+	padding-left: 29px;
+>>>>>>> eadb68f dd
 	padding-top: 22px;
 }
 
