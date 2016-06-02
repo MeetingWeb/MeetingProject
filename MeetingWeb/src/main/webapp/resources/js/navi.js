@@ -65,7 +65,7 @@ $(function() {
 	$("#meeting-form-background, #meeting-form-map").css("height", $(window).height() - 64);
 
 	$("#set-location").on("click", function() {
-		$("#map").css("visibility","inherit");
+		$("#view-map").css("visibility","inherit");
 	});
 
 });

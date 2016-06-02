@@ -36,7 +36,7 @@ function getAddress(latlng) {
 
 				var opt = $("<option value='" + latlng.toString() + "'>" + address + "</option>");
 				/*$("#markerList").append(opt);*/
-				$("input[name=adrr]").val(address + latlng.toString());
+				$("input[name=adrr]").val(latlng.toString().replace(/[()]/gi,''));
 				// markersArray.push(marker);
 			}
 		} else if (status == google.maps.GeocoderStatus.ERROR) {

@@ -20,7 +20,6 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq3jxShghVhbdVBUvU1WoyLbJnNYxoCKA"></script>
-<!-- <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" /> -->
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
@@ -73,13 +72,15 @@
 					</div>
 				</div>
 			</form>
-			<div id="map" style="height: 500px; width: 930px;"></div>
 		</div>
-		
+		<div id="view-map">
+			<div id="map" style="height: 500px; width: 930px;"></div>
+			<input type="text" name="adrr" style="width: 100%;">
+		</div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
 		<jsp:include page="include/chat_view.jsp" />
-		
+
 	</section>
 	<jsp:include page="include/footer.jsp" />
 </body>
