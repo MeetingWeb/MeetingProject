@@ -1,22 +1,21 @@
 $(function() {
 	var link =  document.location.href;
 	var c_width;
+	var body_height = $(window).height();
+	var body_width = $(window).width();
+	
 	if(link != "http://192.168.8.19:7777/NowMeetingWeb/web/main") {
-		c_width = document.getElementById("menu").getBoundingClientRect().width;
+		body_width += 17;
 	} else {
-		c_width = document.getElementById("menu").getBoundingClientRect().width + 17;
+		c_width = document.getElementById("menu").getBoundingClientRect().width;
 	}
 	
-	var body_width = document.body.scrollWidth;
-
-	$("#contents").css("height", window.innerHeight - 100).css("width", body_width - c_width);
-	$("footer").css({
-		"width" : body_width - c_width
-	});
+	$("#contents").css("height", body_height - 64).css("width", body_width - 64);
 	$("#headernavi").css({
-		"width" : body_width - c_width
+		"width" : body_width - 64
+		/*"padding-left":"64px"*/
 	});
-
+	
 	// ///////////////////////////////////////////////////////////
 	var flip = 0;
 	var flip2 = 0;

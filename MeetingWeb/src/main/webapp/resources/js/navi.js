@@ -17,8 +17,10 @@ $(function() {
 		}
 	});
 
-	$("#meeting-form-background").css("width", $("#contents").width());
+	// $("#meeting-form-background").css("width", $("#contents").width());
 	var add_form_left = $("#contents").width() - $("#meeting-form-lid").width() + 150;
 	var add_form_top = $("#contents").height() - $("#meeting-form-lid").height();
 	$("#meeting-form-lid").css("left", add_form_left / 2).css("top", add_form_top / 2);
+
+	$("#meeting-form-background").css("height", $(window).height() - 64);
 });

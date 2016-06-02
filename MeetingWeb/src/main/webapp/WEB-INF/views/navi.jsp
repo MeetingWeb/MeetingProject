@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<section id="menu">
+<section id="menu" class="hidden-sm hidden-xs">
 	<div id="menu-in">
 		<nav style="position: relative; z-index: 50; left: 0px; width: 64px;">
 			<ul>

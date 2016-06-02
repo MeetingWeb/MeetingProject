@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/style_comm.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
@@ -31,6 +31,7 @@
 		<div id="meeting-form-background"></div>
 		<div id="meeting-form-map"></div>
 		<div id="meeting-form-lid">
+		<button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			<form name="addMeetingForm">
 				<div id="meeting-form-lid-in">
 					<div id="meeting-form-lid-in-top">

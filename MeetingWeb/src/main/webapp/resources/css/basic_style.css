@@ -28,6 +28,12 @@ ul {
 	clear: both;
 }
 
+#m-menu-btn {
+	font-size: 64px;
+	color: #ddd;
+	cursor: pointer;
+}
+
 #menu {
 	width: 64px;
 	height: 100%;
@@ -111,14 +117,16 @@ ul {
 }
 
 #contents {
-	width: 100%;
+	//width: 100%;
 	background: #F0F9F5;
 	float: right;
+	//padding-left: 64px;
 }
 
 footer {
 	background: #ddd;
 	height: 50px;
+	width: 100%;
 	float: right;
 }
 
@@ -191,6 +199,7 @@ footer {
 #headernavi {
 	height: 64px;
 	float: right;
+	width: 100%;
 }
 
 #title_name {
