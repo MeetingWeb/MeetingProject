@@ -1,16 +1,48 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE HTML>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>Insert title here</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<script type="text/javascript"
+	src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
+<script type="text/javascript"
+	src='<c:url value="/resources/js/style_comm.js"/>'></script>
+<script type="text/javascript"
+	src='<c:url value="/resources/js/navi.js"/>'></script>
+<script type="text/javascript"
+	src='<c:url value="/resources/js/chat.js"/>'></script>
+<script type="text/javascript"
+	src='<c:url value="/resources/js/map.js"/>'></script>
+<link rel="stylesheet" type="text/css"
+	href='<c:url value="/resources/css/basic_style.css"/>'>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
+	crossorigin="anonymous">
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
+	crossorigin="anonymous">
+
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
+	crossorigin="anonymous"></script>
+<script
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap"
+	async defer></script>
+<title>ì—¬ê¸°ì—¬ê¸° ë¶™ì–´ë¼</title>
 <style type="text/css">
-input.title{width:720px;}
+input.title {
+	width: 720px;
+}
 </style>
-<script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript">
+var user_id = '<c:out value="${sessionScope.id}"/>';
 function modify(){	
 	
 	$.ajax({		
@@ -26,36 +58,161 @@ function modify(){
 		success:function(data)
 		{
 			if(data.ok){
-				alert("±ÛÀÌ ¼º°øÀûÀ¸·Î ¼öÁ¤µÇ¾ú½À´Ï´Ù.");
+				alert("ê¸€ì´ ì„±ê³µì ìœ¼ë¡œ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
 				location.href="latelyRead";
-			} else alert("±Û ¼öÁ¤¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");			
+			} else alert("ê¸€ ìˆ˜ì •ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");			
 		},
 		complete:function(data)
 		{			
 		},
 		error:function(xhr,status,error)
 		{
-			alert("±Û ¼öÁ¤¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+			alert("ê¸€ ìˆ˜ì •ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
 		}
 		
 	}); 	
 }
 
+function cancel(){
+	if(confirm('ê¸€ ìˆ˜ì •ì„ ì·¨ì†Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ??'))
+	{		
+		location.href="read?num="+${ data.num };
+	}
+	
+}
+
+$(function(){
+	window.name="my";
+	 $("#pwc").keyup (function() {
+		    if($('input#pw').val()==$('input#pwc').val())
+		    {
+		    	$('#pw_checktext').text("ë§ë‹¤.");	
+		    }
+		    else if($('input#pw').val()!=$('input#pwc').val())
+		    {
+		    	$('#pw_checktext').text("ì•„ë‹ˆì•¼.");	
+		    }
+		});
+	 
+});
+
+	function email_check() {
+	 var email = $('#email').val();
+	 $.ajax({
+			type : 'get',
+			dataType : 'json',
+			url : 'eamil_check',
+			data : {email:email},
+			success : function(evt) {
+				if(evt.ok==true)
+				{
+					alert("í™•ì¸ë˜ì—ˆã……ë¸Œë‹ˆë‹¤.")
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+		
+	}
+
+
+	function id_check() {
+		var id = $('input#id').val();
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'id_check',
+			data : {id:id},
+			success : function(evt) {
+				if(evt.ok==true)
+				{
+					$('#id_checktext').text("ì‚¬ìš© ê°€ëŠ¥í•œ ì•„ì´ë”” ì…ë‹ˆë‹¤.");
+					//alert("ì‚¬ìš© ê°€ëŠ¥í•œ ì•„ì´ë”” ì…ë‹ˆë‹¤.");
+				}
+				else if(evt.ok==false)
+				{
+					$('#id_checktext').text("ì‚¬ìš© ì¤‘ì¸ ì•„ì´ë”” ì…ë‹ˆë‹¤.");
+					//alert("ì‚¬ìš© ì¤‘ì¸ ì•„ì´ë”” ì…ë‹ˆë‹¤.");
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+
+	}
+
+	function joinsave() {
+		var data = $('#joinform').serialize();
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'join',
+			data : data,
+			success : function(evt) {
+				if (evt.ok == true) {
+					alert("ì„±ê³µ");
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+
+	}
 </script>
 </head>
 <body>
-<form>
-<table>
-<caption>±Û ¼öÁ¤</caption>
-<tr><th>¹øÈ£</th><td>${ data.num }</td></tr>
-<tr><th>Á¦¸ñ</th><td><input type="text" class="title" value=${ data.title }></td></tr>
-<tr><th>±Û¾´ÀÌ</th><td>${ data.id }</td></tr>
-<tr><th>³¯Â¥</th><td>${ data.cre_date }</td></tr>
-<tr><th>³»¿ë</th><td><textarea rows="40" cols="100" class="contents">${ data.contents }</textarea></td></tr>
-</table>
-<button type="button" onclick="modify()">¼öÁ¤</button>
-<button type="button" type="reset">Ãë¼Ò</button>
-</table>
-</form>
+	<jsp:include page="../navi.jsp" />
+	<jsp:include page="../header.jsp" />
+	<section id="contents">
+		<form>
+			<table>
+				<caption>ê¸€ ìˆ˜ì •</caption>
+				<tr>
+					<th>ë²ˆí˜¸</th>
+					<td>${ data.num }</td>
+				</tr>
+				<tr>
+					<th>ì œëª©</th>
+					<td><input type="text" class="title" value=${ data.title }></td>
+				</tr>
+				<tr>
+					<th>ê¸€ì“´ì´</th>
+					<td>${ data.id }</td>
+				</tr>
+				<tr>
+					<th>ë‚ ì§œ</th>
+					<td>${ data.cre_date }</td>
+				</tr>
+				<tr>
+					<th>ë‚´ìš©</th>
+					<td><textarea rows="40" cols="100" class="contents">${ data.contents }</textarea></td>
+				</tr>
+			</table>
+			<button type="button" onclick="modify()">ìˆ˜ì •</button>
+			<button type="button" onclick="cancel()">ì·¨ì†Œ</button>
+			</table>
+		</form>
+
+
+
+
+
+		<jsp:include page="../loginForm.jsp" />
+		<jsp:include page="../joinForm.jsp" />
+		<jsp:include page="../chat_view.jsp" />
+	</section>
+	<jsp:include page="../footer.jsp" />
 </body>
 </html>
