@@ -37,6 +37,14 @@ ul {
 	z-index: 100;
 }
 
+#menu a{
+	color: #000;
+}
+
+#menu #home-btn a{
+	color: #fff;
+}
+
 #menu #menu-in {
 	width: 100%;
 	height: 100%;

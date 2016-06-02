@@ -11,16 +11,16 @@
 				</li>
 				<li id="home-btn">
 					<div class="glyphicon glyphicon-th menu-btn-icon"></div>
-					<div class="menu-btn-name" style="background: #33B573">HOME</div>
+					<div class="menu-btn-name" style="background: #33B573"><a href="#">HOME</a></div>
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
-					<div class="menu-btn-name">MEETING</div>
+					<div class="menu-btn-name"><a href="#">MEETING</a></div>
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>
-					<div class="menu-btn-name">NOTICE</div>
-					<div class="menu-btn-name">REVIEWS</div>
+					<div class="menu-btn-name"><a href="#">NOTICE</a></div>
+					<div class="menu-btn-name"><a href="#">REVIEWS</a></div>
 				</li>
 			</ul>
 		</nav>
