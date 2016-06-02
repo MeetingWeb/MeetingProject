@@ -15,6 +15,7 @@
 body {
 	margin: 0px;
 	padding: 0px;
+	background: #ddd;
 }
 
 ul {
@@ -39,6 +40,7 @@ ul {
 
 #menu a{
 	color: #000;
+	font-size: 9pt;
 }
 
 #menu #home-btn a{
@@ -110,7 +112,7 @@ ul {
 
 #contents {
 	width: 100%;
-	background: #000;
+	background: #F0F9F5;
 	float: right;
 }
 
