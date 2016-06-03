@@ -79,9 +79,11 @@
 }
 
 #view-map {
-	position: fixed;
-	top: 0px;
-	left: 100px;
+	position: absolute;
+	top: 64px;
+	left: 64px;
 	visibility: hidden;
-	z-index: 200;
+	z-index: 20;
+	padding: 64px;
+	background: #fff;
 }

@@ -64,8 +64,15 @@ $(function() {
 	$("#meeting-form-lid").css("margin-left", -$("#meeting-form-lid").width() / 2 + 32);
 	$("#meeting-form-background, #meeting-form-map").css("height", $(window).height() - 64);
 
+	var visibility = false;
 	$("#set-location").on("click", function() {
-		$("#view-map").css("visibility","inherit");
+		$("#view-map").css("visibility", "inherit");
 	});
 
+	$("#view-map #close").on("click", function() {
+		$("#view-map").css("visibility", "hidden");
+	});
+	
+	$("#view-map").css({"width":$(window).width() - 64, "height":$(window).height() -64});
+	
 });
