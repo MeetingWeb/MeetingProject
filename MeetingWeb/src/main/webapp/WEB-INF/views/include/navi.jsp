@@ -12,22 +12,22 @@
 				<li id="home-btn">
 					<div class="glyphicon glyphicon-th menu-btn-icon"></div>
 					<div class="menu-btn-name" style="background: #33B573">
-						<a href="main">HOME</a>
+						<a href="/NowMeetingWeb/web/main">HOME</a>
 					</div>
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
 					<div class="menu-btn-name">
-						<a href="addForm">MEETING</a>
+						<a href="/NowMeetingWeb/web/addForm">MEETING</a>
 					</div>
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>
 					<div class="menu-btn-name">
-						<a href="#">NOTICE</a>
+						<a href="/NowMeetingWeb/notice/getList">NOTICE</a>
 					</div>
 					<div class="menu-btn-name">
-						<a href="#">REVIEWS</a>
+						<a href="/NowMeetingWeb/reviews/list">REVIEWS</a>
 					</div>
 				</li>
 			</ul>

@@ -1,15 +1,14 @@
 var body_height = $(window).height();
 $(function() {
+	/////////메뉴 네비////////////////////////////
+	$("#menu ul li").on("click", function(){
+		var path = $(this).find("a").attr("href");
+		location.href= path;
+	});
+	
+	
 	var link = document.location.href;
-	var c_width;
-
 	var body_width = $(window).width();
-
-	if (link != "http://192.168.8.19:7777/NowMeetingWeb/web/main") {
-		body_width;
-	} else {
-		c_width = document.getElementById("menu").getBoundingClientRect().width;
-	}
 
 	$("#map").css("height", body_height - 64);
 
@@ -60,8 +59,8 @@ $(function() {
 	// $("#meeting-form-background").css("width", $("#contents").width());
 	var add_form_left = $("#contents").width() - $("#meeting-form-lid").width() + 140;
 	var add_form_top = $("#contents").height() - $("#meeting-form-lid").height() + 100;
-	$("#meeting-form-lid").css("top", "120px");
-	$("#meeting-form-lid").css("margin-left", -$("#meeting-form-lid").width() / 2 + 32);
+	//$("#meeting-form-lid").css("top", "120px");
+	$//("#meeting-form-lid").css("margin-left", -$("#meeting-form-lid").width() / 2 + 32);
 	$("#meeting-form-background, #meeting-form-map").css("height", $(window).height() - 64);
 
 	var visibility = false;
