@@ -114,18 +114,18 @@ $(function(){
 </script>
 </head>
 <body>
-	<jsp:include page="navi.jsp" />
-	<jsp:include page="header.jsp" />
+	<jsp:include page="include/navi.jsp" />
+	<jsp:include page="include/header.jsp" />
 	<section id="contents">
 		<div class="chat-btn">
 			채팅방참여
 			<input type="hidden" value="JUN">
 		</div>
 		<div id="map" style="width: 100%; height: 100%;"></div>
-		<jsp:include page="loginForm.jsp" />
-		<jsp:include page="joinForm.jsp" />
-		<jsp:include page="chat_view.jsp" />
+		<jsp:include page="include/loginForm.jsp" />
+		<jsp:include page="include/joinForm.jsp" />
+		<jsp:include page="include/chat_view.jsp" />
 	</section>
-	<jsp:include page="footer.jsp" />
+	<jsp:include page="include/footer.jsp" />
 </body>
 </html>
