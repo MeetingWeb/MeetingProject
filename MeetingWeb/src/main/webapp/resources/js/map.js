@@ -87,8 +87,6 @@ function showDetail(num){
    
 }
 
-
-
 function attachMeetingInfo(marker,meeting){	
 	
 	var simpleInfo=""+
@@ -131,6 +129,36 @@ function drawMeetings(){
 			alert(error);
 		}		
 	});		
+}
+
+function showMyLocation(){
+	$.ajax({
+		type: 'post',
+		dataType : 'json',	
+		url : 'getMyLocation',		
+		success : function(data) {
+			
+			var loc=data.latlng;
+			
+			loc=loc.replace('(','');
+			loc=loc.replace(')','');			
+			var arr=loc.split(',');				
+			var lat=Number(arr[0]);
+			var lng=Number(arr[1]);				 
+			var latlng = new google.maps.LatLng(lat,lng);
+			map.panTo(latlng);
+						
+			
+		},
+		complete : function(data) {
+
+		},
+		error : function(xhr, status, error) {
+			alert(error);
+		}	
+		
+	});
+	
 }
 
 function makeMarker(latlng,meeting){

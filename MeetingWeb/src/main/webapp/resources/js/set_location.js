@@ -192,4 +192,14 @@ function adrSave() {
 		$("#view-map").css("visibility", "hidden");
 	}
 }
+
+function setMyLocation(){
+	if (confirm("내 위치로 지정 하시겠습니까?")) {
+		var lat=LOC.lat();
+		var lng=LOC.lng();
+		var latlng='('+lat+','+lng+')';
+		location.href="changeMyLOC?latlng="+latlng;
+		
+	}
+}
 google.maps.event.addDomListener(window, 'load', init);
