@@ -38,10 +38,12 @@ $(function(){
 		    }
 		});	
 	 $("#show_Infomation").css("height",$(window).height()-64);
-	 
-	 if("${requestScope.id}"!=null)
-		{		 
-			drawMeetings(map);	
+	
+	 if("${sessionScope.id}"!="")
+		{				 
+			drawMeetings(map);				
+			showMyLocation();
+		
 		}		
 });
 

@@ -89,6 +89,11 @@ public class WebController {
 	    	return "mainPage";
 		}
 	 
+	 @RequestMapping(value="myLocation")
+	 public String myLocationForm(){
+		 return "myLocation";
+	 }
+	 
 	 @RequestMapping(value="getAllMeeting")
 	 @ResponseBody
 	 public String getAllMeeting(){
@@ -100,6 +105,28 @@ public class WebController {
 		 return ms.getMeeting(num);
 	 }
     
-    
+	 @RequestMapping(value="changeMyLOC")
+	 public String changeLOC(HttpServletRequest request,Model model){
+		 boolean ok=us.changeLatlng(request);
+		 if(ok)System.out.println("위치저장완료");
+		 return "mainPage";
+	 }
+	 @RequestMapping(value="choiceLOC")		
+	 public String choiceLOC(HttpSession session,HttpServletRequest request, Model model)
+	 {
+		 	String userId = request.getParameter("id");		
+	    	if(userId != null) {
+	    		session.setAttribute("id", userId);
+	    		model.addAttribute("id", userId);		    		    		
+	    	}	  	    	    	
+	    	return "choiceLocationMenu";
+	 }
+	 
+	 @RequestMapping(value="getMyLocation")
+	 @ResponseBody
+	 public String getMyLocation(HttpServletRequest request)
+	 {		
+		 return us.getMyLocation(request);		 
+	 }
     
 }

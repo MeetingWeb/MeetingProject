@@ -18,4 +18,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="id_check" resultType="meeting.team.vo.UserVo">
 		select * from users where id=#{id}
 	</select>
+	
+	<update id="changeLatlng" parameterType="meeting.team.vo.UserVo">
+		update users set latlng=#{latlng} where id=#{id} 
+	</update>
+	
+	<select id="getMyLocation" resultType="java.lang.String" parameterType="java.lang.String">
+		select latlng from users where id=#{id}
+	</select>
 </mapper>
