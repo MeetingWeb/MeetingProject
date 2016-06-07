@@ -16,7 +16,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			request.setAttribute("login", false);
 			String url = request.getRequestURI().split("/NowMeetingWeb/")[1];
 			session.setAttribute("from", url);
-			RequestDispatcher rd = request.getRequestDispatcher("/meeting/main");
+			RequestDispatcher rd = request.getRequestDispatcher("/web/main");
 			rd.forward(request, response);
 			// response.sendRedirect("../login/form?login=" + false);
 			return false;

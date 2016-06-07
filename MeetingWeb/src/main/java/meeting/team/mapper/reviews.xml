@@ -6,12 +6,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="insert" parameterType="meeting.team.vo.ReviewsVo">
 		insert into reviews
-		values(REVIEWS_NUM_SEQ.NEXTVAL,#{id},#{title},SYSDATE,0,#{contents},#{ori_file_name},#{mod_file_name},#{ref})
+		values(REVIEWS_NUM_SEQ.NEXTVAL,#{id},#{title},SYSDATE,#{contents},#{ori_file_name},#{mod_file_name},#{ref})
 	</insert>
 
 	<select id="fileOverLapCnt" resultType="java.lang.Integer">
 		SELECT COUNT(ori_file_name) AS cnt FROM reviews WHERE ori_file_name=#{file_name}
 	</select>
-
+	<select id="currNum" resultType="java.lang.Integer">
+		SELECT MAX(num) FROM reviews WHERE id = #{id}
+	</select>
+	<select id="selectOne" resultType="meeting.team.vo.ReviewsVo">
+		SELECT * FROM reviews WHERE num=#{num}
+	</select>
+	<select id="getList" resultType="meeting.team.vo.ReviewsVo">
+		SELECT * FROM reviews ORDER BY cre_date DESC
+	</select>
+	<delete id="delete">
+		DELETE FROM reviews WHERE num=#{num}
+	</delete>
 </mapper>
 

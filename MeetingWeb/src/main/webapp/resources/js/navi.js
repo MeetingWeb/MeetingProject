@@ -11,6 +11,7 @@ $(function() {
 	var body_width = $(window).width();
 
 	$("#map").css("height", body_height - 64);
+	$("#login-form, #joinform").css("height", body_height - 64);
 
 	// ///////////로그인 회원가입////////////////////////////////////////////////
 	var flip = 0;
@@ -73,5 +74,11 @@ $(function() {
 	});
 	
 	$("#view-map").css({"width":$(window).width() - 64, "height":$(window).height() -64});
+	
+	//////////////review js////////////////////////
+	$(".img-box").on("click",function(){
+		console.log($(this).attr("data-num"));
+		location.href="selectOne?num=" + $(this).attr("data-num");
+	});
 	
 });

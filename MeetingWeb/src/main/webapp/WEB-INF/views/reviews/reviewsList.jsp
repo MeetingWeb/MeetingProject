@@ -8,8 +8,8 @@
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
-<script type="text/javascript" src='<c:url value="/resources/js/map.js"/>'></script>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
 
@@ -17,69 +17,30 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/reviews_style.css"/>'>
 <title>여기여기 붙어라</title>
-<style type="text/css">
-input.title {
-	width: 720px;
-}
-</style>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
-
-	function insert() {
-		var form = new FormData(document.getElementById('insertForm'));
-		$.ajax({
-			url : "insert",
-			type : "post",
-			data : form,
-			processData: false,
-            contentType: false,
-			dataType : "text",
-			success : function(obj) {
-				var json = JSON.parse(obj);
-				if(json.ok) {
-					alert("글쓰기 성공");
-					location.href="selectOne?num=0";
-				} else {
-					alert("글쓰기 실패");
-				}
-			},
-			complete : function(data) {
-			},
-			error : function(xhr, status, error) {
-				alert("글쓰기에 실패하였습니다.");
-			}
-		});
-	}
 </script>
 </head>
 <body>
 	<jsp:include page="../include/navi.jsp" />
 	<jsp:include page="../include/header.jsp" />
-	<section id="contents">
-		<form enctype="multipart/form-data" name="insert-form" id="insertForm">
-			<table>
-				<caption>글 쓰기</caption>
-				<tr>
-					<th>제목</th>
-					<td>
-						<input type="text" name="title" class="title">
-					</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>
-						<textarea rows="40" cols="100" name="contents"></textarea>
-					</td>
-				</tr>
-			</table>
-			<div class="form-group">
-				<label for="inputfile">File input</label>
-				<input type="file" id="inputfile" name="file">
+	<section id="contents" style="overflow: visible">
+		<a href="#" onclick="javascript:location.href='writeForm'">글쓰기</a>
+		<div class="container-fluid">
+			<div id="list-box" class="row">
+				<c:forEach var="list" items="${list }">
+
+					<div class="img-box col-md-2 col-xs-12 col-sm-2" data-num="${list.num }">
+						<div class="img" style="background:url(../resources/images/${list.mod_file_name }); background-size: cover; background-position: center;"></div>
+						<div class="title">${list.title }</div>
+					</div>
+
+				</c:forEach>
+				<div class="clear_f"></div>
 			</div>
-			<button type="button" onclick="insert()">글쓰기</button>
-			<button type="button" onclick="javascript:location.href='list'">취소</button>
-		</form>
+		</div>
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
 		<jsp:include page="../include/chat_view.jsp" />

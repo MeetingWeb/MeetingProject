@@ -192,5 +192,9 @@ $(function(){
 	</section>
 	<jsp:include page="include/footer.jsp" />
 </body>
-
+<c:if test="${param.error==true }">
+	<script type="text/javascript">
+		alert("로그인 실패");
+	</script>
+</c:if>
 </html>
