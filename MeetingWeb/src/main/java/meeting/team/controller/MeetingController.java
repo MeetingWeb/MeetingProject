@@ -26,5 +26,6 @@ public class MeetingController {
 		model.addAttribute("id", request.getParameter("id"));
 		model.addAttribute("ip", ipArr);
 		return "mainPage";
-	}
+	}	
+	
 }

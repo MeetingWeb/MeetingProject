@@ -4,21 +4,39 @@ import java.sql.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class FileVo {
-	private String author;
+public class ReviewsVo {
+	private int num;
+	private String id;
+	private String title;
 	private Date cre_date;
+	private String contents;
+	private int ref;
 	private String ori_file_name;
 	private String mod_file_name;
-	private double file_size;
 	private MultipartFile file;
-	private boolean ok;
 
-	public String getAuthor() {
-		return author;
+	public int getNum() {
+		return num;
 	}
 
-	public void setAuthor(String author) {
-		this.author = author;
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public Date getCre_date() {
@@ -27,6 +45,22 @@ public class FileVo {
 
 	public void setCre_date(Date cre_date) {
 		this.cre_date = cre_date;
+	}
+
+	public String getContents() {
+		return contents;
+	}
+
+	public void setContents(String contents) {
+		this.contents = contents;
+	}
+
+	public int getRef() {
+		return ref;
+	}
+
+	public void setRef(int ref) {
+		this.ref = ref;
 	}
 
 	public String getOri_file_name() {
@@ -45,28 +79,12 @@ public class FileVo {
 		this.mod_file_name = mod_file_name;
 	}
 
-	public double getFile_size() {
-		return file_size;
-	}
-
-	public void setFile_size(double file_size) {
-		this.file_size = file_size;
-	}
-
 	public MultipartFile getFile() {
 		return file;
 	}
 
 	public void setFile(MultipartFile file) {
 		this.file = file;
-	}
-
-	public boolean isOk() {
-		return ok;
-	}
-
-	public void setOk(boolean ok) {
-		this.ok = ok;
 	}
 
 }

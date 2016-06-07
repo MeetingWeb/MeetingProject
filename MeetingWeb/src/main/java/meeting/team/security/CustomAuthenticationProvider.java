@@ -29,13 +29,16 @@ public class CustomAuthenticationProvider implements AuthenticationProvider {
 
 		User user = null;
 		Collection<? extends GrantedAuthority> authorities = null;
-
+		String encodedPwd = null;
 		try {
 
 			user = (User) userService.loadUserByUsername(username);
-
-			String encodedPwd = user.getPassword();
-
+			if(user == null) {
+				throw new BadCredentialsException("로그인 실패");
+			}else {
+				encodedPwd = user.getPassword();
+			}
+				
 			if (!passwordEncoder.matches(password, encodedPwd))
 				throw new BadCredentialsException("비밀번호 불일치");
 

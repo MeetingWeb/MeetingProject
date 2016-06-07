@@ -1,11 +1,21 @@
 package meeting.team.dao;
 
-import meeting.team.vo.FileVo;
+import java.util.List;
+
+import meeting.team.vo.ReviewsVo;
 
 public interface ReviewsDao {
 
 	int fileOverLapCnt(String fileName);
 
-	int uploadFile(FileVo uploadedFile);
+	int insert(ReviewsVo uploadedFile);
+
+	int currNum(String id);
+
+	ReviewsVo selectOne(int num);
+
+	List<ReviewsVo> getList();
+
+	int delete(int num);
 
 }

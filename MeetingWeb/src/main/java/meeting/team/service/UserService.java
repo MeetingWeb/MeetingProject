@@ -3,12 +3,11 @@ package meeting.team.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMessage.RecipientType;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -124,6 +123,33 @@ public class UserService implements UserDetailsService {
         }
         return false;
     }
+	
+	public boolean changeLatlng(HttpServletRequest request){
+		System.out.println("µé¾î¿È");
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		String latlng=request.getParameter("latlng");
+		String id=(String)request.getSession().getAttribute("id");
+		System.out.println(latlng);
+		System.out.println(id);
+		UserVo user=new UserVo();
+		user.setId(id);
+		user.setLatlng(latlng);
+		int res=user_dao.changeLatlng(user);
+		if(res==1)return true;
+		else return false;		
+	}
+	
+	public String getMyLocation(HttpServletRequest request){
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		System.out.println(request.getSession().getAttribute("id"));
+		String id=(String)request.getSession().getAttribute("id");
+		String myLOC=user_dao.getMyLocation(id);
+		System.out.println(myLOC);
+		JSONObject jsonObj=new JSONObject();	
+		jsonObj.put("latlng", myLOC);
+		return jsonObj.toJSONString();
+	}
+	
 
 
 }

@@ -11,6 +11,15 @@ public class UserVo {
 	private String email;
 	private String power;
 	private String interests; 
+	private String latlng;
+
+	public String getLatlng() {
+		return latlng;
+	}
+
+	public void setLatlng(String latlng) {
+		this.latlng = latlng;
+	}
 
 	public String getInterests() {
 		return interests;

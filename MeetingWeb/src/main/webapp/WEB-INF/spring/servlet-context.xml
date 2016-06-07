@@ -43,6 +43,14 @@
 			<beans:bean class="meeting.team.interceptor.HandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/reviews/**" />
+			<mapping path="/notice/**" />
+			<beans:bean class="meeting.team.interceptor.LoginInterceptor" />
+		</interceptor>
+	</interceptors>
 
 		
 	<!-- 

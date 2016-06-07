@@ -12,5 +12,6 @@ public interface UserDao {
 	public int joinhabby(HashMap<String, Object> map);
 	public UserVo login(String id);
 	public UserVo id_check(String id);
-
+	public int changeLatlng(UserVo user);
+	public String getMyLocation(String id);
 }

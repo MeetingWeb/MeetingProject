@@ -5,6 +5,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<style type="text/css">
+
+</style>
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
@@ -12,7 +15,7 @@
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
-
+	
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
 	crossorigin="anonymous">
 
@@ -33,11 +36,20 @@ $(function(){
 		    {
 		    	$('#pw_checktext').text("아니야.");	
 		    }
-		});
-	 
+		});	
+	 $("#show_Infomation").css("height",$(window).height()-64);
+	
+	 if("${sessionScope.id}"!="")
+		{				 
+			drawMeetings(map);				
+			showMyLocation();
+		
+		}		
 });
 
-	function email_check() {
+
+	
+	/* function email_check() {
 	 var email = $('#email').val();
 	 $.ajax({
 			type : 'get',
@@ -59,7 +71,7 @@ $(function(){
 		});
 		
 	}
-
+ */
 
 	function id_check() {
 		var id = $('input#id').val();
@@ -87,8 +99,10 @@ $(function(){
 				alert(error);
 			}
 		});
-
 	}
+ 
+ 
+ 
 
 	function joinsave() {
 		var data = $('#joinform').serialize();
@@ -109,14 +123,66 @@ $(function(){
 				alert(error);
 			}
 		});
-
 	}
+	
+	
+	
 </script>
 </head>
 <body>
 	<jsp:include page="include/navi.jsp" />
 	<jsp:include page="include/header.jsp" />
 	<section id="contents">
+	
+	
+<!-- Button trigger modal -->
+<!-- Modal -->
+<div class = "modal fade" id = "myModal" tabindex = "-1" role = "dialog" 
+   aria-labelledby = "myModalLabel" aria-hidden = "false">
+   
+   <div class = "modal-dialog">
+      <div class = "modal-content">
+         
+         <div class = "modal-header">
+            <button type = "button" class = "close" data-dismiss = "modal" aria-hidden = "true">
+               ×
+            </button>
+            
+            <h4 class = "modal-title" id = "myModalLabel">
+               This Modal title
+            </h4>
+         </div>
+         
+         <div class = "modal-body" id="myModalBody">
+            Press ESC button to exit.
+         </div>
+         
+         <div class = "modal-footer">
+            <button type = "button" class = "btn btn-default" data-dismiss = "modal">
+               Close
+            </button>          
+            
+            <button type = "button" class = "btn btn-success">
+               	Directions
+            </button>
+            
+             <button type = "button" class = "btn btn-success">
+               Participation in chat rooms
+            </button>
+            
+             <button type = "button" class = "btn btn-success">
+               Rough map
+            </button>
+            
+            
+            
+         </div>
+         
+      </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+   
+</div><!-- /.modal -->	      
+      	
 		<div class="chat-btn">
 			채팅방참여
 			<input type="hidden" value="JUN">
@@ -128,4 +194,9 @@ $(function(){
 	</section>
 	<jsp:include page="include/footer.jsp" />
 </body>
+<c:if test="${param.error==true }">
+	<script type="text/javascript">
+		alert("로그인 실패");
+	</script>
+</c:if>
 </html>

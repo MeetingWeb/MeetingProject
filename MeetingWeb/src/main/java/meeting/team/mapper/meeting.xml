@@ -6,4 +6,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMeetingList" resultType="meeting.team.vo.MeetingVo">
 		select * from meeting
 	</select>
+	<select id="getAllMeeting" resultType="meeting.team.vo.MeetingVo">
+		select * from meeting	
+	</select>
+	<select id="getMeeting" resultType="meeting.team.vo.MeetingVo">
+		select * from meeting where num=#{num}
+	</select>
 </mapper>
