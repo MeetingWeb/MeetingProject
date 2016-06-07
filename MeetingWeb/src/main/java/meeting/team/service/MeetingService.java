@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.xml.crypto.Data;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -47,11 +48,34 @@ public class MeetingService {
 			jsonObj.put("loc",list.get(i).getArea());
 			//가져와야 하는것 추가
 			//---------------------
-			
+			jsonObj.put("num", list.get(i).getNum());
+			jsonObj.put("contents",list.get(i).getContents());
+			jsonObj.put("endTime",list.get(i).getEnd_time().toString());
+			jsonObj.put("master",list.get(i).getMaster());
+			jsonObj.put("type",list.get(i).getMeetingType());
+			jsonObj.put("startTime",list.get(i).getStart_time().toString());			
+			jsonObj.put("title",list.get(i).getTitle());	
 			//---------------------
 			jsonArr.add(jsonObj);
 		}
 		return jsonArr.toJSONString();	
+	}
+	
+	public String getMeeting(int num){
+		meeting_dao=sql_temp.getMapper(MeetingDao.class);
+		MeetingVo meeting=meeting_dao.getMeeting(num);
+		JSONObject jsonObj=new JSONObject();
+		jsonObj.put("loc",meeting.getArea());
+		jsonObj.put("num",meeting.getNum());
+		jsonObj.put("contents",meeting.getContents());
+		jsonObj.put("endTime",meeting.getEnd_time().toString());
+		jsonObj.put("master",meeting.getMaster());
+		jsonObj.put("type",meeting.getMeetingType());
+		jsonObj.put("startTime",meeting.getStart_time().toString());			
+		jsonObj.put("title",meeting.getTitle());
+		return jsonObj.toJSONString();
+		
+		
 	}
 
 }
