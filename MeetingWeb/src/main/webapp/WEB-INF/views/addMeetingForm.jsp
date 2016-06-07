@@ -5,8 +5,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.8.18/themes/base/jquery-ui.css" type="text/css" media="all" />
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
 <%-- <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script> --%>
 
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
@@ -21,7 +24,22 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq3jxShghVhbdVBUvU1WoyLbJnNYxoCKA"></script> -->
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9kEdjl_v9QToMmfVpM0U_I0BkBoNu7Hs&libraries=places"></script>
-
+<script>
+	$(function() {
+		  $("#datepicker1, #datepicker2").datepicker({
+		    dateFormat: 'yy-mm-dd',
+		    prevText: '이전 달',
+		    nextText: '다음 달',
+		    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
+		    dayNames: ['일','월','화','수','목','금','토'],
+		    dayNamesShort: ['일','월','화','수','목','금','토'],
+		    dayNamesMin: ['일','월','화','수','목','금','토'],
+		    showMonthAfterYear: true,
+		    yearSuffix: '년'
+		  });
+	});
+</script>
 <title>여기여기 붙어라</title>
 </head>
 <body>
@@ -55,6 +73,12 @@
 							</div>
 							<div class="col-sm-offset-2 col-sm-10" style="width: 300px;">
 								<button type="button" class="btn btn-default" id="set-location">Set Location</button>
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="input" class="col-sm-2 control-label">Date</label>
+							<div class="col-sm-10">
+								<input type="text" class="form-control" id="datepicker1" name='studydate01' placeholder="모임 날짜 선택">
 							</div>
 						</div>
 						<div class="form-group">
