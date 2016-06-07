@@ -11,8 +11,6 @@
 	<context:component-scan base-package="meeting.team.security" />
 	<context:component-scan base-package="meeting.team.service" />
 	
-	
-
 	<sec:http auto-config='true' use-expressions="true">
 		<sec:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')" />
 		<sec:intercept-url pattern="/member/**" access="isAuthenticated()" />
