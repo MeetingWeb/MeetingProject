@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -26,13 +25,30 @@ input.title {
 </style>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
+
+	function insert() {
+		$.ajax({
+			url : "insert",
+			type : "post",
+			data : $("form[name=insert-form]").serialize(),
+			dataType : "json",
+			success : function(obj) {
+				console.log(obj);
+			},
+			complete : function(data) {
+			},
+			error : function(xhr, status, error) {
+				alert("글쓰기에 실패하였습니다.");
+			}
+		});
+	}
 </script>
 </head>
 <body>
 	<jsp:include page="../include/navi.jsp" />
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
-		<form>
+		<form enctype="multipart/form-data" name="insert-form">
 			<table>
 				<caption>글 쓰기</caption>
 				<tr>
@@ -50,7 +66,7 @@ input.title {
 			</table>
 			<div class="form-group">
 				<label for="inputfile">File input</label>
-				<input type="file" id="inputfile">
+				<input type="file" id="inputfile" name="file">
 			</div>
 			<button type="button" onclick="insert()">글쓰기</button>
 			<button type="button" onclick="javascript:location.href='list'">취소</button>

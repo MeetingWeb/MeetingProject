@@ -1,11 +1,11 @@
 package meeting.team.dao;
 
-import meeting.team.vo.FileVo;
+import meeting.team.vo.ReviewsVo;
 
 public interface ReviewsDao {
 
 	int fileOverLapCnt(String fileName);
 
-	int uploadFile(FileVo uploadedFile);
+	int insert(ReviewsVo uploadedFile);
 
 }
