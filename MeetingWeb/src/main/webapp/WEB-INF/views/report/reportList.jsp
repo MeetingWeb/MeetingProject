@@ -1,33 +1,42 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>»ç°Ç»ç°í °Ô½ÃÆÇ</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ì‚¬ê±´ì‚¬ê³  ê²Œì‹œíŒ</title>
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 
 <script type="text/javascript">
 	function writeForm() {
-		location.href = "./writeForm";
+		location.href = "./reportForm";
+	}
+	
+	function searchCheck() {
+		if(search.keyword.value == "") {
+			alert("ê²€ìƒ‰í•  ë‹¨ì–´ë¥¼ ì…ë ¥í•˜ì„¸ìš”.");
+			search.keyword.focus();
+			return;
+		}
+		search.submit();
 	}
 </script>
 
 </head>
 <body>
 	
-	<h1 align="center">»ç°Ç»ç°í °Ô½ÃÆÇ</h1>
+	<h1 align="center">ì‚¬ê±´ì‚¬ê³  ê²Œì‹œíŒ</h1>
 	
 	<table border="5" width="1125" align= "center">
 		<tr>
-			<th>±Û ¹øÈ£</th><th>Á¦¸ñ</th><th>¾ÆÀÌµğ</th><th>ÀÛ¼ºÀÏ</th>
+			<th>ê¸€ ë²ˆí˜¸</th><th>ì œëª©</th><th>ì•„ì´ë””</th><th>ì‘ì„±ì¼</th>
 		</tr>
 		
 		<c:forEach var="list" items="${listReport}">
 		<tr>
 			<td>${list.num}</td>
-			<td>${list.title}</td>
+			<td><a href="reportInfo?num=${list.num}">${list.title}</a></td>
 			<td>${list.id}</td>
 			<td>${list.cre_date}</td>
 		</tr>
@@ -37,7 +46,36 @@
 	<table align="center">
 		<tr>
 			<td>
-				<button type="button" onclick="writeForm()">»ç°Ç»ç°í µî·Ï</button>
+				<button type="button" onclick="writeForm()">ì‚¬ê±´ì‚¬ê³  ë“±ë¡</button>
+			</td>
+		</tr>
+		<tr>
+			<!-- í˜ì´ì§• -->
+			<c:forEach var="i" begin="${startPageNum}" end="${endPageNum}">
+				<c:if test="${pageNum == i}">
+					<span style="color:red">
+						<a href="reportList?pageNum=${i}${pms}">[${i}]</a>
+					</span>
+				</c:if>
+				<c:if test="${pageNum != i}">
+					<span>
+						<a href="reportList?pageNum=${i}${pms}">[${i}]</a>
+					</span>
+				</c:if>
+			</c:forEach>
+		</tr>
+		<tr>
+			<!-- ê²€ìƒ‰ -->
+			<td>
+				<form name="search" method="post">
+					<p align=right>
+						<select name="keyField">
+							<option value="title">ì œëª©</option>
+							<option value="id">ì‘ì„±ì</option>
+						</select>
+						<input type="text" name="keyword" size=20 maxlength=20 />
+						<button type="button" onclick="searchCheck()">ê²€ìƒ‰</button>
+				</form>
 			</td>
 		</tr>
 	</table>

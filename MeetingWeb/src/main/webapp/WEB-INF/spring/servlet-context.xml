@@ -42,8 +42,7 @@
 			<beans:bean class="meeting.team.interceptor.HandshakeInterceptor" />
 		</websocket:handshake-interceptors>
 	</websocket:handlers>
-
-
+	
 	<!-- <beans:bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl"> <beans:property name="host" value="smtp.gmail.com" /> <beans:property 
 		name="port" value="25" /> <beans:property name="username" value="junkim0312@gmail.com" /> <beans:property name="password" value="dmsxhsla03" /> <beans:property 
 		name="defaultEncoding" value="utf-8" /> <beans:property name="javaMailProperties"> <beans:props> <beans:prop key="mail.smtp.starttls.enable">true</beans:prop> 

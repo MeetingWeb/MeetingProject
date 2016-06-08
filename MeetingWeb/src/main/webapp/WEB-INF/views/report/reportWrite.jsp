@@ -1,42 +1,71 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>»ç°Ç»ç°í µî·Ï</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>ì‚¬ê±´ì‚¬ê³  ë“±ë¡</title>
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 
-<!-- nicEdit.js °æ·Î -->
-<script type="text/javascript" src="<c:url value='../nicEdit/nicEdit.js'/>"></script>
+<!-- ckEdit.js ê²½ë¡œ -->
+<script type="text/javascript" src='<c:url value="/resources/ckeditor/ckeditor.js"/>' ></script>
 
 <script>
-	//¿¡µğÅÍ È£Ãâ
-	bkLib.onDomLoaded(function() {
-		nicEditors.editors.push(new nicEditor().panelInstance(document
-				.getElementById('myNicEditor')));
+
+	//ckeditor setting
+	var ckeditor_config = {
+			resize_enabled : false, // ì—ë””í„° í¬ê¸°ë¥¼ ì¡°ì ˆí•˜ì§€ ì•ŠìŒ
+			enterMode : CKEDITOR.ENTER_BR , // ì—”í„°í‚¤ë¥¼ <br> ë¡œ ì ìš©í•¨.
+	     	shiftEnterMode : CKEDITOR.ENTER_P ,  // ì‰¬í”„íŠ¸ +  ì—”í„°ë¥¼ <p> ë¡œ ì ìš©í•¨.
+	     	toolbarCanCollapse : true , 
+	     	removePlugins : "elementspath", // DOM ì¶œë ¥í•˜ì§€ ì•ŠìŒ
+	     	filebrowserUploadUrl: './upload' // íŒŒì¼ ì—…ë¡œë“œë¥¼ ì²˜ë¦¬ í•  ê²½ë¡œ ì„¤ì •.
+	};
+	
+	var editor = null;
+	
+	$(function() {
+		// ckeditor ì ìš©
+        editor = CKEDITOR.replace("ckEditor" , ckeditor_config, {
+        	width:'100%',
+            height:'400px',
+        });
+		
+        CKEDITOR.on('dialogDefinition', function(ev){
+            var dialogName = ev.data.name;
+            var dialogDefinition = ev.data.definition;
+          
+            switch (dialogName) {
+                case 'image': //Image Properties dialog
+                    //dialogDefinition.removeContents('info');
+                    dialogDefinition.removeContents('Link');
+                    dialogDefinition.removeContents('advanced');
+                    break;
+            }
+        });
+		
 	});
 	
 	function saved() {
-		var contents = $(".nicEdit-main").html();
-		$("textarea[name=contents]").val(contents);
+		editor.updateElement();
 		
 		$.ajax({
-			url : "./write",
+			url : "./reportWrite",
 			type : "post",
 			data : $('form').serialize(),
-			success : function(data) {
-				if(data.code = 200) {
-					alert(data.msg);
-					location.href = data.url;
-				} else if(data.code == 201) {
-					alert(data.msg);
+			success : function(save) {
+				if(save.code = 200) {
+					alert(save.msg);
+					location.href = save.url;
+				} else if(save.code == 201) {
+					alert(save.msg);
+					location.href = save.url;
 				}
 			},
 			error : function(error) {
-				alert("½Ã½ºÅÛ ¿¡·¯!");
+				alert("ì‹œìŠ¤í…œ ì—ëŸ¬!");
 			}
 		}); // end of ajax({})
 	} // end of saved()
@@ -46,12 +75,12 @@
 <body>
 	
 	<div align="center">
-		<h1>»ç°Ç»ç°í µî·Ï</h1>
+		<h1>ì‚¬ê±´ì‚¬ê³  ë“±ë¡</h1>
 		
 		<form>
 			<table>
 				<tr>
-					<th>ÀÛ¼ºÀÚ</th>
+					<th>ì‘ì„±ì</th>
 					<td>
 						<input type="text" name="id" value="<sec:authentication property='name'/>" 
 							readonly="readonly" size="10" />
@@ -59,21 +88,22 @@
 				</tr>
 
 				<tr>
-					<th>Á¦¸ñ</th>
+					<th>ì œëª©</th>
 					<td><input type="text" name="title" size="80" /></td>
 				</tr>
 				
 				<tr>
-					<th>»ó¼¼³»¿ë</th>
+					<th>ìƒì„¸ë‚´ìš©</th>
 					<td height="50">
-						<textarea id="myNicEditor" name="contents" cols="100" rows="30"></textarea>
+						<textarea id="ckEditor" name="contents" cols="100" rows="30"></textarea>
 					</td>
 				</tr>
 
 			</table>
 			
-			<button type="button" onclick="saved()">µî·Ï</button>
-			<input type="reset"	value="´Ù½ÃÀÛ¼º"> <input type="button" value="¸ñ·Ï" onclick="location='./list'">
+			<button type="button" onclick="saved()">ë“±ë¡</button>
+			<input type="reset"	value="ë‹¤ì‹œì‘ì„±"> <input type="button" 
+				value="ëª©ë¡" onclick="location='./reportList'">
 		</form>
 		
 	</div>

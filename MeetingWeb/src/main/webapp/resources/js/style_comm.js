@@ -1,7 +1,7 @@
 $(function() {
 	var c_width = document.getElementById("menu").getBoundingClientRect().width;
 	var body_width = document.body.scrollWidth - 17;
-	console.log(body_width);
+
 	$("#contents").css("height", window.innerHeight).css("width", body_width - c_width);
 	$("footer").css({
 		"width" : body_width - c_width,

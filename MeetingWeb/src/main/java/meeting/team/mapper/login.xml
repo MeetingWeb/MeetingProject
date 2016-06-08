@@ -11,7 +11,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into users(id,pw,name,email,power) values(#{id},#{pw},#{name},#{email},#{power})
 	</insert>
 	
-	<insert id="joinhabby">
-		insert into users(id,interests) values(#{id},#{interests})
+	<insert id="joinhabby" parameterType="hashmap">
+		insert into interests(id,interest) values(#{a},#{b})
 	</insert>
 </mapper>
