@@ -169,9 +169,11 @@
 }
 
 #rough-map-in-img {
-	visibility: inherit;
+	//display: none;
+	visibility: hidden;
 	width: 640px;
 	height: 640px;
+	position: absolute;
 }
 
 #rough-map-in {
