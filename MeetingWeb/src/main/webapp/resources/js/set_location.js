@@ -202,20 +202,23 @@ function setMyLocation() {
 
 	}
 }
-var lan = null;
+var lan = "37.49736948554443,127.02452659606933";
 var width = $("#rough-map").width();
 var height = $("#rough-map").height();
-var path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom=17&size="+width+"x"+height+"&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
+var path = null;
 
 function roughMap(zoom){
 	lan = $("input[name=area]").val();
 	$("#rough-map").css("visibility", "visible");
 	$("#rough-map-in").css({"width":width,"height":height});
-	
+	path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom="+zoom+"&size="+width+"x"+height+"&scale=2&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
 	if(lan != "") {
 		path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C"+lan+"&zoom="+zoom+"&size="+width+"x"+height+"&scale=2&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
 	}
+	
+	var img = document.getElementById("rough-map-in-img");
 	$("#rough-map img").attr("src", path);
+	$("#rough-map canvas").attr("width", width).attr("height", height);
 	drawCanvas();
 }
 
@@ -223,30 +226,62 @@ $("#zoom-num").on("change",function(){
 	var zoom = $(this).val();
 	$("#rough-map-in label").text(zoom);
 	roughMap(zoom);
-	drawCanvas();
 });
 
 $("#zoom-min").on("change",function(){
 	var zoom = $(this).val();
 	$("#rough-map-in label").text(zoom);
 	roughMap(zoom);
-	drawCanvas();
+	
 });
 
+var canvas = null;
+var context = null;
+var imageObj = null;
+var colorCode = "#000";
+var p1, p2, ep, sp;
+
 function drawCanvas(){
-	var canvas = document.getElementById('map-canvas');
-    var context = canvas.getContext('2d');
-    var imageObj = new Image();
+	/*canvas = document.getElementById('map-canvas');
+    context = canvas.getContext('2d');
+    
+    context.clearRect(0, 0, canvas.width, canvas.height);*/
+	
+    canvas = document.getElementById('map-canvas');
+    context = canvas.getContext('2d');
+    
+    imageObj = new Image();
     var img = document.getElementById("rough-map-in-img");
-   /* console.log(img);
-    context.fillStyle = '#000';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(img, 0, 0);*/
     imageObj.onload = function() {
-      context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+    	context.fillStyle = '#fff';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    	context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
     };
     
     imageObj.src = $("#rough-map img").attr("src");
+    
+    canvas.addEventListener('mousedown', onMouseDown);
+	canvas.addEventListener('mouseup', onMouseUp);
+}
+
+function Pointer(x, y) {
+	this.x = x;
+	this.y = y;
+}
+
+function onMouseDown(e) {
+	p1 = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+	sp = p1;
+}
+
+function onMouseUp(e) {
+	ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+	context.beginPath();
+	context.moveTo(sp.x, sp.y);
+	context.lineTo(ep.x, ep.y);
+	context.lineWidth = 5;
+	context.strokeStyle = colorCode;
+	context.stroke();
 }
 
 /*$("#rough-map").on("click", function(){

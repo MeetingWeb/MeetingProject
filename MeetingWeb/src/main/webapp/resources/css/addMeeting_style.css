@@ -169,18 +169,16 @@
 }
 
 #rough-map-in-img {
-	//display: none;
+	display: none;
 	visibility: hidden;
-	width: 640px;
-	height: 640px;
 	position: absolute;
 }
 
 #rough-map-in {
-	margin: 0px auto;
+	//margin: 0px auto;
 }
 
-#map-canvas {
+/* #map-canvas {
 	width: 640px;
 	height: 640px;
-}
+} */
