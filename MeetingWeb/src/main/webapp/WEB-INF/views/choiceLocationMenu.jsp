@@ -35,9 +35,9 @@ var user_id = '<c:out value="${sessionScope.id}"/>';
 	<jsp:include page="include/navi.jsp" />
 	<jsp:include page="include/header.jsp" />
 	<section id="contents"><br>
-		<a herf="myLocation">내위치 지정하기</a><br>
-		<a href="myLocation">그냥 시작하기</a>		
-		
+	
+		<a href="myLocation">내 위치 다시 지정하기</a><br>	
+		<a href="main">예전 위치에서 시작하기</a>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
 		<jsp:include page="include/chat_view.jsp" />
