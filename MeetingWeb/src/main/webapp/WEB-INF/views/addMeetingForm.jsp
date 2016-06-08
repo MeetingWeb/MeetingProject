@@ -10,6 +10,7 @@
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <%-- <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script> --%>
 
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
@@ -26,19 +27,37 @@
 <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC9kEdjl_v9QToMmfVpM0U_I0BkBoNu7Hs&libraries=places"></script>
 <script>
 	$(function() {
-		  $("#datepicker1, #datepicker2").datepicker({
-		    dateFormat: 'yy-mm-dd',
-		    prevText: '이전 달',
-		    nextText: '다음 달',
-		    monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		    monthNamesShort: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'],
-		    dayNames: ['일','월','화','수','목','금','토'],
-		    dayNamesShort: ['일','월','화','수','목','금','토'],
-		    dayNamesMin: ['일','월','화','수','목','금','토'],
-		    showMonthAfterYear: true,
-		    yearSuffix: '년'
-		  });
+		$("#datepicker1, #datepicker2").datepicker({
+			dateFormat : 'yy-mm-dd',
+			prevText : '이전 달',
+			nextText : '다음 달',
+			monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
+			monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월' ],
+			dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
+			dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
+			dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+			showMonthAfterYear : true,
+			yearSuffix : '년'
+		});
 	});
+	function insert() {
+		$.ajax({
+			url : "/NowMeetingWeb/meeting/insert",
+			type : "post",
+			data : $("#add-meeting-form").serialize(),
+			dataType : "json",
+			success : function(obj) {
+				if (obj.ok) {
+					alert("모임 만들기 성공");
+				} else {
+					alert("모임 만들기 실패");
+				}
+			},
+			error : function(xhr, error, status) {
+
+			}
+		});
+	}
 </script>
 <title>여기여기 붙어라</title>
 </head>
@@ -51,39 +70,65 @@
 		<div id="meeting-form-lid" class="custom-model">
 			<div class="custom-modal-dialog">
 				<div class="custom-modal-content">
-					<h1 class="center-block meeting-title">CREATE MEETING</h1>
+					<h1 class="center-block" id="meeting-form-title">CREATE MEETING</h1>
 					<form class="form-horizontal" id="add-meeting-form">
 						<div class="form-group">
-							<label for="inputEmail3" class="col-sm-2 control-label" id="title">Title</label>
+							<label class="col-sm-2 control-label" id="title">Title</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" id="meeting-title" placeholder="제목" name="title">
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="inputPassword3" class="col-sm-2 control-label">Contents</label>
+							<label class="col-sm-2 control-label">Contents</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" id="meeting-contents" rows="10" placeholder="내용"></textarea>
+								<textarea class="form-control" id="meeting-contents" rows="10" placeholder="내용" name="contents"></textarea>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="inputPassword3" class="col-sm-2 control-label">Location</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="location">
-								<input type="hidden" name="address">
+							<label class="col-sm-2 control-label">Division</label>
+							<div class="col-sm-3">
+								<select class="form-control" name="meetingType">
+									<option>농구</option>
+									<option>야구</option>
+									<option>축구</option>
+									<option>족구</option>
+									<option>배드민턴</option>
+									<option>보드타기</option>
+									<option>자전거타기</option>
+								</select>
 							</div>
-							<div class="col-sm-offset-2 col-sm-10" style="width: 300px;">
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Location</label>
+							<div class="col-sm-3">
+								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="locaion">
+								<input type="hidden" name="area">
+							</div>
+							<div class="col-sm-2" style="width: 300px;">
 								<button type="button" class="btn btn-default" id="set-location">Set Location</button>
+								<button type="button" class="btn btn-default" id="set-location" onclick="roughMap(17)">Create Map</button>
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="input" class="col-sm-2 control-label">Date</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" id="datepicker1" name='studydate01' placeholder="모임 날짜 선택">
+							<label class="col-sm-2 control-label">Date</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="datepicker1" name='meetingDay' placeholder="모임 날짜 선택">
 							</div>
 						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">StartTime</label>
+							<div class="col-sm-2">
+								<input type="time" class="form-control" name="s_time">
+							</div>
+							<label class="col-sm-2 control-label">EndTime</label>
+							<div class="col-sm-2">
+								<input type="time" class="form-control" name="e_time">
+							</div>
+						</div>
+						<div class="fomr-group"></div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="submit" class="btn btn-default">CREATE MEETING</button>
+								<button type="button" class="btn btn-default" onclick="insert()">CREATE MEETING</button>
 							</div>
 						</div>
 					</form>
@@ -101,6 +146,15 @@
 				<button type="button" onclick="adrSave()">저장</button>
 			</form>
 			<div id="location-map" style="height: 100%; width: 100%;"></div>
+		</div>
+		<div id="rough-map">
+			<div id="rough-map-in">
+				<img src="" id="rough-map-in-img">
+				<canvas id="map-canvas"></canvas>
+				<label for="zoom-min" style="color: #fff;">Price:</label>
+				<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="17" style="width: 200px;">
+				<input type="number" value="17" id="zoom-num" max="19" min="9">
+			</div>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />

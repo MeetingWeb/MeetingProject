@@ -3,7 +3,7 @@
 	<div id="menu-in">
 		<nav style="position: relative; z-index: 50; left: 0px; width: 64px;">
 			<ul>
-				<li>
+				<li id="logo">
 					<div class="glyphicon glyphicon-record menu-btn-icon"></div>
 				</li>
 				<li id="menu-btn">
@@ -29,6 +29,11 @@
 					<div class="menu-btn-name">
 						<a href="/NowMeetingWeb/reviews/list">REVIEWS</a>
 					</div>
+				</li>
+				<li>
+					<div class="glyphicon glyphicon-phone-alt menu-btn-icon"></div>
+					<div class="menu-btn-name"><a href="/NowMeetingWeb/Inquiry/list">INQUIRY</a></div>
+					<div class="menu-btn-name"><a href="#">USE</a></div>
 				</li>
 			</ul>
 		</nav>

@@ -48,6 +48,7 @@
 		<interceptor>
 			<mapping path="/reviews/**" />
 			<mapping path="/notice/**" />
+			<mapping path="/web/addForm"/>
 			<beans:bean class="meeting.team.interceptor.LoginInterceptor" />
 		</interceptor>
 	</interceptors>
