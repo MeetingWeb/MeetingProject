@@ -19,6 +19,7 @@
 		<sec:form-login login-page="/mainPage" login-processing-url="/user/login" username-parameter="id" password-parameter="pw"
 			default-target-url="/web/loginSuccess" authentication-failure-url="/web/main?error=true" />
 		<sec:logout logout-success-url="/web/main" />
+
 		<sec:csrf disabled="true" />
 		<sec:session-management>
 			<sec:concurrency-control max-sessions="1" expired-url="/login_duplicate"/>
@@ -27,9 +28,9 @@
 
 	<bean id="dataSource" class="oracle.jdbc.pool.OracleDataSource">
 		<property name="dataSourceName" value="ds" />
-		<property name="URL" value="jdbc:oracle:thin:@localhost:1521:xe" />
-		<property name="user" value="scott" />
-		<property name="password" value="TIGER" />
+		<property name="URL" value="jdbc:oracle:thin:@192.168.8.52:1521:orcl" />
+		<property name="user" value="SECOND" />
+		<property name="password" value="SECOND" />
 	</bean>
 	
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
