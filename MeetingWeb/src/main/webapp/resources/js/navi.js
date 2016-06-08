@@ -1,7 +1,7 @@
 var body_height = $(window).height();
 $(function() {
 	/////////메뉴 네비////////////////////////////
-	$("#menu ul li").on("click", function(){
+	$("#menu ul li:not(#menu-btn, #logo)").on("click", function(){
 		var path = $(this).find("a").attr("href");
 		location.href= path;
 	});

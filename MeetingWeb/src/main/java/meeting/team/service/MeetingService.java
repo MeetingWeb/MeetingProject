@@ -2,19 +2,19 @@ package meeting.team.service;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.xml.crypto.Data;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonAnyFormatVisitor;
 
 import meeting.team.dao.MeetingDao;
 import meeting.team.vo.MeetingVo;
@@ -37,17 +37,16 @@ public class MeetingService {
 		String localHostIpAddress = InetAddress.getLocalHost().getHostAddress();
 		return null;
 	}
-	
-	public String getAllMeeting(){
-		meeting_dao=sql_temp.getMapper(MeetingDao.class);
-		List<MeetingVo> list=meeting_dao.getAllMeeting();
-		JSONArray jsonArr=new JSONArray();
-		for(int i=0; i<list.size(); i++)
-		{
-			JSONObject jsonObj=new JSONObject();
-			jsonObj.put("loc",list.get(i).getArea());
-			//가져와야 하는것 추가
-			//---------------------
+
+	public String getAllMeeting() {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		List<MeetingVo> list = meeting_dao.getAllMeeting();
+		JSONArray jsonArr = new JSONArray();
+		for (int i = 0; i < list.size(); i++) {
+			JSONObject jsonObj = new JSONObject();
+			jsonObj.put("loc", list.get(i).getArea());
+			// 가져와야 하는것 추가
+			// ---------------------
 			jsonObj.put("num", list.get(i).getNum());
 			jsonObj.put("contents",list.get(i).getContents());
 			jsonObj.put("endTime",list.get(i).getEnd_time().toString());
@@ -58,7 +57,7 @@ public class MeetingService {
 			//---------------------
 			jsonArr.add(jsonObj);
 		}
-		return jsonArr.toJSONString();	
+		return jsonArr.toJSONString();
 	}
 	
 	public String getMeeting(int num){
@@ -73,9 +72,36 @@ public class MeetingService {
 		jsonObj.put("field",meeting.getField());
 		jsonObj.put("startTime",meeting.getStart_time().toString());			
 		jsonObj.put("title",meeting.getTitle());
+
 		return jsonObj.toJSONString();
+
+	}
+
+	public String insert(MeetingVo meeting, HttpServletRequest request) throws ParseException {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		JSONObject json = new JSONObject();
+
+		String id = (String) request.getSession().getAttribute("id");
+		String sTime = request.getParameter("s_time");
+		String eTime = request.getParameter("e_time");
+		String meetingDay = request.getParameter("meetingDay");
+		String sDate = meetingDay + " " + sTime + ":00";
+		String eDate = meetingDay + " " + eTime + ":00";
 		
-		
+		java.sql.Timestamp s_stamp = java.sql.Timestamp.valueOf(sDate);
+		java.sql.Timestamp e_stamp = java.sql.Timestamp.valueOf(eDate);
+		meeting.setStart_time(s_stamp);
+		meeting.setEnd_time(e_stamp);
+		meeting.setMaster(id);
+		meeting.setDivision("now");
+		int ok = meeting_dao.insert(meeting);
+
+		if (ok > 0) {
+			json.put("ok", true);
+		} else {
+			json.put("ok", false);
+		}
+		return json.toJSONString();
 	}
 	
 	public String getRecommend(List<String> interests){

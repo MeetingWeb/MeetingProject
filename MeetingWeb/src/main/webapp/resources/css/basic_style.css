@@ -135,9 +135,10 @@ ul {
 @media (max-width: 991px) {
 #contents {
 		padding-left: 0px;
-		padding-top: 64px;
+		padding-top: 0px;
+		overflow: visible;
+		height: auto;
 	}
->>>>>>> branch 'master' of https://github.com/MeetingWeb/MeetingProject.git
 }
 
 footer {
@@ -223,11 +224,21 @@ footer {
 @media (max-width: 991px) {
 #headernavi {
 		padding-left: 0px;
-		position: fixed;
+		//position: fixed;
 		background: #fff;
 		z-index: 200;
 	}
 }
+
+/* @media (max-width: 768px) {
+	#headernavi {
+		padding-left: 0px;
+		position: fixed;
+		background: #fff;
+		z-index: 200;
+		width: 100%;
+	}
+} */
 
 #title_name {
 	width: 320px;
