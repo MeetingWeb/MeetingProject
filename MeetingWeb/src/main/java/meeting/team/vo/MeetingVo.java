@@ -13,7 +13,15 @@ public class MeetingVo {
 	}
 
 	private String title;
-	private String meetingType;
+	private String field;
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
+
 	private String contents;
 	private String master;
 	private String area;
@@ -30,13 +38,7 @@ public class MeetingVo {
 		this.title = title;
 	}
 
-	public String getMeetingType() {
-		return meetingType;
-	}
 
-	public void setMeetingType(String meetingType) {
-		this.meetingType = meetingType;
-	}
 
 	public String getContents() {
 		return contents;
