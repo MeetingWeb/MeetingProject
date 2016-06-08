@@ -73,11 +73,11 @@ function init() {
 		var place = autocomplete.getPlace();
 		map.panTo(place.geometry.location);
 		markers[0] = new google.maps.Marker({
-			position: place.geometry.location,
-			map: map
+			position : place.geometry.location,
+			map : map
 		});
 		iw = new google.maps.InfoWindow({
-			content: getIWContent(place)
+			content : getIWContent(place)
 		});
 		iw.open(map, markers[0]);
 	}
@@ -135,16 +135,16 @@ function init() {
 			}
 		});
 	}
-	window.addEventListener('load', function() {
-		window.addEventListener('keydown', function(evt) {
-			evt.returnValue = false;
-			if (evt.keyCode == 13) {
-				searchMap(document.getElementById('address').value);
-
-			}
-		});
-	});
 }
+window.addEventListener('load', function() {
+	window.addEventListener('keydown', function(evt) {
+		//evt.returnValue = false;
+		if (evt.keyCode == 13) {
+			searchMap(document.getElementById('address').value);
+
+		}
+	});
+});
 function searchMap(place) {
 	var geocoder = new google.maps.Geocoder();
 	geocoder.geocode({
@@ -163,7 +163,7 @@ function searchMap(place) {
 			}
 
 			iw = new google.maps.InfoWindow({
-				content: getIWContent(place)
+				content : getIWContent(place)
 			})
 			map.fitBounds(bounds);
 			map.setZoom(15);
@@ -188,18 +188,67 @@ function searchMap(place) {
 function adrSave() {
 	if (confirm("모임장소로 설정하기겠습니까?")) {
 		$("#meeting-location").val(ADR);
-		$("input[name=address]").val(LOC.toString().replace(/[()]/gi, ''));
+		$("input[name=area]").val(LOC.toString().replace(/[()]/gi, ''));
 		$("#view-map").css("visibility", "hidden");
 	}
 }
 
-function setMyLocation(){
+function setMyLocation() {
 	if (confirm("내 위치로 지정 하시겠습니까?")) {
-		var lat=LOC.lat();
-		var lng=LOC.lng();
-		var latlng='('+lat+','+lng+')';
-		location.href="changeMyLOC?latlng="+latlng;
-		
+		var lat = LOC.lat();
+		var lng = LOC.lng();
+		var latlng = '(' + lat + ',' + lng + ')';
+		location.href = "changeMyLOC?latlng=" + latlng;
+
 	}
 }
+var lan = $("input[name=area]").val();
+var width = $("#rough-map").width();
+var height = $("#rough-map").height();
+var path = null;
+
+function roughMap(zoom){
+	$("#rough-map").css("visibility", "visible");
+	$("#rough-map-in").css({"width":width,"height":height});
+	if(lan != '')
+		path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C"+lan+"&zoom="+zoom+"&size="+width+"x"+height+"&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
+	else
+		path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom="+zoom+"&size="+width+"x"+height+"&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
+	
+	$("#rough-map img").attr("src", path);
+	drawCanvas();
+}
+
+$("#zoom-num").on("change",function(){
+	var zoom = $(this).val();
+	$("#rough-map-in label").text(zoom);
+	roughMap(zoom);
+	drawCanvas();
+});
+
+$("#zoom-min").on("change",function(){
+	var zoom = $(this).val();
+	$("#rough-map-in label").text(zoom);
+	roughMap(zoom);
+	drawCanvas();
+});
+
+function drawCanvas(){
+	var canvas = document.getElementById('map-canvas');
+    var context = canvas.getContext('2d');
+    var imageObj = new Image();
+    var img = document.getElementById("rough-map-in-img");
+    context.fillStyle = '#000';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(img, 10, 10);
+    /*imageObj.onload = function() {
+      context.drawImage(imageObj, 0, 0);
+    };
+    
+    imageObj.src = $("#rough-map img").attr("src");*/
+}
+
+/*$("#rough-map").on("click", function(){
+	$("#rough-map").css("visibility", "hidden");
+});*/
 google.maps.event.addDomListener(window, 'load', init);
