@@ -225,9 +225,7 @@ $(function(){
 	<div class="recommend-list">		
 	</div>
 	<span id="recommend-more"><a href='#none' onClick='getRecommend(); return false;' >새로고침</a></span>
-</div>  
-  
-      	
+</div>        	
 		<div class="chat-btn">
 			채팅방참여
 			<input type="hidden" value="JUN">
