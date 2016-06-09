@@ -19,9 +19,9 @@ import meeting.team.vo.MeetingVo;
 public class MeetingController {
 	@Autowired
 	MeetingService meeting_svc;
-	
+
 	@RequestMapping(value = "insert", method = RequestMethod.POST)
-	public @ResponseBody String insert(MeetingVo meeting, HttpServletRequest request){
+	public @ResponseBody String insert(MeetingVo meeting, HttpServletRequest request) {
 		try {
 			return meeting_svc.insert(meeting, request);
 		} catch (ParseException e) {
@@ -29,10 +29,10 @@ public class MeetingController {
 		}
 		return null;
 	}
-	
-	@RequestMapping(value="mapSaveLocal", method = RequestMethod.POST)
+
+	@RequestMapping(value = "mapSaveLocal", method = RequestMethod.POST)
 	public @ResponseBody String mapSaveLocal(HttpServletRequest request) {
 		return meeting_svc.mapSaveLocal(request);
 	}
-	
+
 }
