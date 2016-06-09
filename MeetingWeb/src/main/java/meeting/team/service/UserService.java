@@ -150,6 +150,15 @@ public class UserService implements UserDetailsService {
 		return jsonObj.toJSONString();
 	}
 	
+	public List<String> getInterest(HttpServletRequest request)
+	{
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		String id=(String)request.getSession().getAttribute("id");
+		List<String> interest=user_dao.getInterest(id);
+		return interest;
+		
+	}
+	
 
 
 }

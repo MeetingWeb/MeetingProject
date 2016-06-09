@@ -101,9 +101,6 @@ $(function(){
 		});
 	}
  
- 
- 
-
 	function joinsave() {
 		var data = $('#joinform').serialize();
 		$.ajax({
@@ -125,8 +122,46 @@ $(function(){
 		});
 	}
 	
+	function getRecommend(){
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'getRecommend',			
+			success : function(data) {
+				$('div.recommend-list').children().remove();
+				var html="";
+				for(var i=0; i<data.length; i++)
+				{					
+					var loc=data[i].loc;					
+					var arr=loc.split(',');				
+					var meetinglat=Number(arr[0]);				
+					var meetinglng=Number(arr[1]);					
+					var distance=calcDistance(mylat,mylng,meetinglat,meetinglng);
+				
+					if(distance<40){							
+						if(((i!=0)&&(data[i-1].field!=data[i].field))||(i==0)){
+							html+="<table><caption>"+data[i].field+"</caption>";							
+						}
+						html+="<tr><td> "+data[i].title+"</td><td> "+data[i].master+"</td><td> 거리"+distance+"km</td><td> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere("+meetinglat+","+meetinglng+")'>모임 보기</button></td></tr>";
+						if((i==(data.length-1))||(data[i].field!=data[i+1].field)){
+							html+="</table>";				
+							$('div.recommend-list').append(html);
+							html="";
+						}						
+					}					
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+		
+		
 	
-	
+	}	
 </script>
 </head>
 <body>
@@ -182,6 +217,14 @@ $(function(){
    </div><!-- /.modal-dialog -->
    
 </div><!-- /.modal -->	      
+  
+<div class="recommend">	
+	<span id="recommend-title">추천목록</span><br>
+	<div class="recommend-list">		
+	</div>
+	<span id="recommend-more"><a href='#none' onClick='getRecommend(); return false;' >새로고침</a></span>
+</div>  
+  
       	
 		<div class="chat-btn">
 			채팅방참여

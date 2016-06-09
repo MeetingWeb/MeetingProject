@@ -51,13 +51,13 @@ public class MeetingService {
 			// 가져와야 하는것 추가
 			// ---------------------
 			jsonObj.put("num", list.get(i).getNum());
-			jsonObj.put("contents", list.get(i).getContents());
-			jsonObj.put("endTime", list.get(i).getEnd_time().toString());
-			jsonObj.put("master", list.get(i).getMaster());
-			jsonObj.put("type", list.get(i).getMeetingType());
-			jsonObj.put("startTime", list.get(i).getStart_time().toString());
-			jsonObj.put("title", list.get(i).getTitle());
-			// ---------------------
+			jsonObj.put("contents",list.get(i).getContents());
+			jsonObj.put("endTime",list.get(i).getEnd_time().toString());
+			jsonObj.put("master",list.get(i).getMaster());
+			jsonObj.put("field",list.get(i).getField());
+			jsonObj.put("startTime",list.get(i).getStart_time().toString());			
+			jsonObj.put("title",list.get(i).getTitle());	
+			//---------------------
 			jsonArr.add(jsonObj);
 		}
 		return jsonArr.toJSONString();
@@ -73,9 +73,10 @@ public class MeetingService {
 		jsonObj.put("contents", meeting.getContents());
 		jsonObj.put("endTime", meeting.getEnd_time().toString());
 		jsonObj.put("master", meeting.getMaster());
-		jsonObj.put("type", meeting.getMeetingType());
+		jsonObj.put("type", meeting.getField());
 		jsonObj.put("startTime", meeting.getStart_time().toString());
 		jsonObj.put("title", meeting.getTitle());
+
 		return jsonObj.toJSONString();
 
 	}
@@ -107,6 +108,30 @@ public class MeetingService {
 			json.put("ok", false);
 		}
 		return json.toJSONString();
+	}
+	
+	public String getRecommend(List<String> interests){
+		meeting_dao=sql_temp.getMapper(MeetingDao.class);
+		JSONArray jsonArr=new JSONArray();		
+		for(int i=0 ; i<interests.size(); i++)
+		{
+			List<MeetingVo> meetings=meeting_dao.getRecommend(interests.get(i));
+			for(int j=0; j<meetings.size(); j++)
+			{
+				JSONObject jsonObj=new JSONObject();
+				jsonObj.put("loc",meetings.get(j).getArea());
+				jsonObj.put("num",meetings.get(j).getNum());
+				jsonObj.put("contents",meetings.get(j).getContents());
+				jsonObj.put("endTime",meetings.get(j).getEnd_time().toString());
+				jsonObj.put("master",meetings.get(j).getMaster());			
+				jsonObj.put("startTime",meetings.get(j).getStart_time().toString());			
+				jsonObj.put("title",meetings.get(j).getTitle());
+				jsonObj.put("field",meetings.get(j).getField());
+				jsonArr.add(jsonObj);	
+			}
+		
+		}
+		return jsonArr.toJSONString();		
 	}
 
 	@SuppressWarnings("unchecked")

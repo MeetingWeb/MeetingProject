@@ -431,3 +431,25 @@ footer {
 #login-btn:hover {
 	background-color: #2E827E;
 }
+
+.recommend {
+	background-color: rgba(255, 255, 255, 0.85);
+	z-index: 50;
+	width: 378px;
+	height: 30%;
+	position: absolute;
+	top: 64px;
+	right: 0px;
+	overflow-y:scroll;
+	display:none; 	
+}
+#recommend-title{
+	color: gray;	
+	font-size: 17px;
+	
+}
+#recommend-more{
+	color: gray;	
+	font-size: 14px;
+	
+}
