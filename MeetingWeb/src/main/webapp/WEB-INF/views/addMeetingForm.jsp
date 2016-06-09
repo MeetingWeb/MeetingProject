@@ -10,7 +10,6 @@
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
-<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
 <%-- <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script> --%>
 
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
@@ -156,12 +155,12 @@
 		</div>
 		<div id="rough-map">
 			<div id="rough-map-in">
-				<img src="" id="rough-map-in-img">
-				<canvas id="map-canvas" width="640" height="640"></canvas>
-				<label for="zoom-min" style="color: #fff;">Price:</label>
 				<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="17" style="width: 200px;">
 				<input type="number" value="17" id="zoom-num" max="19" min="9">
 				<button id="rough-map-save-btn" type="button" onclick="roughMapSave()">Save</button>
+				<img src="" id="rough-map-in-img">
+				<canvas id="map-canvas" width="640" height="640"></canvas>
+				<label for="zoom-min" style="color: #fff;">ZOOM:</label>
 			</div>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />

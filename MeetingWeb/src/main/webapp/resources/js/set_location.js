@@ -243,28 +243,6 @@ var colorCode = "#000";
 var p1, p2, ep, sp;
 
 function drawCanvas(){
-	/*canvas = document.getElementById('map-canvas');
-    context = canvas.getContext('2d');
-    
-    context.clearRect(0, 0, canvas.width, canvas.height);*/
-	
-	/*$.ajax({
-		url : "/NowMeetingWeb/meeting/mapSaveLocal",
-		type : "post",
-		data : {path : path},
-		dataType : "json",
-		success : function(obj){
-			console.log(obj.ok);
-			if(obj.ok) {
-				path = obj.filePath;
-				console.log(path);
-			}
-		},
-		error : function(error, xhr, status) {
-			alert("error");
-		}
-	});*/
-	console.log(path);
 	canvas = document.getElementById('map-canvas');
     context = canvas.getContext('2d');
     
@@ -288,30 +266,6 @@ function roughMapSave(){
 	$("#rough-map-img").css("visibility", "visible");
 	$("#rough-map-img img").attr("src", img_data);
 	$("#rough-map-data").val(img_data);
-	//window.open(img_str, 'snapshot', 'width=300, height=300');
-	//var form = new FormData(document.getElementById('insertForm'));
-	/*$.ajax({
-		url : "/NowMeetingWeb/meeting/roughMapSave",
-		type : "post",
-		data : $("#add-meeting-form").serialize(),
-		processData: false,
-        contentType: false,
-		dataType : "json",
-		success : function(obj) {
-			var json = JSON.parse(obj);
-			if(json.ok) {
-				alert("성공");
-				//location.href="selectOne?num=0";
-			} else {
-				alert("실패");
-			}
-		},
-		complete : function(data) {
-		},
-		error : function(xhr, status, error) {
-			alert("글쓰기에 실패하였습니다.");
-		}
-	});*/
 }
 
 function Pointer(x, y) {

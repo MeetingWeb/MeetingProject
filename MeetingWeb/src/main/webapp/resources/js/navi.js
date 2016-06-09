@@ -1,18 +1,17 @@
 var body_height = $(window).height();
 $(function() {
-	/////////메뉴 네비////////////////////////////
-	$("#menu ul li:not(#menu-btn, #logo)").on("click", function(){
+	// ///////메뉴 네비////////////////////////////
+	$("#menu ul li:not(#menu-btn, #logo)").on("click", function() {
 		var path = $(this).find("a").attr("href");
-		location.href= path;
+		location.href = path;
 	});
-	
-	
+
 	var link = document.location.href;
 	var body_width = $(window).width();
 
 	$("#map").css("height", body_height - 64);
 	$("#login-form, #joinform").css("height", body_height - 64);
-
+	$("#mobile-login-form").css("height", body_height);
 	// ///////////로그인 회원가입////////////////////////////////////////////////
 	var flip = 0;
 	var flip2 = 0;
@@ -37,17 +36,17 @@ $(function() {
 	$("#logoutbtn").on("click", function() {
 		location.href = "../logout";
 	});
-	//////////추천/////////////////////
-	$("#recommendbtn").on("click",function(){
-		
-		if($("div.recommend").css('display')=='none'){	
+	// ////////추천/////////////////////
+	$("#recommendbtn").on("click", function() {
+
+		if ($("div.recommend").css('display') == 'none') {
 			getRecommend();
-			$("div.recommend").css('display','block');
-		}else if($("div.recommend").css('display')=='block'){
-			$("div.recommend").css('display','none');
-		};
-				
-	
+			$("div.recommend").css('display', 'block');
+		} else if ($("div.recommend").css('display') == 'block') {
+			$("div.recommend").css('display', 'none');
+		}
+		;
+
 	});
 	// ///////메뉴///////////////////////
 	var bool = false;
@@ -71,25 +70,57 @@ $(function() {
 	// $("#meeting-form-background").css("width", $("#contents").width());
 	var add_form_left = $("#contents").width() - $("#meeting-form-lid").width() + 140;
 	var add_form_top = $("#contents").height() - $("#meeting-form-lid").height() + 100;
-	//$("#meeting-form-lid").css("top", "120px");
-	$//("#meeting-form-lid").css("margin-left", -$("#meeting-form-lid").width() / 2 + 32);
+	// $("#meeting-form-lid").css("top", "120px");
+	$// ("#meeting-form-lid").css("margin-left",
+		// -$("#meeting-form-lid").width() / 2 + 32);
 	$("#meeting-form-background, #meeting-form-map").css("height", $(window).height() - 64);
 
 	var visibility = false;
-	$("#set-location").on("click", function() {
-		$("#view-map").css("visibility", "visible");
-	});
+	
 
 	$("#view-map #close").on("click", function() {
 		$("#view-map").css("visibility", "hidden");
 	});
-	
-	$("#view-map").css({"width":$(window).width() - 64, "height":$(window).height() -64});
-	
-	//////////////review js////////////////////////
-	$(".img-box").on("click",function(){
+
+	// ////////////review js////////////////////////
+	$(".img-box").on("click", function() {
 		console.log($(this).attr("data-num"));
-		location.href="selectOne?num=" + $(this).attr("data-num");
+		location.href = "selectOne?num=" + $(this).attr("data-num");
 	});
-	
+
+	// 모바일 자바스크립트///////////////////////////////////
+	var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
+	for ( var txt in mobileArr) {
+		if (navigator.userAgent.match(mobileArr[txt]) != null) {
+			$("#m-menu-btn").on("click", function() {
+				$("#m-menu").css("display", "block");
+			});
+			
+			$("#headernavi").css("width", document.body.clientWidth);
+			
+			$("#view-map").css({
+				"width" : document.body.clientWidth,
+				"height" : document.body.clientHeight
+			});
+			
+			$("#set-location").on("click", function() {
+				$("#view-map").css("visibility", "visible");
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+			});
+			
+			
+			break;
+		} else {
+			$("#view-map").css({
+				"width" : $(window).width() - 64,
+				"height" : $(window).height() - 64
+			});
+			
+			$("#set-location").on("click", function() {
+				$("#view-map").css("visibility", "visible");
+			});
+			break;
+		}
+	}
 });

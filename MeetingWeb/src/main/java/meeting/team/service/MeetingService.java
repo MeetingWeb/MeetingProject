@@ -156,7 +156,7 @@ public class MeetingService {
 	}
 
 	public String roughMapSave(HttpServletRequest request) {
-		String pdfPath = request.getSession().getServletContext().getRealPath("/resources/images/roughMap/");
+		String pdfPath = request.getSession().getServletContext().getRealPath("/resources/images/");
 		String fileName = (String) request.getSession().getAttribute("id") + "RoughMap.png";
 		String data = request.getParameter("imgData").replaceAll("data:image/png;base64,", "");
 		byte[] imgBytes = Base64.decodeBase64(data.getBytes());
