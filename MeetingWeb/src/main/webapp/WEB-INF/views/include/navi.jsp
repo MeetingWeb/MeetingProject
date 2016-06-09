@@ -39,3 +39,14 @@
 		</nav>
 	</div>
 </section>
+<div id="m-menu">
+	<nav style="width: 100%; height: 100%;">
+		<ul>
+			<li>HOME</li>
+			<li>MEETING ADD</li>
+			<li>NOTICE</li>
+			<li>REVIEWS</li>
+			<li>INQUIRY</li>
+		</ul>
+	</nav>
+</div>
