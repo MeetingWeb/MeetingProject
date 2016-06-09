@@ -35,9 +35,4 @@ public class MeetingController {
 		return meeting_svc.mapSaveLocal(request);
 	}
 	
-	@RequestMapping(value = "roughMapSave", method = RequestMethod.POST)
-	public @ResponseBody String roughMapSave(HttpServletRequest request) {
-		return meeting_svc.roughMapSave(request);
-	}
-	
 }
