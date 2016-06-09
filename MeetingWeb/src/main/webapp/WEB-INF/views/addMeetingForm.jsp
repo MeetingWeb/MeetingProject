@@ -95,6 +95,8 @@
 									<option>배드민턴</option>
 									<option>보드타기</option>
 									<option>자전거타기</option>
+									<option>술먹기</option>
+									<option>동현이 죽빵 때리기</option>
 								</select>
 							</div>
 						</div>
@@ -135,6 +137,7 @@
 							<img style="width: 100%; height: 100%;">
 						</div>
 						<input type="hidden" id="rough-map-data" name="imgData">
+						<input type="hidden" id="division" name="division">
 					</form>
 				</div>
 			</div>

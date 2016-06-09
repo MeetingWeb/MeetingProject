@@ -77,7 +77,7 @@ $(function() {
 
 	var visibility = false;
 	$("#set-location").on("click", function() {
-		$("#view-map").css("visibility", "inherit");
+		$("#view-map").css("visibility", "visible");
 	});
 
 	$("#view-map #close").on("click", function() {

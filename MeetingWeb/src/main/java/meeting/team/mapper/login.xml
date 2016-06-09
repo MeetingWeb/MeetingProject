@@ -30,6 +30,4 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getInterest" resultType="java.lang.String" parameterType="java.lang.String">
 		select interest from interests where id=#{id}
 	</select>
-
-
 </mapper>
