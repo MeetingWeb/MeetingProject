@@ -87,7 +87,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Division</label>
 							<div class="col-sm-3">
-								<select class="form-control" name="meetingType">
+								<select class="form-control" name="field">
 									<option>농구</option>
 									<option>야구</option>
 									<option>축구</option>
@@ -95,6 +95,8 @@
 									<option>배드민턴</option>
 									<option>보드타기</option>
 									<option>자전거타기</option>
+									<option>술먹기</option>
+									<option>동현이 죽빵 때리기</option>
 								</select>
 							</div>
 						</div>
@@ -131,6 +133,11 @@
 								<button type="button" class="btn btn-default" onclick="insert()">CREATE MEETING</button>
 							</div>
 						</div>
+						<div id="rough-map-img">
+							<img style="width: 100%; height: 100%;">
+						</div>
+						<input type="hidden" id="rough-map-data" name="imgData">
+						<input type="hidden" id="division" name="division">
 					</form>
 				</div>
 			</div>
@@ -150,10 +157,11 @@
 		<div id="rough-map">
 			<div id="rough-map-in">
 				<img src="" id="rough-map-in-img">
-				<canvas id="map-canvas"></canvas>
+				<canvas id="map-canvas" width="640" height="640"></canvas>
 				<label for="zoom-min" style="color: #fff;">Price:</label>
 				<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="17" style="width: 200px;">
 				<input type="number" value="17" id="zoom-num" max="19" min="9">
+				<button id="rough-map-save-btn" type="button" onclick="roughMapSave()">Save</button>
 			</div>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />

@@ -202,20 +202,24 @@ function setMyLocation() {
 
 	}
 }
-var lan = null;
+var lan = "37.49736948554443,127.02452659606933";
 var width = $("#rough-map").width();
 var height = $("#rough-map").height();
-var path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom=17&size="+width+"x"+height+"&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
+var path = null;
 
 function roughMap(zoom){
 	lan = $("input[name=area]").val();
-	$("#rough-map").css("visibility", "visible");
+	//$("#rough-map").css("visibility", "visible");
+	$("#rough-map").css("display", "block");
 	$("#rough-map-in").css({"width":width,"height":height});
-	
+	path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom="+zoom+"&size="+width+"x"+height+"&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
 	if(lan != "") {
-		path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C"+lan+"&zoom="+zoom+"&size="+width+"x"+height+"&scale=2&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
+		path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C"+lan+"&zoom="+zoom+"&size="+width+"x"+height+"&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
 	}
+	
+	var img = document.getElementById("rough-map-in-img");
 	$("#rough-map img").attr("src", path);
+	$("#rough-map canvas").attr("width", width).attr("height", height);
 	drawCanvas();
 }
 
@@ -223,30 +227,111 @@ $("#zoom-num").on("change",function(){
 	var zoom = $(this).val();
 	$("#rough-map-in label").text(zoom);
 	roughMap(zoom);
-	drawCanvas();
 });
 
 $("#zoom-min").on("change",function(){
 	var zoom = $(this).val();
 	$("#rough-map-in label").text(zoom);
 	roughMap(zoom);
-	drawCanvas();
+	
 });
 
+var canvas = null;
+var context = null;
+var imageObj = null;
+var colorCode = "#000";
+var p1, p2, ep, sp;
+
 function drawCanvas(){
-	var canvas = document.getElementById('map-canvas');
-    var context = canvas.getContext('2d');
-    var imageObj = new Image();
-    var img = document.getElementById("rough-map-in-img");
-   /* console.log(img);
-    context.fillStyle = '#000';
-    context.fillRect(0, 0, canvas.width, canvas.height);
-    context.drawImage(img, 0, 0);*/
-    imageObj.onload = function() {
-      context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
-    };
+	/*canvas = document.getElementById('map-canvas');
+    context = canvas.getContext('2d');
     
-    imageObj.src = $("#rough-map img").attr("src");
+    context.clearRect(0, 0, canvas.width, canvas.height);*/
+	
+	/*$.ajax({
+		url : "/NowMeetingWeb/meeting/mapSaveLocal",
+		type : "post",
+		data : {path : path},
+		dataType : "json",
+		success : function(obj){
+			console.log(obj.ok);
+			if(obj.ok) {
+				path = obj.filePath;
+				console.log(path);
+			}
+		},
+		error : function(error, xhr, status) {
+			alert("error");
+		}
+	});*/
+	console.log(path);
+	canvas = document.getElementById('map-canvas');
+    context = canvas.getContext('2d');
+    
+    imageObj = new Image();
+    imageObj.setAttribute('crossOrigin', 'anonymous');
+    var img = document.getElementById("rough-map-in-img");
+    imageObj.onload = function() {
+    	context.fillStyle = '#fff';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    	context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+    };
+    imageObj.src = path;
+    
+    canvas.addEventListener('mousedown', onMouseDown);
+	canvas.addEventListener('mouseup', onMouseUp);
+}
+
+function roughMapSave(){
+	$("#rough-map").css("display", "none");
+	var img_data = canvas.toDataURL("image/png");
+	$("#rough-map-img").css("visibility", "visible");
+	$("#rough-map-img img").attr("src", img_data);
+	$("#rough-map-data").val(img_data);
+	//window.open(img_str, 'snapshot', 'width=300, height=300');
+	//var form = new FormData(document.getElementById('insertForm'));
+	/*$.ajax({
+		url : "/NowMeetingWeb/meeting/roughMapSave",
+		type : "post",
+		data : $("#add-meeting-form").serialize(),
+		processData: false,
+        contentType: false,
+		dataType : "json",
+		success : function(obj) {
+			var json = JSON.parse(obj);
+			if(json.ok) {
+				alert("성공");
+				//location.href="selectOne?num=0";
+			} else {
+				alert("실패");
+			}
+		},
+		complete : function(data) {
+		},
+		error : function(xhr, status, error) {
+			alert("글쓰기에 실패하였습니다.");
+		}
+	});*/
+}
+
+function Pointer(x, y) {
+	this.x = x;
+	this.y = y;
+}
+
+function onMouseDown(e) {
+	p1 = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+	sp = p1;
+}
+
+function onMouseUp(e) {
+	ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+	context.beginPath();
+	context.moveTo(sp.x, sp.y);
+	context.lineTo(ep.x, ep.y);
+	context.lineWidth = 5;
+	context.strokeStyle = colorCode;
+	context.stroke();
 }
 
 /*$("#rough-map").on("click", function(){

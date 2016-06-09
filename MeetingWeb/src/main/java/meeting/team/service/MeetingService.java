@@ -1,15 +1,22 @@
 package meeting.team.service;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -33,11 +40,7 @@ public class MeetingService {
 		return meeting_dao.getMeetingList(id);
 	}
 
-	public String[] getPosition() throws UnknownHostException {
-		String localHostIpAddress = InetAddress.getLocalHost().getHostAddress();
-		return null;
-	}
-
+	@SuppressWarnings("unchecked")
 	public String getAllMeeting() {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		List<MeetingVo> list = meeting_dao.getAllMeeting();
@@ -59,24 +62,26 @@ public class MeetingService {
 		}
 		return jsonArr.toJSONString();
 	}
-	
-	public String getMeeting(int num){
-		meeting_dao=sql_temp.getMapper(MeetingDao.class);
-		MeetingVo meeting=meeting_dao.getMeeting(num);
-		JSONObject jsonObj=new JSONObject();
-		jsonObj.put("loc",meeting.getArea());
-		jsonObj.put("num",meeting.getNum());
-		jsonObj.put("contents",meeting.getContents());
-		jsonObj.put("endTime",meeting.getEnd_time().toString());
-		jsonObj.put("master",meeting.getMaster());
-		jsonObj.put("field",meeting.getField());
-		jsonObj.put("startTime",meeting.getStart_time().toString());			
-		jsonObj.put("title",meeting.getTitle());
+
+	@SuppressWarnings("unchecked")
+	public String getMeeting(int num) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		MeetingVo meeting = meeting_dao.getMeeting(num);
+		JSONObject jsonObj = new JSONObject();
+		jsonObj.put("loc", meeting.getArea());
+		jsonObj.put("num", meeting.getNum());
+		jsonObj.put("contents", meeting.getContents());
+		jsonObj.put("endTime", meeting.getEnd_time().toString());
+		jsonObj.put("master", meeting.getMaster());
+		jsonObj.put("type", meeting.getField());
+		jsonObj.put("startTime", meeting.getStart_time().toString());
+		jsonObj.put("title", meeting.getTitle());
 
 		return jsonObj.toJSONString();
 
 	}
 
+	@SuppressWarnings("unchecked")
 	public String insert(MeetingVo meeting, HttpServletRequest request) throws ParseException {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		JSONObject json = new JSONObject();
@@ -87,13 +92,14 @@ public class MeetingService {
 		String meetingDay = request.getParameter("meetingDay");
 		String sDate = meetingDay + " " + sTime + ":00";
 		String eDate = meetingDay + " " + eTime + ":00";
-		
+
 		java.sql.Timestamp s_stamp = java.sql.Timestamp.valueOf(sDate);
 		java.sql.Timestamp e_stamp = java.sql.Timestamp.valueOf(eDate);
 		meeting.setStart_time(s_stamp);
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(id);
 		meeting.setDivision("now");
+		meeting.setMap_name(roughMapSave(request));
 		int ok = meeting_dao.insert(meeting);
 
 		if (ok > 0) {
@@ -126,6 +132,44 @@ public class MeetingService {
 		
 		}
 		return jsonArr.toJSONString();		
+	}
+
+	@SuppressWarnings("unchecked")
+	public String mapSaveLocal(HttpServletRequest request) {
+		JSONObject json = new JSONObject();
+		String pdfPath = request.getSession().getServletContext().getRealPath("/resources/images/");
+		String fileName = (String) request.getSession().getAttribute("id") + "RoughMap.png";
+		String path = request.getParameter("path");
+		try {
+			URL url = new URL(path);
+			BufferedImage img = ImageIO.read(url);
+			File file = new File(pdfPath + fileName);
+			ImageIO.write(img, "png", file);
+			json.put("ok", true);
+			json.put("filePath", "/resources/images/" + fileName);
+		} catch (IOException e) {
+			json.put("ok", false);
+			e.printStackTrace();
+		}
+		return json.toJSONString();
+	}
+
+	public String roughMapSave(HttpServletRequest request) {
+		String pdfPath = request.getSession().getServletContext().getRealPath("/resources/images/roughMap/");
+		String fileName = (String) request.getSession().getAttribute("id") + "RoughMap.png";
+		String data = request.getParameter("imgData").replaceAll("data:image/png;base64,", "");
+		byte[] imgBytes = Base64.decodeBase64(data.getBytes());
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(new File(pdfPath + fileName));
+			fos.write(imgBytes);
+			fos.close();
+			
+			return fileName;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

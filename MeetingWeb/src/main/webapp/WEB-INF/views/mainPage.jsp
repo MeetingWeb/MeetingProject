@@ -25,6 +25,7 @@
 <script type="text/javascript">
 var user_id = '<c:out value="${sessionScope.id}"/>';
 
+
 $(function(){
 	window.name="my";
 	 $("#pwc").keyup (function() {
@@ -40,7 +41,8 @@ $(function(){
 	 $("#show_Infomation").css("height",$(window).height()-64);
 	
 	 if("${sessionScope.id}"!="")
-		{				 
+		{		
+		 	console.log(user_id);
 			drawMeetings(map);				
 			showMyLocation();
 		
