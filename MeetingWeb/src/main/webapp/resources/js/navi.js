@@ -37,7 +37,18 @@ $(function() {
 	$("#logoutbtn").on("click", function() {
 		location.href = "../logout";
 	});
-
+	//////////추천/////////////////////
+	$("#recommendbtn").on("click",function(){
+		
+		if($("div.recommend").css('display')=='none'){	
+			getRecommend();
+			$("div.recommend").css('display','block');
+		}else if($("div.recommend").css('display')=='block'){
+			$("div.recommend").css('display','none');
+		};
+				
+	
+	});
 	// ///////메뉴///////////////////////
 	var bool = false;
 	$("#menu #menu-btn").on("click", function() {
@@ -66,7 +77,7 @@ $(function() {
 
 	var visibility = false;
 	$("#set-location").on("click", function() {
-		$("#view-map").css("visibility", "inherit");
+		$("#view-map").css("visibility", "visible");
 	});
 
 	$("#view-map #close").on("click", function() {

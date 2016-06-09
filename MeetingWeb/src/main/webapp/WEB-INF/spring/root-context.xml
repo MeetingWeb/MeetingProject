@@ -19,6 +19,7 @@
 		<sec:form-login login-page="/mainPage" login-processing-url="/user/login" username-parameter="id" password-parameter="pw"
 			default-target-url="/web/loginSuccess" authentication-failure-url="/web/main?error=true" />
 		<sec:logout logout-success-url="/web/main" />
+
 		<sec:csrf disabled="true" />
 		<sec:session-management>
 			<sec:concurrency-control max-sessions="1" expired-url="/login_duplicate"/>
@@ -63,6 +64,16 @@
 	    </props>
 	    </property>
 	</bean>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages/messages" />
+	</bean>
+	
+	 <bean id="multipartResolver" 
+  		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+  		
 	
 	
 </beans>

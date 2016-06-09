@@ -3,6 +3,7 @@ package meeting.team.service;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.mail.MessagingException;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.json.simple.JSONObject;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
@@ -23,8 +25,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 
 import meeting.team.dao.UserDao;
+import meeting.team.validator.JoinValidator;
 import meeting.team.vo.EmailVo;
 import meeting.team.vo.UserVo;
 
@@ -38,6 +43,9 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	protected JavaMailSender mailSender;
+	
+	@Autowired
+	private MessageSource messageSource;
 	
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -55,7 +63,65 @@ public class UserService implements UserDetailsService {
 		return null;
 	}
 	
-	public String join(UserVo user){
+	public String check(UserVo user, BindingResult result, HttpServletRequest request){
+		new JoinValidator().validate(user, result);
+		
+		JSONObject json = null;
+		if(result.hasErrors()){
+			json = new JSONObject();
+			
+			List<FieldError> list = result.getFieldErrors();
+			for(int i=0;i<list.size();i++) {
+				
+				FieldError fe = list.get(i);
+				System.out.println("오류필드:"+fe.getField());
+				
+				if(fe.getField().equals("id")){
+					String idErr = messageSource.getMessage("required.user.id", null, Locale.getDefault());
+					json.put("idErr", idErr);
+
+				}
+				
+				if(fe.getField().equals("ids")){
+					String idErr = messageSource.getMessage("required2.user.ids", null, Locale.getDefault());
+					json.put("idErr", idErr);
+				}
+				
+				if(fe.getField().equals("pw")){
+					String idErr = messageSource.getMessage("required.user.pw", null, Locale.getDefault());
+					json.put("pwdErr", idErr);
+				}
+				
+				if(fe.getField().equals("pws")){
+					String idErr = messageSource.getMessage("required2.user.pws", null, Locale.getDefault());
+					json.put("pwdErr", idErr);
+				}
+				
+				if(fe.getField().equals("pwc")){
+					String idErr = messageSource.getMessage("required3.user.pwc", null, Locale.getDefault());
+					json.put("pwdErr2", idErr);
+				}
+				
+				if(fe.getField().equals("pwcc")){
+					String idErr = messageSource.getMessage("required4.user.pwcc", null, Locale.getDefault());
+					json.put("pwdErr2", idErr);
+				}
+				
+				
+
+			}
+			return json.toJSONString();
+		}
+		
+		
+		json = new JSONObject();
+		json.put("idErr", user.getId());
+		return json.toJSONString(); 
+	}
+	
+public String join(UserVo user, HttpServletRequest request){
+		
+		
 		String id = user.getId();
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
 		String encodedPw = encoder.encode(user.getPw());
@@ -83,25 +149,26 @@ public class UserService implements UserDetailsService {
 		return json.toJSONString();
 	}
 	
-	public String id_check(String id) {
-		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
-		UserVo ids = user_dao.id_check(id);
-		JSONObject json = new JSONObject();
-		//System.out.println(ids.getId());
-		if(ids==null)
-		{
-			json.put("msg", id);
-			json.put("ok", true);
-		}
-		else
-		{
-			json.put("msg", ids.getId());
-			json.put("ok", false);
-		}
-		
-		
-		return json.toJSONString();
+	public String id_check(String id,HttpServletRequest request) {
+	UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+	UserVo ids = user_dao.id_check(id);
+	JSONObject json = new JSONObject();
+	//System.out.println(ids.getId());
+	if(ids==null)
+	{
+		json.put("msg", id);
+		request.setAttribute("id_check", id);
+		json.put("ok", true);
 	}
+	else
+	{
+		json.put("msg", ids.getId());
+		json.put("ok", false);
+	}
+	
+	
+	return json.toJSONString();
+}
 	
 
 	public boolean email_check(final EmailVo email) throws Exception {
@@ -148,6 +215,15 @@ public class UserService implements UserDetailsService {
 		JSONObject jsonObj=new JSONObject();	
 		jsonObj.put("latlng", myLOC);
 		return jsonObj.toJSONString();
+	}
+	
+	public List<String> getInterest(HttpServletRequest request)
+	{
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		String id=(String)request.getSession().getAttribute("id");
+		List<String> interest=user_dao.getInterest(id);
+		return interest;
+		
 	}
 	
 

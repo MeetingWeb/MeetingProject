@@ -9,6 +9,7 @@ public interface MeetingDao {
 	List<MeetingVo> getMeetingList(String id);
 	List<MeetingVo> getAllMeeting();
 	MeetingVo getMeeting(int num);
+	List<MeetingVo> getRecommend(String interest);
 	int insert(MeetingVo meeting);
 
 }

@@ -1,4 +1,10 @@
 var map;
+var mylat;
+var mylng;
+var deslat;
+var deslng;
+var directionsService;
+var directionsDisplay;
 function initMap() {
 
 	// Specify features and elements to define styles.
@@ -33,7 +39,10 @@ function initMap() {
 		styles : styleArray,
 		zoom : 15
 	});
-
+	
+	 directionsService = new google.maps.DirectionsService;
+	 directionsDisplay = new google.maps.DirectionsRenderer;
+	 directionsDisplay.setMap(map);
 
 }
 
@@ -41,13 +50,31 @@ function goChat(){
 	alert("채팅방 입장");
 }
 
-function simpleMap(){
-	alert("약도 보기");
+function direction(){	
+	calculateAndDisplayRoute(directionsService, directionsDisplay);
 }
 
-function searchRoad(){
-	alert("길찾기");
+
+
+function showHere(lat,lng){	
+	var latlng = new google.maps.LatLng(lat,lng);
+	map.panTo(latlng);
+	
 }
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+	  directionsService.route({
+	    origin: new google.maps.LatLng(mylat,mylng),
+	    destination: new google.maps.LatLng(deslat,deslng),
+	    travelMode: google.maps.TravelMode.DRIVING
+	  }, function(response, status) {
+	    if (status === google.maps.DirectionsStatus.OK) {
+	      directionsDisplay.setDirections(response);
+	    } else {
+	      window.alert('Directions request failed due to ' + status);
+	    }
+	  });
+	}
 
 function showDetail(num){
 	$.ajax({
@@ -71,6 +98,12 @@ function showDetail(num){
 			$('#myModalLabel').text(title);
 			$('#myModalBody').text(num+" "+ contents+" "+end_time+" "+start_time+" "+master+" "+type+" "+title);
 			$('#myModal').modal({keyboard: true});
+			var loc=meeting.loc;
+			var arr=loc.split(',');				
+			var lat=Number(arr[0]);
+			var lng=Number(arr[1]);	
+			deslat=lat;
+			deslng=lng;
 			
 		},
 		complete:function(data)
@@ -144,7 +177,9 @@ function showMyLocation(){
 			loc=loc.replace(')','');			
 			var arr=loc.split(',');				
 			var lat=Number(arr[0]);
-			var lng=Number(arr[1]);				 
+			var lng=Number(arr[1]);	
+			mylat=lat;
+			mylng=lng;
 			var latlng = new google.maps.LatLng(lat,lng);
 			map.panTo(latlng);
 						
@@ -159,6 +194,26 @@ function showMyLocation(){
 		
 	});
 	
+}
+
+function calcDistance(lat1, lon1, lat2, lon2){
+    var EARTH_R, Rad, radLat1, radLat2, radDist; 
+    var distance, ret;
+
+
+    EARTH_R = 6371000.0;
+    Rad 		= Math.PI/180;
+    radLat1 = Rad * lat1;
+    radLat2 = Rad * lat2;
+    radDist = Rad * (lon1 - lon2);
+    
+    distance = Math.sin(radLat1) * Math.sin(radLat2);
+    distance = distance + Math.cos(radLat1) * Math.cos(radLat2) * Math.cos(radDist);
+    ret 		 = EARTH_R * Math.acos(distance);
+				
+    var rtn = Math.round(Math.round(ret) / 1000);     	
+//   	rtn = rtn + " km";    
+    return  rtn;
 }
 
 function makeMarker(latlng,meeting){

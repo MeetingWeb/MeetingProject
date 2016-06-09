@@ -3,13 +3,135 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="meeting.team.dao.ReportDao">
+    
+    <!-- 글 조회(리스트) -->
+    <select id="getReport" resultType="meeting.team.vo.BoardVo">
+        SELECT * FROM 
+        	(
+        	SELECT A.*, ROWNUM RNUM FROM 
+        		(
+        			SELECT * FROM REPORT 
+        			<where>
+        			    <if test="keyField != null and keyField != '' "> 
+        			        title like '%' || #{keyword} || '%' 
+        			    </if> 
+        			    <if test="keyField != null and keyField != '' "> 
+        			        OR id like '%' || #{keyword} || '%' 
+        			    </if> 
+        			</where>
+        			ORDER BY NUM DESC
+        		) A 
+        	) 
+        <![CDATA[
+        	WHERE RNUM >= #{startNum}
+        		AND RNUM <= #{endNum}
+        ]]> 
+    </select>
+    
     <!-- 글 등록 -->
     <insert id="insertReport" parameterType="meeting.team.vo.BoardVo">
         INSERT INTO REPORT 
         	(NUM, ID, TITLE, CRE_DATE, CONTENTS) 
         VALUES 
-        	( (SELECT NVL(MAX(TO_NUMBER(NUM), 0)+1) FROM REPORT), 
-        		#{id}, #{title}, #{cre_date}, #{contents} )
+        	( 
+        		(SELECT NVL(MAX(TO_NUMBER(NUM) ), 0)+1 FROM REPORT), 
+        		#{id}, #{title}, SYSDATE, #{contents}
+        	)
     </insert>
+    
+    <!-- 글 상세조회 -->
+    <select id="infoReport" resultType="meeting.team.vo.BoardVo">
+        SELECT NUM, ID, TITLE, CRE_DATE, CONTENTS FROM REPORT 
+        WHERE NUM = #{num}
+    </select>
+    
+    <!-- 글 수정 -->
+    <update id="updateReport" parameterType="meeting.team.vo.BoardVo">
+        UPDATE REPORT SET 
+        	TITLE = #{title}, 
+        	CRE_DATE = SYSDATE, 
+        	CONTENTS = #{contents}
+        WHERE NUM = #{num}
+    </update>
+    
+    <!-- 글 삭제 -->
+    <delete id="deleteReport" parameterType="meeting.team.vo.BoardVo">
+        DELETE FROM REPORT WHERE NUM = ${num}
+    </delete>
+    
+    <!-- 댓글 -->
+    
+    <!-- 댓글 등록 -->
+    <insert id="insertReply" parameterType="meeting.team.vo.BoardResVo">
+        INSERT INTO RES_REPORT 
+        	(NUM, REF, ID, CONTENTS, CRE_DATE) 
+        VALUES 
+        	(REPORT_REPLY.NEXTVAL, #{ref}, #{id}, #{contents}, SYSDATE)
+        	
+        <selectKey resultType="Integer" keyProperty="num" order="AFTER">
+            SELECT MAX(NUM) AS NUM FROM RES_REPORT
+        </selectKey>
+    </insert>
+    
+    <!-- 댓글 조회(리스트) -->
+    <select id="getReply" resultType="meeting.team.vo.BoardResVo">
+        SELECT * FROM RES_REPORT 
+        	WHERE REF = #{num}
+        ORDER BY NUM DESC
+    </select>
+    
+    <!-- 댓글 수정 -->
+    <update id="updateReply" parameterType="meeting.team.vo.BoardResVo">
+        UPDATE RES_REPORT SET 
+        	CONTENTS = #{contents}, 
+        	CRE_DATE = SYSDATE 
+        WHERE NUM = #{num}
+    </update>
+    
+    <!-- 댓글 삭제 -->
+    <delete id="deleteReply">
+        DELETE FROM RES_REPORT WHERE NUM = #{num}
+    </delete>
+    
+    <!-- 게시판 페이징 -->
+    
+    <!-- 전체 글 갯수 -->
+    <select id="getCount" resultType="Integer" parameterType="java.util.Map">
+        SELECT NVL(COUNT(1), 0) FROM REPORT 
+        <where>
+            <if test="keyField != null and keyField != '' ">
+		        title like '%' || #{keyword} || '%'
+		    </if>
+		    <if test="keyField != null and keyField != '' ">
+		        OR id like '%' || #{keyword} || '%'
+		    </if>
+        </where>
+    </select>
+    
+    <!-- 이전글 정보 -->
+    <select id="getPrev" resultType="meeting.team.vo.BoardVo">
+        <![CDATA[
+        	SELECT * FROM 
+        		(
+        		SELECT * FROM REPORT 
+        			WHERE NUM > #{num} 
+        		ORDER BY NUM ASC 
+        		) 
+        	WHERE ROWNUM = 1 
+        ]]>
+    </select>
+    
+    <!-- 다음글 정보 -->
+    <select id="getNext" resultType="meeting.team.vo.BoardVo">
+        <![CDATA[
+        	SELECT * FROM 
+        		( 
+        		SELECT * FROM REPORT 
+        			WHERE NUM < #{num} 
+        		ORDER BY NUM DESC 
+        		) 
+        	WHERE ROWNUM = 1 
+        ]]>
+    </select>
     
 </mapper>
