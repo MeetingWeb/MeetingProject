@@ -87,7 +87,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Division</label>
 							<div class="col-sm-3">
-								<select class="form-control" name="meetingType">
+								<select class="form-control" name="field">
 									<option>농구</option>
 									<option>야구</option>
 									<option>축구</option>

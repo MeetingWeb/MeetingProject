@@ -248,7 +248,7 @@ function drawCanvas(){
     
     context.clearRect(0, 0, canvas.width, canvas.height);*/
 	
-	$.ajax({
+	/*$.ajax({
 		url : "/NowMeetingWeb/meeting/mapSaveLocal",
 		type : "post",
 		data : {path : path},
@@ -258,28 +258,28 @@ function drawCanvas(){
 			if(obj.ok) {
 				path = obj.filePath;
 				console.log(path);
-				
-				canvas = document.getElementById('map-canvas');
-			    context = canvas.getContext('2d');
-			    
-			    imageObj = new Image();
-			    imageObj.setAttribute('crossOrigin', 'anonymous');
-			    var img = document.getElementById("rough-map-in-img");
-			    imageObj.onload = function() {
-			    	context.fillStyle = '#fff';
-			        context.fillRect(0, 0, canvas.width, canvas.height);
-			    	context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
-			    };
-			    imageObj.src = path;
-			    
-			    canvas.addEventListener('mousedown', onMouseDown);
-				canvas.addEventListener('mouseup', onMouseUp);
 			}
 		},
 		error : function(error, xhr, status) {
 			alert("error");
 		}
-	});
+	});*/
+	console.log(path);
+	canvas = document.getElementById('map-canvas');
+    context = canvas.getContext('2d');
+    
+    imageObj = new Image();
+    imageObj.setAttribute('crossOrigin', 'anonymous');
+    var img = document.getElementById("rough-map-in-img");
+    imageObj.onload = function() {
+    	context.fillStyle = '#fff';
+        context.fillRect(0, 0, canvas.width, canvas.height);
+    	context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+    };
+    imageObj.src = path;
+    
+    canvas.addEventListener('mousedown', onMouseDown);
+	canvas.addEventListener('mouseup', onMouseUp);
 }
 
 function roughMapSave(){

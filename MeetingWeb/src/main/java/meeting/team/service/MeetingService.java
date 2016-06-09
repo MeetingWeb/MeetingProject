@@ -161,7 +161,7 @@ public class MeetingService {
 		byte[] imgBytes = Base64.decodeBase64(data.getBytes());
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(new File(pdfPath));
+			fos = new FileOutputStream(new File(pdfPath + fileName));
 			fos.write(imgBytes);
 			fos.close();
 			
