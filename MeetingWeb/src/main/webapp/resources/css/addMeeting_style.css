@@ -160,7 +160,8 @@
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	visibility: hidden;
+	display: none;
+	//visibility: hidden;
 	z-index: 200;
 	padding: 64px;
 	background-color: rgba(0,0,0,0.75);
@@ -176,6 +177,13 @@
 
 #rough-map-in {
 	//margin: 0px auto;
+}
+
+#rough-map-img {
+	width: 200px; 
+	height: 200px;
+	visibility: hidden;
+	
 }
 
 /* #map-canvas {

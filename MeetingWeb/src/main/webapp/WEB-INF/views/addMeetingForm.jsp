@@ -131,6 +131,10 @@
 								<button type="button" class="btn btn-default" onclick="insert()">CREATE MEETING</button>
 							</div>
 						</div>
+						<div id="rough-map-img">
+							<img style="width: 100%; height: 100%;">
+						</div>
+						<input type="hidden" id="rough-map-data" name="imgData">
 					</form>
 				</div>
 			</div>
@@ -154,6 +158,7 @@
 				<label for="zoom-min" style="color: #fff;">Price:</label>
 				<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="17" style="width: 200px;">
 				<input type="number" value="17" id="zoom-num" max="19" min="9">
+				<button id="rough-map-save-btn" type="button" onclick="roughMapSave()">Save</button>
 			</div>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />
