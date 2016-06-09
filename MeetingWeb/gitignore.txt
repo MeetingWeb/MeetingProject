@@ -1,0 +1,3 @@
+*.MF
+pom.properties
+*.class
