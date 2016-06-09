@@ -38,7 +38,7 @@ $(function() {
 		location.href = "../logout";
 	});
 	//////////추천/////////////////////
-	$("#client-req-btn").on("click",function(){
+	$("#recommendbtn").on("click",function(){
 		
 		if($("div.recommend").css('display')=='none'){	
 			getRecommend();

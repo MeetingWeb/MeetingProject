@@ -197,7 +197,7 @@ $(function(){
                Close
             </button>          
             
-            <button type = "button" class = "btn btn-success">
+            <button type = "button" class = "btn btn-success" onclick="direction()")>
                	Directions
             </button>
             
