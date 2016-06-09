@@ -110,6 +110,7 @@ public class MeetingService {
 		return json.toJSONString();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public String getRecommend(List<String> interests){
 		meeting_dao=sql_temp.getMapper(MeetingDao.class);
 		JSONArray jsonArr=new JSONArray();		

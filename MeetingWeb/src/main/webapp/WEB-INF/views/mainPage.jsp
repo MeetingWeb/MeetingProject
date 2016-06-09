@@ -24,9 +24,8 @@
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 var user_id = '<c:out value="${sessionScope.id}"/>';
-
-
 $(function(){
+	
 	window.name="my";
 	 $("#pwc").keyup (function() {
 		    if($('input#pw').val()==$('input#pwc').val())
@@ -46,12 +45,127 @@ $(function(){
 			drawMeetings(map);				
 			showMyLocation();
 		
-		}		
+		}	
+	
+	<c:if test="${ok == true}">
+		var email = '<c:out value="${requestScope.email}"/>';
+		$("input[name='id']").prop('disabled', false);
+		$("input[name='pw']").prop('disabled',false);
+		$("input[name='pwc']").prop('disabled',false);
+		$("input[name='name']").prop('disabled',false);
+		$("input[name='interests']").prop('disabled',false);
+		$("input[name='email']").val(email);
+		$('form#joinform').css("display","block")
+	</c:if>
+
+	 $('#id').keyup(function(){
+		 var id = $('#id').val();
+		 $.ajax({
+				type : 'post',
+				dataType : 'json',
+				url : 'check',
+				data : {id:id},
+				success : function(evt) {
+					if(evt.idErr) {
+						$('#id_checktext').text(evt.idErr);
+					}
+				},
+				complete : function(data) {
+
+				},
+				error : function(xhr, status, error) {
+					alert(error);
+				}
+			});	 
+	 
+	});
+	
+	 $('input#pw').keyup(function(){
+		 var pw = $('input#pw').val();
+		 var pwc = $('#pwc').val();
+		 $.ajax({
+				type : 'post',
+				dataType : 'json',
+				url : 'check',
+				data : {pw:pw,pwc:pwc},
+				success : function(evt) {
+					if(evt.pwdErr) {
+						$('#pwc_checktext').text(evt.pwdErr);
+						$('#pw_checktext').text(evt.pwdErr2);
+					}
+				},
+				complete : function(data) {
+
+				},
+				error : function(xhr, status, error) {
+					alert(error);
+				}
+			});	 
+	});
+	 
+	 $('#pwc').keyup(function(){
+		 var pw = $('input#pw').val();
+		 var pwc = $('#pwc').val();
+		 $.ajax({
+				type : 'post',
+				dataType : 'json',
+				url : 'check',
+				data : {pw:pw,pwc:pwc},
+				success : function(evt) {
+					if(evt.pwdErr2) {
+						$('#pw_checktext').text(evt.pwdErr2);
+					}
+				},
+				complete : function(data) {
+
+				},
+				error : function(xhr, status, error) {
+					alert(error);
+				}
+			});	 
+	 
+	});
 });
 
+function getRecommend(){
+	$.ajax({
+		type : 'post',
+		dataType : 'json',
+		url : 'getRecommend',			
+		success : function(data) {
+			$('div.recommend-list').children().remove();
+			var html="";
+			for(var i=0; i<data.length; i++)
+			{					
+				var loc=data[i].loc;					
+				var arr=loc.split(',');				
+				var meetinglat=Number(arr[0]);				
+				var meetinglng=Number(arr[1]);					
+				var distance=calcDistance(mylat,mylng,meetinglat,meetinglng);
+			
+				if(distance<40){							
+					if(((i!=0)&&(data[i-1].field!=data[i].field))||(i==0)){
+						html+="<table><caption>"+data[i].field+"</caption>";							
+					}
+					html+="<tr><td> "+data[i].title+"</td><td> "+data[i].master+"</td><td> 거리"+distance+"km</td><td> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere("+meetinglat+","+meetinglng+")'>모임 보기</button></td></tr>";
+					if((i==(data.length-1))||(data[i].field!=data[i+1].field)){
+						html+="</table>";				
+						$('div.recommend-list').append(html);
+						html="";
+					}						
+				}					
+			}
+		},
+		complete : function(data) {
 
-	
-	/* function email_check() {
+		},
+		error : function(xhr, status, error) {
+			alert(error);
+		}
+	});
+}
+
+function email_check() {
 	 var email = $('#email').val();
 	 $.ajax({
 			type : 'get',
@@ -73,8 +187,8 @@ $(function(){
 		});
 		
 	}
- */
 
+	var id_checks = null;
 	function id_check() {
 		var id = $('input#id').val();
 		$.ajax({
@@ -85,13 +199,12 @@ $(function(){
 			success : function(evt) {
 				if(evt.ok==true)
 				{
-					$('#id_checktext').text("사용 가능한 아이디 입니다.");
-					//alert("사용 가능한 아이디 입니다.");
+					$('#id_checktext').text("중복확인 되었습니다..");
+					id_checks=evt.msg;
 				}
 				else if(evt.ok==false)
 				{
 					$('#id_checktext').text("사용 중인 아이디 입니다.");
-					//alert("사용 중인 아이디 입니다.");
 				}
 			},
 			complete : function(data) {
@@ -101,9 +214,20 @@ $(function(){
 				alert(error);
 			}
 		});
+
 	}
- 
+
 	function joinsave() {
+		
+
+		if(id_checks!=$('#id').val())
+		{
+		alert("중복검사하세요.");
+		} 
+		if(id_checks==$('#id').val())
+		{
+		 
+		 
 		var data = $('#joinform').serialize();
 		$.ajax({
 			type : 'post',
@@ -122,48 +246,10 @@ $(function(){
 				alert(error);
 			}
 		});
+		
+		}
+		
 	}
-	
-	function getRecommend(){
-		$.ajax({
-			type : 'post',
-			dataType : 'json',
-			url : 'getRecommend',			
-			success : function(data) {
-				$('div.recommend-list').children().remove();
-				var html="";
-				for(var i=0; i<data.length; i++)
-				{					
-					var loc=data[i].loc;					
-					var arr=loc.split(',');				
-					var meetinglat=Number(arr[0]);				
-					var meetinglng=Number(arr[1]);					
-					var distance=calcDistance(mylat,mylng,meetinglat,meetinglng);
-				
-					if(distance<40){							
-						if(((i!=0)&&(data[i-1].field!=data[i].field))||(i==0)){
-							html+="<table><caption>"+data[i].field+"</caption>";							
-						}
-						html+="<tr><td> "+data[i].title+"</td><td> "+data[i].master+"</td><td> 거리"+distance+"km</td><td> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere("+meetinglat+","+meetinglng+")'>모임 보기</button></td></tr>";
-						if((i==(data.length-1))||(data[i].field!=data[i+1].field)){
-							html+="</table>";				
-							$('div.recommend-list').append(html);
-							html="";
-						}						
-					}					
-				}
-			},
-			complete : function(data) {
-
-			},
-			error : function(xhr, status, error) {
-				alert(error);
-			}
-		});
-		
-		
-	
-	}	
 </script>
 </head>
 <body>
