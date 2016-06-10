@@ -44,6 +44,11 @@ public class WebController {
 		return "addMeetingForm";
 	}
 	
+	@RequestMapping("mobileLogin")
+	public String mobileLoginForm(){
+		return "mobile/mobileLoginForm";
+	}
+	
 	@RequestMapping(value="join", method = RequestMethod.POST)
 	@ResponseBody
 	public String join(UserVo uvo,HttpServletRequest request){

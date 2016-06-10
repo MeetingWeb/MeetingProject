@@ -285,11 +285,11 @@ function email_check() {
                Close
             </button>          
             
-            <button type = "button" class = "btn btn-success" onclick="direction()")>
+            <button type = "button" class = "btn btn-success" onclick="direction()">
                	Directions
             </button>
             
-             <button type = "button" class = "btn btn-success">
+             <button type = "button" class = "btn btn-success chat-btn">
                Participation in chat rooms
             </button>
             
@@ -313,11 +313,6 @@ function email_check() {
 	<span id="recommend-more"><a href='#none' onClick='getRecommend(); return false;' >새로고침</a></span>
 </div>  
   
-      	
-		<div class="chat-btn">
-			채팅방참여
-			<input type="hidden" value="JUN">
-		</div>
 		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
