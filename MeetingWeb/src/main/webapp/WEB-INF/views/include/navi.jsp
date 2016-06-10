@@ -40,7 +40,6 @@
 	</div>
 </section>
 <div id="m-menu">
-<<<<<<< HEAD
 	<nav>
 		<ul>
 			<li><a href="/NowMeetingWeb/web/main">HOME</a></li>
@@ -48,15 +47,7 @@
 			<li><a href="/NowMeetingWeb/web/addForm">MEETING</a></li>
 			<li><a href="#">HOME</a></li>
 			<li><a href="#">HOME</a></li>
-=======
-	<nav style="width: 100%; height: 100%;">
-		<ul>
-			<li>HOME</li>
-			<li>MEETING ADD</li>
-			<li>NOTICE</li>
-			<li>REVIEWS</li>
-			<li>INQUIRY</li>
->>>>>>> branch 'master' of https://github.com/MeetingWeb/MeetingProject.git
+
 		</ul>
 	</nav>
 </div>
