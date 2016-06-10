@@ -31,7 +31,6 @@
 	
 	<div id="mobile-title-name" class="hidden-md hidden-lg">come together</div>
 	<div class="glyphicon glyphicon-align-justify hidden-md hidden-lg pull-right" id="m-menu-btn"></div>
-	
 </div>
 
 

@@ -92,4 +92,8 @@ $(function() {
 		location.href="selectOne?num=" + $(this).attr("data-num");
 	});
 	
+	$("#m-menu-btn").on("click",function() {
+		
+	});
+	
 });
