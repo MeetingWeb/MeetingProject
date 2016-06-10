@@ -71,7 +71,8 @@ $(function() {
 	 
 
 	$("#contents .chat-btn").on("click", function() {
-		var name = $(this).find("input[type=hidden]").val();
+		$(".close").trigger("click");
+		var name = $(".modal-footer").find("input[type=hidden]").val();
 		var c_btn = "<div class=chat-view-btn></div>";
 		var c_div = "<div class=chat-lid-in><div class=chat-lid-in-title>" + name + "</div></div>";
 		var c_width = $(".chat-lid").height();

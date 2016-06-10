@@ -281,6 +281,7 @@ function email_check() {
          </div>
          
          <div class = "modal-footer">
+         	<input type="hidden" name="master">
             <button type = "button" class = "btn btn-default" data-dismiss = "modal">
                Close
             </button>          
