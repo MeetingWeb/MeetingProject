@@ -109,6 +109,8 @@ $(function() {
 				document.documentElement.scrollTop = 0;
 			});
 			
+			$(".chat-lid").css("height",document.body.clientHeight).css("width", document.body.clientWidth);
+			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": document.body.clientHeight - 64})
 			
 			break;
 		} else {
@@ -120,6 +122,9 @@ $(function() {
 			$("#set-location").on("click", function() {
 				$("#view-map").css("visibility", "visible");
 			});
+			
+			$(".chat-lid").css("height",$(window).height() - 164).css("width", $(window).width() - ($("#chat-list-lid").width() + 65));
+			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": $(window).height() - 64})
 			break;
 		}
 	}

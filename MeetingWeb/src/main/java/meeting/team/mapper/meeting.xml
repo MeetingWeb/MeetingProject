@@ -21,5 +21,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO meeting
 		VALUES(MEETING_NUM_SEQ.NEXTVAL,#{title},#{field},#{contents},#{master},#{area},#{start_time},#{end_time},#{map_name},#{division})
 	</insert>
+	
+	<insert id="chatInsert" parameterType="java.util.Map">
+		INSERT INTO chatList VALUES(#{master},#{user})
+	</insert>
+	
+	<select id="userExit">
+		SELECT master, member FROM chatList WHERE member
+	</select>
 
 </mapper>

@@ -1,16 +1,5 @@
 var check;
 $(function() {
-	
-	$("#all").on("change", function() {
-		if (check) {
-			$("p input[type=checkbox]").attr("checked", false);
-			check = false;
-		} else {
-			$("p input[type=checkbox]").attr("checked", true);
-			check = true;
-		}
-		console.log(check);
-	});
 	// var ws = new WebSocket("ws://localhost:8888/MavenWeb/wsinit");
 	var ws = new WebSocket("ws://192.168.8.19:7777/NowMeetingWeb/chat");
 
@@ -19,24 +8,24 @@ $(function() {
 		if (!list_ok) {
 			send_message("list");
 		}*/
+		$(".chat-lid-in-console").append("<span>접속</span><br>");
 		$('#chatStatus').text('Info: connection opened.');
-		$('input[name=chatInput]').on('keydown', function(evt) {
+		$(document).on('keydown',".msg input[name=msg]" ,function(evt) {
+			console.log(evt.keyCode);
 			if (evt.keyCode == 13) {
-				var msg = $('input[name=chatInput]').val();
+				var msg = $('input[name=msg]').val();
 				send_message(msg);
-				$('input[name=chatInput]').val('');
+				$('input[name=msg]').val('');
 			}
 		});
 	};
 
 	ws.onmessage = function(event) {
-		var $console = $("#console");
+		var $console = $(".chat-lid-in-console");
 		var json = JSON.parse(event.data);
-		if (json.cmd == "list") {
-			connect_cre_list();
-		} else if (json.cmd == "msg") {
-			$('#console').append("<span>" + json.msg + '</span><br>');
-		}
+
+		$(".chat-lid-in-console").append('<span class=user-msg>' + json.msg + '</span><br>');
+		
 		$console.scrollTop($console.prop("scrollHeight"));
 	};
 
@@ -47,7 +36,7 @@ $(function() {
 	function send_message(msg) {
 		var jsonStr;
 		var obj = {};
-		if (msg != '') {
+		/*if (msg != '') {
 			if (msg == "list") {
 				obj.cmd = "list";
 				// obj.nickArr = arr;
@@ -65,21 +54,40 @@ $(function() {
 				});
 				$("#chat").val("");
 			}
-		}
+		}*/
+		obj.msg = msg;
+		jsonStr = JSON.stringify(obj);
 		ws.send(jsonStr);
 	}
 	 
-
 	$("#contents .chat-btn").on("click", function() {
-		$(".close").trigger("click");
+		var master = $(".modal-footer input[name=master]").val();
+		console.log("방장 -> " + master);
+		console.log("방장 -> " + user_id);
+		$.ajax({
+			url : "/NowMeetingWeb/meeting/chatInsert",
+			type : "post",
+			data :{user : user_id, master : master},
+			dataType : "json",
+			success : function(obj){
+				alert(obj.ok);
+				location.href = "NowWebMeeting/web/chatForm";
+			},
+			error : function(error, xhr, status) {
+				alert("error");
+			}
+		});
+		
+		/*$(".close").trigger("click");
 		var name = $(".modal-footer").find("input[type=hidden]").val();
 		var c_btn = "<div class=chat-view-btn></div>";
 		var c_div = "<div class=chat-lid-in><div class=chat-lid-in-title>" + name + "</div></div>";
 		var c_width = $(".chat-lid").height();
+		var c_console = "<div class=chat-lid-in-console></div>";
 		var c_input = "<div class=msg><input type=text name=msg></div>";
-		/*
+		
 		 * $(c_div).append(c_title); $(".chat-lid").append(c_div);
-		 */
+		 
 		$(c_div).appendTo(".chat-lid");
 		$(c_btn).appendTo(".chat-lid");
 
@@ -87,15 +95,17 @@ $(function() {
 			"display" : "block",
 			"top" : window.innerHeight - c_width
 		});
+		$(".chat-lid-in").append(c_console);
+		$(".chat-lid-in").append(c_input);
 
 		$(".chat-lid-in").each(function(idx) {
 			if (name == $(this).find(".chat-lid-in-title").text()) {
 				$(this).append(c_input);
 			}
-		});
+		});*/
 	});
 
-	$("#contents .chat-view-btn").on("click", function() {
+	/*$("#contents .chat-view-btn").on("click", function() {
 		$(".chat-lid").css("overflow", "visible");
 		$(".chat-lid-in").animate({
 			top : -310
@@ -116,7 +126,7 @@ $(function() {
 			});
 			bool = false;
 		}
-	});
+	});*/
 });
 
 function connect_cre_list() {

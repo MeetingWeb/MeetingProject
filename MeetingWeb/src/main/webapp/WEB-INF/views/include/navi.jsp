@@ -32,8 +32,17 @@
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-phone-alt menu-btn-icon"></div>
-					<div class="menu-btn-name"><a href="/NowMeetingWeb/Inquiry/list">INQUIRY</a></div>
-					<div class="menu-btn-name"><a href="#">USE</a></div>
+					<div class="menu-btn-name">
+						<a href="/NowMeetingWeb/Inquiry/list">INQUIRY</a>
+					</div>
+				</li>
+				<li id="message-btn">
+					<div class="glyphicon glyphicon-envelope menu-btn-icon" style="width: 100%;">
+						<span class="badge" style="position: absolute; top: -10px; left: 35px;">4</span>
+					</div>
+					<div class="menu-btn-name">
+						<a href="/NowMeetingWeb/web/chatForm">MESSAGE</a>
+					</div>
 				</li>
 			</ul>
 		</nav>
@@ -42,11 +51,21 @@
 <div id="m-menu">
 	<nav>
 		<ul>
-			<li><a href="/NowMeetingWeb/web/main">HOME</a></li>
-			<li><a href="/NowMeetingWeb/web/mobileLogin">LOGIN</a></li>
-			<li><a href="/NowMeetingWeb/web/addForm">MEETING</a></li>
-			<li><a href="#">HOME</a></li>
-			<li><a href="#">HOME</a></li>
+			<li>
+				<a href="/NowMeetingWeb/web/main">HOME</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/web/mobileLogin">LOGIN</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/web/addForm">MEETING</a>
+			</li>
+			<li>
+				<a href="#">HOME</a>
+			</li>
+			<li>
+				<a href="#">HOME</a>
+			</li>
 
 		</ul>
 	</nav>
