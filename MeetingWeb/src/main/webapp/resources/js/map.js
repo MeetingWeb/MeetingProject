@@ -98,6 +98,7 @@ function showDetail(num){
 			$('#myModalLabel').text(title);
 			$('#myModalBody').text(num+" "+ contents+" "+end_time+" "+start_time+" "+master+" "+type+" "+title);
 			$('#myModal').modal({keyboard: true});
+			$(".modal-footer input[name=master]").val(master);
 			var loc=meeting.loc;
 			var arr=loc.split(',');				
 			var lat=Number(arr[0]);

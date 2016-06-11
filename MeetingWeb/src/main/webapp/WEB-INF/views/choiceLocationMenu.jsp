@@ -40,7 +40,6 @@ var user_id = '<c:out value="${sessionScope.id}"/>';
 		<a href="main">예전 위치에서 시작하기</a>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
-		<jsp:include page="include/chat_view.jsp" />
 	</section>
 	<jsp:include page="include/footer.jsp" />
 </sec:authorize>

@@ -6,7 +6,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <style type="text/css">
-
 </style>
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
@@ -15,7 +14,7 @@
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
-	
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
 	crossorigin="anonymous">
 
@@ -23,50 +22,48 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
-var user_id = '<c:out value="${sessionScope.id}"/>';
-$(function(){
-	
-	window.name="my";
-	 $("#pwc").keyup (function() {
-		    if($('input#pw').val()==$('input#pwc').val())
-		    {
-		    	$('#pw_checktext').text("맞다.");	
-		    }
-		    else if($('input#pw').val()!=$('input#pwc').val())
-		    {
-		    	$('#pw_checktext').text("아니야.");	
-		    }
-		});	
-	 $("#show_Infomation").css("height",$(window).height()-64);
-	
-	 if("${sessionScope.id}"!="")
-		{		
-		 	console.log(user_id);
-			drawMeetings(map);				
+	var user_id = '<c:out value="${sessionScope.id}"/>';
+	$(function() {
+
+		window.name = "my";
+		$("#pwc").keyup(function() {
+			if ($('input#pw').val() == $('input#pwc').val()) {
+				$('#pw_checktext').text("맞다.");
+			} else if ($('input#pw').val() != $('input#pwc').val()) {
+				$('#pw_checktext').text("아니야.");
+			}
+		});
+		$("#show_Infomation").css("height", $(window).height() - 64);
+
+		if ("${sessionScope.id}" != "") {
+			console.log(user_id);
+			drawMeetings(map);
 			showMyLocation();
-		
-		}	
-	
-	<c:if test="${ok == true}">
+
+		}
+
+		<c:if test="${ok == true}">
 		var email = '<c:out value="${requestScope.email}"/>';
 		$("input[name='id']").prop('disabled', false);
-		$("input[name='pw']").prop('disabled',false);
-		$("input[name='pwc']").prop('disabled',false);
-		$("input[name='name']").prop('disabled',false);
-		$("input[name='interests']").prop('disabled',false);
+		$("input[name='pw']").prop('disabled', false);
+		$("input[name='pwc']").prop('disabled', false);
+		$("input[name='name']").prop('disabled', false);
+		$("input[name='interests']").prop('disabled', false);
 		$("input[name='email']").val(email);
-		$('form#joinform').css("display","block")
-	</c:if>
+		$('form#joinform').css("display", "block")
+		</c:if>
 
-	 $('#id').keyup(function(){
-		 var id = $('#id').val();
-		 $.ajax({
+		$('#id').keyup(function() {
+			var id = $('#id').val();
+			$.ajax({
 				type : 'post',
 				dataType : 'json',
 				url : 'check',
-				data : {id:id},
+				data : {
+					id : id
+				},
 				success : function(evt) {
-					if(evt.idErr) {
+					if (evt.idErr) {
 						$('#id_checktext').text(evt.idErr);
 					}
 				},
@@ -76,20 +73,23 @@ $(function(){
 				error : function(xhr, status, error) {
 					alert(error);
 				}
-			});	 
-	 
-	});
-	
-	 $('input#pw').keyup(function(){
-		 var pw = $('input#pw').val();
-		 var pwc = $('#pwc').val();
-		 $.ajax({
+			});
+
+		});
+
+		$('input#pw').keyup(function() {
+			var pw = $('input#pw').val();
+			var pwc = $('#pwc').val();
+			$.ajax({
 				type : 'post',
 				dataType : 'json',
 				url : 'check',
-				data : {pw:pw,pwc:pwc},
+				data : {
+					pw : pw,
+					pwc : pwc
+				},
 				success : function(evt) {
-					if(evt.pwdErr) {
+					if (evt.pwdErr) {
 						$('#pwc_checktext').text(evt.pwdErr);
 						$('#pw_checktext').text(evt.pwdErr2);
 					}
@@ -100,19 +100,22 @@ $(function(){
 				error : function(xhr, status, error) {
 					alert(error);
 				}
-			});	 
-	});
-	 
-	 $('#pwc').keyup(function(){
-		 var pw = $('input#pw').val();
-		 var pwc = $('#pwc').val();
-		 $.ajax({
+			});
+		});
+
+		$('#pwc').keyup(function() {
+			var pw = $('input#pw').val();
+			var pwc = $('#pwc').val();
+			$.ajax({
 				type : 'post',
 				dataType : 'json',
 				url : 'check',
-				data : {pw:pw,pwc:pwc},
+				data : {
+					pw : pw,
+					pwc : pwc
+				},
 				success : function(evt) {
-					if(evt.pwdErr2) {
+					if (evt.pwdErr2) {
 						$('#pw_checktext').text(evt.pwdErr2);
 					}
 				},
@@ -122,59 +125,61 @@ $(function(){
 				error : function(xhr, status, error) {
 					alert(error);
 				}
-			});	 
-	 
-	});
-});
+			});
 
-function getRecommend(){
-	$.ajax({
-		type : 'post',
-		dataType : 'json',
-		url : 'getRecommend',			
-		success : function(data) {
-			$('div.recommend-list').children().remove();
-			var html="";
-			for(var i=0; i<data.length; i++)
-			{					
-				var loc=data[i].loc;					
-				var arr=loc.split(',');				
-				var meetinglat=Number(arr[0]);				
-				var meetinglng=Number(arr[1]);					
-				var distance=calcDistance(mylat,mylng,meetinglat,meetinglng);
-			
-				if(distance<40){							
-					if(((i!=0)&&(data[i-1].field!=data[i].field))||(i==0)){
-						html+="<table><caption>"+data[i].field+"</caption>";							
+		});
+	});
+
+	function getRecommend() {
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'getRecommend',
+			success : function(data) {
+				$('div.recommend-list').children().remove();
+				var html = "";
+				for (var i = 0; i < data.length; i++) {
+					var loc = data[i].loc;
+					var arr = loc.split(',');
+					var meetinglat = Number(arr[0]);
+					var meetinglng = Number(arr[1]);
+					var distance = calcDistance(mylat, mylng, meetinglat, meetinglng);
+
+					if (distance < 40) {
+						if (((i != 0) && (data[i - 1].field != data[i].field)) || (i == 0)) {
+							html += "<table><caption>" + data[i].field + "</caption>";
+						}
+						html += "<tr><td> " + data[i].title + "</td><td> " + data[i].master + "</td><td> 거리" + distance
+								+ "km</td><td> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere(" + meetinglat
+								+ "," + meetinglng + ")'>모임 보기</button></td></tr>";
+						if ((i == (data.length - 1)) || (data[i].field != data[i + 1].field)) {
+							html += "</table>";
+							$('div.recommend-list').append(html);
+							html = "";
+						}
 					}
-					html+="<tr><td> "+data[i].title+"</td><td> "+data[i].master+"</td><td> 거리"+distance+"km</td><td> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere("+meetinglat+","+meetinglng+")'>모임 보기</button></td></tr>";
-					if((i==(data.length-1))||(data[i].field!=data[i+1].field)){
-						html+="</table>";				
-						$('div.recommend-list').append(html);
-						html="";
-					}						
-				}					
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
 			}
-		},
-		complete : function(data) {
+		});
+	}
 
-		},
-		error : function(xhr, status, error) {
-			alert(error);
-		}
-	});
-}
-
-function email_check() {
-	 var email = $('#email').val();
-	 $.ajax({
+	function email_check() {
+		var email = $('#email').val();
+		$.ajax({
 			type : 'get',
 			dataType : 'json',
 			url : 'eamil_check',
-			data : {email:email},
+			data : {
+				email : email
+			},
 			success : function(evt) {
-				if(evt.ok==true)
-				{
+				if (evt.ok == true) {
 					alert("확인되었ㅅ브니다.")
 				}
 			},
@@ -185,7 +190,7 @@ function email_check() {
 				alert(error);
 			}
 		});
-		
+
 	}
 
 	var id_checks = null;
@@ -195,15 +200,14 @@ function email_check() {
 			type : 'post',
 			dataType : 'json',
 			url : 'id_check',
-			data : {id:id},
+			data : {
+				id : id
+			},
 			success : function(evt) {
-				if(evt.ok==true)
-				{
+				if (evt.ok == true) {
 					$('#id_checktext').text("중복확인 되었습니다..");
-					id_checks=evt.msg;
-				}
-				else if(evt.ok==false)
-				{
+					id_checks = evt.msg;
+				} else if (evt.ok == false) {
 					$('#id_checktext').text("사용 중인 아이디 입니다.");
 				}
 			},
@@ -218,37 +222,33 @@ function email_check() {
 	}
 
 	function joinsave() {
-		
 
-		if(id_checks!=$('#id').val())
-		{
-		alert("중복검사하세요.");
-		} 
-		if(id_checks==$('#id').val())
-		{
-		 
-		 
-		var data = $('#joinform').serialize();
-		$.ajax({
-			type : 'post',
-			dataType : 'json',
-			url : 'join',
-			data : data,
-			success : function(evt) {
-				if (evt.ok == true) {
-					alert("성공");
-				}
-			},
-			complete : function(data) {
-
-			},
-			error : function(xhr, status, error) {
-				alert(error);
-			}
-		});
-		
+		if (id_checks != $('#id').val()) {
+			alert("중복검사하세요.");
 		}
-		
+		if (id_checks == $('#id').val()) {
+
+			var data = $('#joinform').serialize();
+			$.ajax({
+				type : 'post',
+				dataType : 'json',
+				url : 'join',
+				data : data,
+				success : function(evt) {
+					if (evt.ok == true) {
+						alert("성공");
+					}
+				},
+				complete : function(data) {
+
+				},
+				error : function(xhr, status, error) {
+					alert(error);
+				}
+			});
+
+		}
+
 	}
 </script>
 </head>
@@ -256,67 +256,56 @@ function email_check() {
 	<jsp:include page="include/navi.jsp" />
 	<jsp:include page="include/header.jsp" />
 	<section id="contents">
-	
-	
-<!-- Button trigger modal -->
-<!-- Modal -->
-<div class = "modal fade" id = "myModal" tabindex = "-1" role = "dialog" 
-   aria-labelledby = "myModalLabel" aria-hidden = "false">
-   
-   <div class = "modal-dialog">
-      <div class = "modal-content">
-         
-         <div class = "modal-header">
-            <button type = "button" class = "close" data-dismiss = "modal" aria-hidden = "true">
-               ×
-            </button>
-            
-            <h4 class = "modal-title" id = "myModalLabel">
-               This Modal title
-            </h4>
-         </div>
-         
-         <div class = "modal-body" id="myModalBody">
-            Press ESC button to exit.
-         </div>
-         
-         <div class = "modal-footer">
-            <button type = "button" class = "btn btn-default" data-dismiss = "modal">
-               Close
-            </button>          
-            
-            <button type = "button" class = "btn btn-success" onclick="direction()">
-               	Directions
-            </button>
-            
-             <button type = "button" class = "btn btn-success chat-btn">
-               Participation in chat rooms
-            </button>
-            
-             <button type = "button" class = "btn btn-success">
-               Rough map
-            </button>
-            
-            
-            
-         </div>
-         
-      </div><!-- /.modal-content -->
-   </div><!-- /.modal-dialog -->
-   
-</div><!-- /.modal -->	      
-  
-<div class="recommend">	
-	<span id="recommend-title">추천목록</span><br>
-	<div class="recommend-list">		
-	</div>
-	<span id="recommend-more"><a href='#none' onClick='getRecommend(); return false;' >새로고침</a></span>
-</div>  
-  
+
+
+		<!-- Button trigger modal -->
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
+
+			<div class="modal-dialog">
+				<div class="modal-content">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+
+						<h4 class="modal-title" id="myModalLabel">This Modal title</h4>
+					</div>
+
+					<div class="modal-body" id="myModalBody">Press ESC button to exit.</div>
+
+					<div class="modal-footer">
+						<input type="hidden" name="master">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+
+						<button type="button" class="btn btn-success" onclick="direction()">Directions</button>
+
+						<button type="button" class="btn btn-success chat-btn">Participation in chat rooms</button>
+
+						<button type="button" class="btn btn-success">Rough map</button>
+
+
+
+					</div>
+
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+
+		</div>
+		<!-- /.modal -->
+
+		<div class="recommend">
+			<span id="recommend-title">추천목록</span>
+			<br>
+			<div class="recommend-list"></div>
+			<span id="recommend-more">
+				<a href='#none' onClick='getRecommend(); return false;'>새로고침</a>
+			</span>
+		</div>
 		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
-		<jsp:include page="include/chat_view.jsp" />
 	</section>
 	<jsp:include page="include/footer.jsp" />
 </body>

@@ -10,6 +10,8 @@
 	<!-- permitAll 은 로그인을 하지 않아도 들어갈수 있게 한다 위 에서 부터 순서대로 실행, 로그인을 안한 사람이 페이지에 접근하면 순서대로 실행되기 때문에 접근이 불가능해진다 허용 범위가 넓은 것을 아래에 작성한다 -->
 	<context:component-scan base-package="meeting.team.security" />
 	<context:component-scan base-package="meeting.team.service" />
+	<context:component-scan base-package="meeting.team.controller" />
+	
 	
 	<sec:http auto-config='true' use-expressions="true">
 		<sec:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')" />

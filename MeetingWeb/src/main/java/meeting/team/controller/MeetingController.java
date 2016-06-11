@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import meeting.team.service.MeetingService;
@@ -33,6 +32,11 @@ public class MeetingController {
 	@RequestMapping(value = "mapSaveLocal", method = RequestMethod.POST)
 	public @ResponseBody String mapSaveLocal(HttpServletRequest request) {
 		return meeting_svc.mapSaveLocal(request);
+	}
+	
+	@RequestMapping(value = "chatInsert", method = RequestMethod.POST)
+	public @ResponseBody String chatInsert(HttpServletRequest request){
+		return meeting_svc.chatInsert(request);
 	}
 
 }
