@@ -35,7 +35,7 @@ $(function() {
 	});
 
 	$("#logoutbtn").on("click", function() {
-		location.href = "../logout";
+		location.href = "/NowMeetingWeb/logout";
 	});
 	// ////////추천/////////////////////
 	$("#recommendbtn").on("click", function() {
@@ -48,6 +48,60 @@ $(function() {
 		}
 		;
 
+	});
+	///////////날 보여줘//////////////
+	
+		$('#logo').on('click',function(){		
+			var latlng = new google.maps.LatLng(mylat,mylng);			
+			map.panTo(latlng);	
+		});
+	//////////검색///////////////////////
+	$("#search-btn").on("click", function() {
+		var url=$(location).attr('pathname');
+			//user_id를 못찾음
+			if(user_id!="")
+			{
+				if(url=='/NowMeetingWeb/web/main')
+				{
+					if ($("#search-menu").css('display') == 'none') {						
+						$("#search-menu").css('display', 'block');
+					} else if ($("#search-menu").css('display') == 'block') {						
+						$("#search-menu").css('display', 'none');
+					}
+				}else{			
+					location.href="/NowMeetingWeb/web/main?search=ok";			
+				}
+			}
+			
+		
+	});
+	$("#search-btn-name").on("click", function() {
+		var url=$(location).attr('pathname');
+		if(user_id!="")
+		{
+			if(url=='/NowMeetingWeb/web/main')
+			{
+				if ($("div.search-menu").css('display') == 'none') {			
+					$("div.search-menu").css('display', 'block');
+				} else if ($("div.search-menu").css('display') == 'block') {
+					$("div.search-menu").css('display', 'none');
+				}
+			}else{			
+				location.href="main?search=ok";			
+			}
+		}
+		
+
+	});
+
+	
+	//////////내위치 정하기////////////////
+	$('#mylocation-btn').on('click',function(){
+		location.href="myLocation";
+	});
+	$('#myLocation-btn-name').on('click',function(){
+		location.href="myLocation";
+		
 	});
 	// ///////메뉴///////////////////////
 	var bool = false;

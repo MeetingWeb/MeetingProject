@@ -38,5 +38,4 @@ public class MeetingController {
 	public @ResponseBody String chatInsert(HttpServletRequest request){
 		return meeting_svc.chatInsert(request);
 	}
-
 }

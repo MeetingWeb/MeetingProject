@@ -174,6 +174,7 @@ public class MeetingService {
 		return null;
 	}
 
+
 	public String chatInsert(HttpServletRequest request) {
 		String user = request.getParameter("user");
 		String master = request.getParameter("master");
@@ -190,4 +191,28 @@ public class MeetingService {
 		return json.toJSONString();
 	}
 
+
+	
+	public String getMeetings(String[] key){
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		JSONArray jsonArr=new JSONArray();
+		for(int i=0; i<key.length; i++)
+		{
+			List<MeetingVo> meetings=meeting_dao.getRecommend(key[i]);
+			for(int j=0; j<meetings.size(); j++)
+			{
+				JSONObject jsonObj=new JSONObject();
+				jsonObj.put("loc",meetings.get(j).getArea());
+				jsonObj.put("num",meetings.get(j).getNum());
+				jsonObj.put("contents",meetings.get(j).getContents());
+				jsonObj.put("endTime",meetings.get(j).getEnd_time().toString());
+				jsonObj.put("master",meetings.get(j).getMaster());			
+				jsonObj.put("startTime",meetings.get(j).getStart_time().toString());			
+				jsonObj.put("title",meetings.get(j).getTitle());
+				jsonObj.put("field",meetings.get(j).getField());
+				jsonArr.add(jsonObj);	
+			}
+		}	
+		return jsonArr.toJSONString();			
+	}
 }

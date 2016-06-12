@@ -114,19 +114,18 @@ public class WebController {
     	return "mainPage";
 	}
 	
-	
-	
-	
-	
 	 @RequestMapping({"main",""})
 		public String mainPage(HttpSession session,HttpServletRequest request, Model model) {
 	    	
 	    	String sessionid = request.getParameter("sess");
-	    	String userId = request.getParameter("id");	    	
+	    	String userId = request.getParameter("id");	
+	    	String search = request.getParameter("search");		    	
 	    	if(userId != null) {
 	    		session.setAttribute("id", userId);
-	    		model.addAttribute("id", userId);		    		    		
-	    	}	  	    	    	
+	    		model.addAttribute("id", userId);	  	    		
+	    	}	 
+	    	model.addAttribute("search",search);
+	    	
 	    	return "mainPage";
 		}
 	 
@@ -175,6 +174,11 @@ public class WebController {
 	 public String getRecommend(HttpServletRequest request)
 	 {	
 		 return ms.getRecommend(us.getInterest(request));		 
+	 }
+	 @RequestMapping(value="search")
+	 @ResponseBody
+	 public String search(@RequestParam("data")String[] list){
+	 	return ms.getMeetings(list);
 	 }
     
 }

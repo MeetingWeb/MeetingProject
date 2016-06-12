@@ -554,16 +554,56 @@ footer {
 	position: absolute;
 	top: 64px;
 	right: 0px;
-	overflow-y: scroll;
+	overflow-y: scroll; 
 	display: none;
 }
 
-#recommend-title {
-	color: gray;
-	font-size: 17px;
-}
+
 
 #recommend-more {
-	color: gray;
+	
 	font-size: 14px;
+	margin-left:40%
+	
+}
+
+#search-menu{
+	background-color: rgba(255, 255, 255, 0);
+	z-index: 50;	
+	position: absolute;
+	top: 64px;
+	left: 64px;
+	display: none;
+	margin-left:1%;
+	margin-top:1%;
+
+ }
+.recommendTable{	
+	margin-left:2%;
+	margin-right:2%;	
+}
+.main{
+	font-size:16px;
+}
+.sub{
+	font-size:12px;
+	color:#9F9F9F;
+}
+.titletd{
+	width:280px;
+	
+	
+}
+.buttontd{
+	width:50px;	
+}
+.recommendfield{
+	font-weight: bold;
+}
+.list-group{
+	width:250px;
+	
+}
+.searchtext{
+	margin-left:35%;
 }
