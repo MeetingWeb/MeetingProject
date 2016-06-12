@@ -97,6 +97,7 @@ public class MeetingService {
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(id);
 		meeting.setMap_name(roughMapSave(request));
+		
 		int ok = meeting_dao.insert(meeting);
 		
 		if(meeting.getDivision().equals("now")) {
