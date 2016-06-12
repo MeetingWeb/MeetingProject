@@ -31,8 +31,13 @@
 			<form action="#" onsubmit="searchMap(document.getElementById('address').value); return(false);">
 				주소/건물：
 				<input id="address" style="width: 400px;" type="text" value="">
-				<input type="submit" value="검색">
-				<button type="button" onclick="setMyLocation()">내위치로 지정</button>
+				<!-- <input type="submit" value="검색"> -->
+				<button type = "submit" class = "btn btn-success btn-xs" >
+    			  검색
+ 				</button>
+				<button type = "button" class = "btn btn-success btn-xs" onclick="setMyLocation()">
+    			  해당위치로 변경
+ 				</button>
 			</form>
 			<div id="location-map" style="height: 100%; width: 100%;"></div>
 		</div>
