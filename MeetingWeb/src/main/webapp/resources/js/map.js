@@ -5,6 +5,7 @@ var deslat;
 var deslng;
 var directionsService;
 var directionsDisplay;
+var markers=[];
 function initMap() {
 
 	// Specify features and elements to define styles.
@@ -44,6 +45,7 @@ function initMap() {
 	 directionsDisplay = new google.maps.DirectionsRenderer;
 	 directionsDisplay.setMap(map);
 
+
 }
 
 function goChat(){
@@ -58,6 +60,7 @@ function direction(){
 
 function showHere(lat,lng){	
 	var latlng = new google.maps.LatLng(lat,lng);
+	drawMeetings();
 	map.panTo(latlng);
 	
 }
@@ -145,7 +148,9 @@ function drawMeetings(){
 		type : 'post',
 		dataType : 'json',
 		url : 'getAllMeeting',		
-		success : function(data) {			
+		success : function(data) {
+			setMapOnAll(null);
+			markers=[];
 			for(var i=0; i<data.length; i++)
 			{
 				var loc=data[i].loc;
@@ -155,6 +160,7 @@ function drawMeetings(){
 				var latlng = new google.maps.LatLng(lat,lng);
 				makeMarker(latlng,data[i]);
 			}
+			setMapOnAll(map); 
 		},
 		complete : function(data) {
 
@@ -172,8 +178,7 @@ function showMyLocation(){
 		url : 'getMyLocation',		
 		success : function(data) {
 			
-			var loc=data.latlng;
-			
+			var loc=data.latlng;			
 			loc=loc.replace('(','');
 			loc=loc.replace(')','');			
 			var arr=loc.split(',');				
@@ -182,6 +187,8 @@ function showMyLocation(){
 			mylat=lat;
 			mylng=lng;
 			var latlng = new google.maps.LatLng(lat,lng);
+		
+			myMarker(latlng);//내위치마커
 			map.panTo(latlng);
 						
 			
@@ -194,6 +201,23 @@ function showMyLocation(){
 		}	
 		
 	});
+	
+}
+function myMarker(latlng){
+	var marker=new google.maps.Marker({
+		position: latlng,
+		map:map,
+		color:'blue'
+		
+	});	
+	var info="내위치";
+	var simpleInfoWindow=new google.maps.InfoWindow({
+		content : info
+	}).open(marker.get('map'), marker);
+	//simpleInfoWindow.open(marker.get('map'), marker);		
+	/*marker.addListener('click', function() {
+		simpleInfoWindow.open(marker.get('map'), marker);		
+	 });	*/ 
 	
 }
 
@@ -224,10 +248,17 @@ function makeMarker(latlng,meeting){
 		map:map,
 		title:num
 	});
-	
+	markers.push(marker);
 	attachMeetingInfo(marker,meeting);	
 	condition=0;	
 }
+
+function setMapOnAll(map) {
+	  for (var i = 0; i < markers.length; i++) {
+	    markers[i].setMap(map);
+	  }
+}
+
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 	infoWindow.setPosition(pos);
 	infoWindow.setContent(browserHasGeolocation ? 'Error: The Geolocation service failed.'

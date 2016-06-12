@@ -53,7 +53,6 @@ public class UserService implements UserDetailsService {
 		UserVo login = user_dao.login(username);
 		if (login != null) {
 			GrantedAuthority role = new SimpleGrantedAuthority(login.getPower());
-
 			List<GrantedAuthority> roles = new ArrayList<GrantedAuthority>();
 			roles.add(role);
 			User user = new User(login.getId(), login.getPw(), roles);
@@ -192,12 +191,9 @@ public String join(UserVo user, HttpServletRequest request){
     }
 	
 	public boolean changeLatlng(HttpServletRequest request){
-		System.out.println("µé¾î¿È");
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
 		String latlng=request.getParameter("latlng");
-		String id=(String)request.getSession().getAttribute("id");
-		System.out.println(latlng);
-		System.out.println(id);
+		String id=(String)request.getSession().getAttribute("id");	
 		UserVo user=new UserVo();
 		user.setId(id);
 		user.setLatlng(latlng);
@@ -207,11 +203,9 @@ public String join(UserVo user, HttpServletRequest request){
 	}
 	
 	public String getMyLocation(HttpServletRequest request){
-		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
-		System.out.println(request.getSession().getAttribute("id"));
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);	
 		String id=(String)request.getSession().getAttribute("id");
-		String myLOC=user_dao.getMyLocation(id);
-		System.out.println(myLOC);
+		String myLOC=user_dao.getMyLocation(id);		
 		JSONObject jsonObj=new JSONObject();	
 		jsonObj.put("latlng", myLOC);
 		return jsonObj.toJSONString();

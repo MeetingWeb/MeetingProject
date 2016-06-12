@@ -25,6 +25,20 @@
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 var user_id = '<c:out value="${sessionScope.id}"/>';
+$(function(){
+	$('#myModal').modal({keyboard: true,backdrop: false});	
+	/* if ("${sessionScope.id}" != "") {		
+		drawMeetings(map);
+		showMyLocation();
+	} */
+})
+
+function myLocation(){
+	location.href="myLocation";
+}
+function main(){
+	location.href="main";
+}
 
 </script>
 </head>
@@ -34,14 +48,41 @@ var user_id = '<c:out value="${sessionScope.id}"/>';
 
 	<jsp:include page="include/navi.jsp" />
 	<jsp:include page="include/header.jsp" />
-	<section id="contents"><br>
-	
-		<a href="myLocation">내 위치 다시 지정하기</a><br>	
-		<a href="main">예전 위치에서 시작하기</a>
+	<section id="contents">
+		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
 		<jsp:include page="include/chat_view.jsp" />
-	</section>
+		</section>
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false" style="display: block;background: rgba(0,0,0,0.6);">
+
+			<div class="modal-dialog">
+				<div class="modal-content" style="margin-top:50%">
+
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+						<h4 class="modal-title" id="myModalLabel">Welcome to COME TOGETHER</h4>
+					</div>
+					<div class="modal-body" id="myModalBody">
+					내 위치를 다시 지정하시겠습니까?</br>
+					정확한 위치가 지정되어있지 않으면 정확한 서비스를 제공받으실 수 없습니다.<br>
+					다시 지정하지 않으실꺼면 [ 예전 위치에서 시작하기 ] 버튼을 눌러주세요.
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-success chat-btn" style="width: 100%; height:50px;"  onclick="myLocation()">내 위치 다시 지정하기</button>
+						<button type="button" class="btn btn-success chat-btn"  style="width: 100%; height:50px; margin: 10px 0px 0px 0px" onclick="main()">예전 위치에서 시작하기</button>
+						
+						
+					</div>
+
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+
+		</div>
+		<!-- /.modal -->
 	<jsp:include page="include/footer.jsp" />
 </sec:authorize>
 </body>

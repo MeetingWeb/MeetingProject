@@ -34,5 +34,5 @@ public class MeetingController {
 	public @ResponseBody String mapSaveLocal(HttpServletRequest request) {
 		return meeting_svc.mapSaveLocal(request);
 	}
-
+	
 }
