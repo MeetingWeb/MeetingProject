@@ -96,9 +96,12 @@ public class MeetingService {
 		meeting.setStart_time(s_stamp);
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(id);
-		meeting.setDivision("now");
 		meeting.setMap_name(roughMapSave(request));
 		int ok = meeting_dao.insert(meeting);
+		
+		if(meeting.getDivision().equals("now")) {
+			
+		}
 
 		if (ok > 0) {
 			json.put("ok", true);

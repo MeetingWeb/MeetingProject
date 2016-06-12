@@ -1,4 +1,5 @@
 var body_height = $(window).height();
+var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
 $(function() {
 	// ///////메뉴 네비////////////////////////////
 	$("#menu ul li:not(#menu-btn, #logo)").on("click", function() {
@@ -89,7 +90,7 @@ $(function() {
 	});
 
 	// 모바일 자바스크립트///////////////////////////////////
-	var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
+	
 	for ( var txt in mobileArr) {
 		if (navigator.userAgent.match(mobileArr[txt]) != null) {
 			$("#m-menu-btn").on("click", function() {
