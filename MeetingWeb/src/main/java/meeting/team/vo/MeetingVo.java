@@ -1,17 +1,35 @@
 package meeting.team.vo;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class MeetingVo {
+	private int num;
 	private String title;
-	private String meetingType;
+	private String field;
 	private String contents;
 	private String master;
 	private String area;
-	private Date start_time;
-	private Date end_time;
-	private String map_name;
+	private Timestamp start_time;
+	private Timestamp end_time;
+	private String map_name = "none";
 	private String division;
+
+	
+	public int getNum() {
+		return num;
+	}
+
+	public void setNum(int num) {
+		this.num = num;
+	}
+
+	public String getField() {
+		return field;
+	}
+
+	public void setField(String field) {
+		this.field = field;
+	}
 
 	public String getTitle() {
 		return title;
@@ -19,14 +37,6 @@ public class MeetingVo {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getMeetingType() {
-		return meetingType;
-	}
-
-	public void setMeetingType(String meetingType) {
-		this.meetingType = meetingType;
 	}
 
 	public String getContents() {
@@ -53,19 +63,19 @@ public class MeetingVo {
 		this.area = area;
 	}
 
-	public Date getStart_time() {
+	public Timestamp getStart_time() {
 		return start_time;
 	}
 
-	public void setStart_time(Date start_time) {
+	public void setStart_time(Timestamp start_time) {
 		this.start_time = start_time;
 	}
 
-	public Date getEnd_time() {
+	public Timestamp getEnd_time() {
 		return end_time;
 	}
 
-	public void setEnd_time(Date end_time) {
+	public void setEnd_time(Timestamp end_time) {
 		this.end_time = end_time;
 	}
 

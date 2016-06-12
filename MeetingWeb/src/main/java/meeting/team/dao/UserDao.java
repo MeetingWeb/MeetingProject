@@ -1,6 +1,7 @@
 package meeting.team.dao;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -12,5 +13,7 @@ public interface UserDao {
 	public int joinhabby(HashMap<String, Object> map);
 	public UserVo login(String id);
 	public UserVo id_check(String id);
-
+	public int changeLatlng(UserVo user);
+	public String getMyLocation(String id);
+	public List<String> getInterest(String id);
 }

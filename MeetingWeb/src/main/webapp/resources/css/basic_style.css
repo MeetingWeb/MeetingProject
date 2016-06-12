@@ -29,9 +29,23 @@ ul {
 }
 
 #m-menu-btn {
-	font-size: 64px;
-	color: #ddd;
+	font-size: 25px;
+	color: #fff;
 	cursor: pointer;
+	padding-top: 12px;
+	padding-right: 13px;
+}
+
+#m-menu {
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: #fff;
+	display: none;
+	width: 100%;
+	height: 100%;
+	z-index: 50;
+	padding-top: 45px;
 }
 
 #menu {
@@ -42,14 +56,15 @@ ul {
 	left: 0px;
 	background: #fff;
 	z-index: 100;
+	box-shadow: 0px 0px 10px silver;
 }
 
-#menu a{
+#menu a {
 	color: #000;
 	font-size: 9pt;
 }
 
-#menu #home-btn a{
+#menu #home-btn a {
 	color: #fff;
 }
 
@@ -77,9 +92,9 @@ ul {
 #menu ul li:hover .menu-btn-name {
 	/* animation-name: move;
     animation-duration: 4s; */
-    left: 64px;
-    opacity: 1;
-    background: #dfe7ed;
+	left: 64px;
+	opacity: 1;
+	background: #dfe7ed;
 }
 
 #menu .menu-btn-name {
@@ -96,12 +111,12 @@ ul {
 }
 
 #menu .menu-btn-name-active {
-	left:64px;
+	left: 64px;
 	opacity: 1;
 	width: 144px;
 }
 
-#menu ul li .menu-btn-icon {
+.menu-btn-icon {
 	margin-top: 18px;
 	font-size: 25px;
 	position: relative;
@@ -122,7 +137,7 @@ ul {
 	float: right;
 	padding-left: 64px;
 	height: 100%;
-	overflow:hidden;
+	overflow: hidden;
 }
 
 /* @media (max-width: 991px) and (min-width: 768px) {
@@ -130,11 +145,13 @@ ul {
 		padding-left: 0px;
 	}
 } */
-
-@media (max-width: 991px) {
-#contents {
+@media ( max-width : 991px) {
+	#contents {
 		padding-left: 0px;
-
+		padding-top: 0px;
+		overflow: visible;
+		height: auto;
+		margin-top: 45px;
 	}
 }
 
@@ -146,41 +163,44 @@ footer {
 }
 
 .chat-btn {
-	background: #0df;
+	/* background: #0df;
 	width: 200px;
 	height: 50px;
 	cursor: pointer;
-	display: none;
+	display: none; */
+}
+
+#chat-list-lid {
+	width: 320px;
+	height: auto;
+	background: #F5EEEE;
+	border-right: 1px solid #ddd;
 }
 
 .chat-lid {
-	width: 280px;
-	height: 50px;
-	position: fixed;
-	right: 20px;
-	display: none;
+	width: 70%;
+	height: auto;
+	display: block;
 	overflow: visible;
 }
 
 .chat-lid-in {
 	width: 100%;
-	height: 360px;
-	background: #F5EEEE;
-	position: relative;
-	top: -310px;
-	border-radius: 3px 3px 0 0;
+	height: 100%;
+	background: #fff;
+	//border-radius: 3px 3px 0 0;
 	box-shadow: 0 1px 1px rgba(0, 0, 0, .3);
 }
 
 .chat-lid-in .msg {
-	position: relative;
-	top: 300px;
+	/* position: relative;
+	top: 300px; */
 	width: 100%;
 }
 
 .chat-lid-in .msg input {
 	width: 100%;
-	height: 30px;
+	height: 64px;
 	outline: 0;
 	border: none;
 	border-top: 1px solid #aaa;
@@ -197,6 +217,13 @@ footer {
 	position: relative;
 	top: 0;
 	cursor: pointer;
+}
+
+.chat-lid-in-console {
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background: #fff;
 }
 
 .chat-view-btn {
@@ -218,12 +245,27 @@ footer {
 	padding-left: 64px;
 }
 
-@media (max-width: 991px) {
-#headernavi {
+@media ( max-width : 991px) {
+	#headernavi {
+		padding-left: 0px;
+		position: fixed;
+		//background: #fff;
+		z-index: 200;
+		background: #33B573;
+		width: 100%;
+		height: 45px;
+	}
+}
+
+@media ( max-width : 768px) {
+	#headernavi {
 		padding-left: 0px;
 		position: fixed;
 		background: #fff;
 		z-index: 200;
+		width: 100%;
+		height: 45px;
+		background: #33B573;
 	}
 }
 
@@ -233,24 +275,34 @@ footer {
 	float: left;
 	background: #33B573;
 	padding: 20px;
-    font-size: 15pt;
-    font-weight: bold;
-    color: #fff;
-    text-transform: uppercase;
+	font-size: 15pt;
+	font-weight: bold;
+	color: #fff;
+	text-transform: uppercase;
 }
 
-@media (max-width: 991px) {
+@media ( max-width : 991px) {
 	#title_name {
 		width: 220px;
 		height: 64px;
 		float: left;
 		background: #33B573;
 		padding: 20px;
-	    font-size: 15pt;
-	    font-weight: bold;
-	    color: #fff;
-	    text-transform: uppercase;
+		font-size: 15pt;
+		font-weight: bold;
+		color: #fff;
+		text-transform: uppercase;
 	}
+}
+
+#mobile-title-name {
+	font-size: 20px;
+	float: left;
+	height: 100%;
+	padding-left: 15px;
+	padding-top: 9px;
+	color: #fff;
+	text-transform: uppercase;
 }
 
 #headernavi #buttonclass {
@@ -277,7 +329,7 @@ footer {
 	margin-top: 25px;
 }
 
-#loginbtn, #logoutbtn {
+#loginbtn, #logoutbtn, #recommendbtn {
 	width: 126px;
 	height: 64px;
 	float: right;
@@ -297,6 +349,18 @@ footer {
 	padding-top: 22px;
 }
 
+#recommendbtn span {
+	float: left;
+	color: #fff;
+	text-transform: uppercase;
+	font-size: 15px;
+	line-height: 18px;
+	font-weight: 500;
+	text-align: left;
+	padding-left: 15px;
+	padding-top: 22px;
+}
+
 #loginbtn span {
 	padding-left: 38px;
 }
@@ -309,6 +373,68 @@ footer {
 	top: 64px;
 	right: 0px;
 	display: none;
+}
+
+@media ( max-width :768px) {
+	#mobile-login-form {
+		width: 100%;
+		height: 100%;
+		padding: 15px;
+		padding-top: 45px;
+		display: block;
+		position: static;
+		background-color: rgba(33, 61, 78, 0.85);
+	}
+	#mobile-login-form #info-group input {
+		background-color: #b6c8cd;
+		color: #213D4E;
+		transition: background-color .2s;
+		outline: 0;
+		border: none;
+		box-shadow: none;
+		-moz-appearance: none;
+		-webkit-appearance: none;
+		border-radius: 0;
+	}
+	#mobile-login-form #info-group label {
+		color: #788994;
+		text-align: right;
+		text-transform: uppercase;
+		font-weight: 700;
+		font-size: 12px;
+		margin: 10px 0px;
+	}
+	#mobile-login-form #login-title {
+		font-size: 20px;
+		color: #3A9E97;
+		font-family: Montserrat-bold;
+		width: 238px;
+		margin: 25px auto;
+	}
+	#mobile-login-form #login-btn-group {
+		width: 100%;
+		margin-top: 30px;
+	}
+	#mobile-login-form #login-btn-group div {
+		height: 50px;
+		padding: 14px 0 0 24px;
+		color: #fff;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-weight: 300;
+		font-size: 15px;
+		line-height: 21px;
+	}
+	#mobile-login-form #facebookLogin {
+		background-color: #33B573;
+	}
+	#mobile-login-form #login-btn {
+		background-color: #129994;
+	}
+}
+
+#login-form #login-title b {
+	text-transform: uppercase;
 }
 
 #login-form #info-group label {
@@ -325,7 +451,8 @@ footer {
 	box-sizing: initial;
 }
 
-#login-form #info-group input[name=id], #login-form #info-group input[name=pw] {
+#login-form #info-group input[name=id], #login-form #info-group input[name=pw]
+	{
 	display: block;
 	float: left;
 	margin: 0 0 16px;
@@ -344,14 +471,14 @@ footer {
 	box-sizing: initial;
 }
 
-#login-title {
+#login-form #login-title {
 	font-size: 34px;
 	color: #3A9E97;
 	font-family: Montserrat-bold;
 	padding: 56px 24px 24px 84px;
 }
 
-#login-title b {
+#login-form #login-title b {
 	text-transform: uppercase;
 }
 
@@ -365,7 +492,7 @@ footer {
 	display: none;
 }
 
-#login-btn-group {
+#login-form #login-btn-group {
 	top: 280px;
 	height: 88px;
 	width: 100%;
@@ -373,7 +500,7 @@ footer {
 	margin-top: 30px;
 }
 
-#facebookLogin {
+#login-form #facebookLogin {
 	display: block;
 	float: left;
 	padding: 24px 0 0 24px;
@@ -395,7 +522,7 @@ footer {
 	background-color: #0F975D;
 }
 
-#login-btn {
+#login-form #login-btn {
 	display: block;
 	float: right;
 	margin: 0;
@@ -417,4 +544,66 @@ footer {
 
 #login-btn:hover {
 	background-color: #2E827E;
+}
+
+.recommend {
+	background-color: rgba(255, 255, 255, 0.85);
+	z-index: 50;
+	width: 378px;
+	height: 30%;
+	position: absolute;
+	top: 64px;
+	right: 0px;
+	overflow-y: scroll; 
+	display: none;
+}
+
+
+
+#recommend-more {
+	
+	font-size: 14px;
+	margin-left:40%
+	
+}
+
+#search-menu{
+	background-color: rgba(255, 255, 255, 0);
+	z-index: 50;	
+	position: absolute;
+	top: 64px;
+	left: 64px;
+	display: none;
+	margin-left:1%;
+	margin-top:1%;
+
+ }
+.recommendTable{	
+	margin-left:2%;
+	margin-right:2%;	
+}
+.main{
+	font-size:16px;
+}
+.sub{
+	font-size:12px;
+	color:#9F9F9F;
+}
+.titletd{
+	width:280px;
+	
+	
+}
+.buttontd{
+	width:50px;	
+}
+.recommendfield{
+	font-weight: bold;
+}
+.list-group{
+	width:250px;
+	
+}
+.searchtext{
+	margin-left:35%;
 }

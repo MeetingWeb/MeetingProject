@@ -158,8 +158,8 @@ $(function(){
 </script>
 </head>
 <body>
-	<jsp:include page="../navi.jsp" />
-	<jsp:include page="../header.jsp" />
+	<jsp:include page="../include/navi.jsp" />
+	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<form>
 <table>
@@ -170,10 +170,10 @@ $(function(){
 <button type="button" onclick="insert()">글쓰기</button> 
 <button type="button" onclick="cancel()">취소</button>
 </form>
-		<jsp:include page="../loginForm.jsp" />
-		<jsp:include page="../joinForm.jsp" />
-		<jsp:include page="../chat_view.jsp" />
+		<jsp:include page="../include/loginForm.jsp" />
+		<jsp:include page="../include/joinForm.jsp" />
+		<jsp:include page="../include/chat_view.jsp" />
 	</section>
-	<jsp:include page="../footer.jsp" />
+	<jsp:include page="../include/footer.jsp" />
 </body>
 </html>

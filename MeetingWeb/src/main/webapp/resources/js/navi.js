@@ -1,19 +1,19 @@
 var body_height = $(window).height();
+var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
 $(function() {
-	var link =  document.location.href;
-	var c_width;
-	
+	// ///////메뉴 네비////////////////////////////
+	$("#menu ul li:not(#menu-btn, #logo)").on("click", function() {
+		var path = $(this).find("a").attr("href");
+		location.href = path;
+	});
+
+	var link = document.location.href;
 	var body_width = $(window).width();
-	
-	if(link != "http://192.168.8.19:7777/NowMeetingWeb/web/main") {
-		body_width;
-	} else {
-		c_width = document.getElementById("menu").getBoundingClientRect().width;
-	}
-	
-	$("#map").css("height",body_height - 64);
-	
-// ///////////로그인 회원가입////////////////////////////////////////////////
+
+	$("#map").css("height", body_height - 64);
+	$("#login-form, #joinform").css("height", body_height - 64);
+	$("#mobile-login-form").css("height", body_height);
+	// ///////////로그인 회원가입////////////////////////////////////////////////
 	var flip = 0;
 	var flip2 = 0;
 	$("#loginbtn").click(function() {
@@ -30,15 +30,80 @@ $(function() {
 	});
 
 	$("#login-btn").on("click", function() {
-		//location.href="/user/login";
+		// location.href="/user/login";
 		$("form[name=loginForm]").submit();
 	});
-	
-	$("#logoutbtn").on("click",function() {
-		location.href="../logout";
+
+	$("#logoutbtn").on("click", function() {
+		location.href = "/NowMeetingWeb/logout";
 	});
+	// ////////추천/////////////////////
+	$("#recommendbtn").on("click", function() {
+
+		if ($("div.recommend").css('display') == 'none') {
+			getRecommend();
+			$("div.recommend").css('display', 'block');
+		} else if ($("div.recommend").css('display') == 'block') {
+			$("div.recommend").css('display', 'none');
+		}
+		;
+
+	});
+	///////////날 보여줘//////////////
 	
-/////////메뉴///////////////////////
+		$('#logo').on('click',function(){		
+			var latlng = new google.maps.LatLng(mylat,mylng);			
+			map.panTo(latlng);	
+		});
+	//////////검색///////////////////////
+	$("#search-btn").on("click", function() {
+		var url=$(location).attr('pathname');
+			//user_id를 못찾음
+			if(user_id!="")
+			{
+				if(url=='/NowMeetingWeb/web/main')
+				{
+					if ($("#search-menu").css('display') == 'none') {						
+						$("#search-menu").css('display', 'block');
+					} else if ($("#search-menu").css('display') == 'block') {						
+						$("#search-menu").css('display', 'none');
+					}
+				}else{			
+					location.href="/NowMeetingWeb/web/main?search=ok";			
+				}
+			}
+			
+		
+	});
+	$("#search-btn-name").on("click", function() {
+		var url=$(location).attr('pathname');
+		if(user_id!="")
+		{
+			if(url=='/NowMeetingWeb/web/main')
+			{
+				if ($("div.search-menu").css('display') == 'none') {			
+					$("div.search-menu").css('display', 'block');
+				} else if ($("div.search-menu").css('display') == 'block') {
+					$("div.search-menu").css('display', 'none');
+				}
+			}else{			
+				location.href="main?search=ok";			
+			}
+		}
+		
+
+	});
+
+	
+	//////////내위치 정하기////////////////
+	$('#mylocation-btn').on('click',function(){
+		location.href="myLocation";
+	});
+	$('#myLocation-btn-name').on('click',function(){
+		location.href="myLocation";
+		
+	});
+	// ///////메뉴///////////////////////
 	var bool = false;
 	$("#menu #menu-btn").on("click", function() {
 		if (bool == false) {
@@ -56,11 +121,66 @@ $(function() {
 			bool = false;
 		}
 	});
-//////////////모임만들기///////////////////////////////////////
+	// ////////////모임만들기///////////////////////////////////////
 	// $("#meeting-form-background").css("width", $("#contents").width());
 	var add_form_left = $("#contents").width() - $("#meeting-form-lid").width() + 140;
 	var add_form_top = $("#contents").height() - $("#meeting-form-lid").height() + 100;
-	$("#meeting-form-lid").css("top", "120px");
-	$("#meeting-form-lid").css("margin-left", -$("#meeting-form-lid").width()/2);
+	// $("#meeting-form-lid").css("top", "120px");
+	$// ("#meeting-form-lid").css("margin-left",
+		// -$("#meeting-form-lid").width() / 2 + 32);
 	$("#meeting-form-background, #meeting-form-map").css("height", $(window).height() - 64);
+
+	var visibility = false;
+	
+
+	$("#view-map #close").on("click", function() {
+		$("#view-map").css("visibility", "hidden");
+	});
+
+	// ////////////review js////////////////////////
+	$(".img-box").on("click", function() {
+		console.log($(this).attr("data-num"));
+		location.href = "selectOne?num=" + $(this).attr("data-num");
+	});
+
+	// 모바일 자바스크립트///////////////////////////////////
+	
+	for ( var txt in mobileArr) {
+		if (navigator.userAgent.match(mobileArr[txt]) != null) {
+			$("#m-menu-btn").on("click", function() {
+				$("#m-menu").css("display", "block");
+			});
+			
+			$("#headernavi").css("width", document.body.clientWidth);
+			
+			$("#view-map").css({
+				"width" : document.body.clientWidth,
+				"height" : document.body.clientHeight
+			});
+			
+			$("#set-location").on("click", function() {
+				$("#view-map").css("visibility", "visible");
+				document.body.scrollTop = 0;
+				document.documentElement.scrollTop = 0;
+			});
+			
+			$(".chat-lid").css("height",document.body.clientHeight).css("width", document.body.clientWidth);
+			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": document.body.clientHeight - 64})
+			
+			break;
+		} else {
+			$("#view-map").css({
+				"width" : $(window).width() - 64,
+				"height" : $(window).height() - 64
+			});
+			
+			$("#set-location").on("click", function() {
+				$("#view-map").css("visibility", "visible");
+			});
+			
+			$(".chat-lid").css("height",$(window).height() - 164).css("width", $(window).width() - ($("#chat-list-lid").width() + 65));
+			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": $(window).height() - 64})
+			break;
+		}
+	}
 });
