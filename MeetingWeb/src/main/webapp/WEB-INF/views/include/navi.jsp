@@ -54,7 +54,21 @@
 					<div class="menu-btn-name">
 						<a href="/NowMeetingWeb/web/chatForm">MESSAGE</a>
 					</div>
+					<div class="menu-btn-name"><a href="/NowMeetingWeb/Inquiry/list">INQUIRY</a></div>
 				</li>
+				<li>
+					<div id="search-btn" class="glyphicon glyphicon-search menu-btn-icon">							
+					</div>
+				<div class="menu-btn-name" id="search-btn-name"><a href="#">SEARCH</a></div>
+				</li>
+				<li>
+					<div id="mylocation-btn" class="glyphicon glyphicon-flag menu-btn-icon">							
+					</div>
+				<div class="menu-btn-name" id="myLocation-btn-name"><a href="#">내위치</a></div>
+				</li>
+				
+				
+				
 			</ul>
 		</nav>
 	</div>
