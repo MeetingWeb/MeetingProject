@@ -1,4 +1,5 @@
 var body_height = $(window).height();
+var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
 $(function() {
 	// ///////메뉴 네비////////////////////////////
 	$("#menu ul li:not(#menu-btn, #logo)").on("click", function() {
@@ -89,7 +90,7 @@ $(function() {
 	});
 
 	// 모바일 자바스크립트///////////////////////////////////
-	var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
+	
 	for ( var txt in mobileArr) {
 		if (navigator.userAgent.match(mobileArr[txt]) != null) {
 			$("#m-menu-btn").on("click", function() {
@@ -109,6 +110,8 @@ $(function() {
 				document.documentElement.scrollTop = 0;
 			});
 			
+			$(".chat-lid").css("height",document.body.clientHeight).css("width", document.body.clientWidth);
+			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": document.body.clientHeight - 64})
 			
 			break;
 		} else {
@@ -120,6 +123,9 @@ $(function() {
 			$("#set-location").on("click", function() {
 				$("#view-map").css("visibility", "visible");
 			});
+			
+			$(".chat-lid").css("height",$(window).height() - 164).css("width", $(window).width() - ($("#chat-list-lid").width() + 65));
+			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": $(window).height() - 64})
 			break;
 		}
 	}

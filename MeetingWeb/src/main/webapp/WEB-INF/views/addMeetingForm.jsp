@@ -40,22 +40,33 @@
 		});
 	});
 	function insert() {
-		$.ajax({
-			url : "/NowMeetingWeb/meeting/insert",
-			type : "post",
-			data : $("#add-meeting-form").serialize(),
-			dataType : "json",
-			success : function(obj) {
-				if (obj.ok) {
-					alert("모임 만들기 성공");
-				} else {
-					alert("모임 만들기 실패");
-				}
-			},
-			error : function(xhr, error, status) {
-
+		var division = null;
+		for ( var txt in mobileArr) {
+			if (navigator.userAgent.match(mobileArr[txt]) != null) {
+				division = $("input[name=division]").val("now");
+				break;
+			} else {
+				division = $("input[name=division]").val("notnow");
+				break;
 			}
-		});
+			
+			$.ajax({
+				url : "/NowMeetingWeb/meeting/insert",
+				type : "post",
+				data : $("#add-meeting-form").serialize(),
+				dataType : "json",
+				success : function(obj) {
+					if (obj.ok) {
+						alert("모임 만들기 성공");
+					} else {
+						alert("모임 만들기 실패");
+					}
+				},
+				error : function(xhr, error, status) {
+
+				}
+			});
+		}
 	}
 </script>
 <title>여기여기 붙어라</title>
@@ -165,7 +176,6 @@
 		</div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
-		<jsp:include page="include/chat_view.jsp" />
 	</section>
 	<jsp:include page="include/footer.jsp" />
 </body>

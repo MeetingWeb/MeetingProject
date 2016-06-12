@@ -1,16 +1,14 @@
 package meeting.team.service;
 
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -98,9 +96,12 @@ public class MeetingService {
 		meeting.setStart_time(s_stamp);
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(id);
-		meeting.setDivision("now");
 		meeting.setMap_name(roughMapSave(request));
 		int ok = meeting_dao.insert(meeting);
+		
+		if(meeting.getDivision().equals("now")) {
+			
+		}
 
 		if (ok > 0) {
 			json.put("ok", true);
@@ -171,6 +172,22 @@ public class MeetingService {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public String chatInsert(HttpServletRequest request) {
+		String user = request.getParameter("user");
+		String master = request.getParameter("master");
+		Map<String, String> chatMap = new HashMap<String, String>();
+		chatMap.put("user", user);
+		chatMap.put("master", master);
+		
+		JSONObject json = new JSONObject();
+		int userInOk = meeting_dao.userExit(user);
+		int ok = meeting_dao.chatInsert(chatMap);
+		if(ok > 0) {
+			json.put("ok", true);
+		}
+		return json.toJSONString();
 	}
 
 }

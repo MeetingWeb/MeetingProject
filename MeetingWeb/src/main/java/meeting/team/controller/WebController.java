@@ -49,6 +49,11 @@ public class WebController {
 		return "mobile/mobileLoginForm";
 	}
 	
+	@RequestMapping("chatForm")
+	public String chatForm(){
+		return "include/chat_view";
+	}
+	
 	@RequestMapping(value="join", method = RequestMethod.POST)
 	@ResponseBody
 	public String join(UserVo uvo,HttpServletRequest request){
@@ -77,7 +82,7 @@ public class WebController {
         session.setAttribute("email", email2);
         email.setReceiver(email2);
         email.setSubject("이메일 확인입니다.");
-        email.setContent("<form target='my' method='post' action='http://192.168.8.27:8088/NowMeetingWeb/web/email_join'>"
+        email.setContent("<form target='my' method='post' action='http://localhost:7777/NowMeetingWeb/web/email_join'>"
         		+ "<input type='hidden' name='sess' value='"+session.getId()+"'> "
         				+ "<button type='submit'>인증확인</button></form>");
         
