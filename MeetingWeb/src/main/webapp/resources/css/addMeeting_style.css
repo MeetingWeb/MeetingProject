@@ -187,7 +187,11 @@
 	position: absolute;
 }
 
-#rough-map-in { //
+#rough-map-in {
+	/* position: relative;
+	top:0px;
+	right: 0px;
+	float: right; */
 	margin: 0px auto;
 }
 

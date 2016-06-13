@@ -152,7 +152,7 @@
 							</div>
 							<div class="col-sm-2" style="width: 300px;">
 								<button type="button" class="btn btn-default" id="set-location">Set Location</button>
-								<button type="button" class="btn btn-default" id="set-location" onclick="roughMap(17)">Create Map</button>
+								<button type="button" class="btn btn-default" id="set-location" onclick="roughMap(16)">Create Map</button>
 							</div>
 						</div>
 						<div class="form-group">
@@ -200,12 +200,12 @@
 		</div>
 		<div id="rough-map">
 			<div id="rough-map-in">
-				<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="17" style="width: 200px;">
-				<input type="number" value="17" id="zoom-num" max="19" min="9">
+				<!-- <input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="16" style="width: 200px;"> -->
+				<input type="number" value="16" id="zoom-num" max="19" min="9">
 				<button id="rough-map-save-btn" type="button" onclick="roughMapSave()">Save</button>
 				<img src="" id="rough-map-in-img">
 				<canvas id="map-canvas" width="640" height="640"></canvas>
-				<label for="zoom-min" style="color: #fff;">ZOOM:</label>
+				<!-- <label for="zoom-min" style="color: #fff;">ZOOM:</label> -->
 			</div>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />

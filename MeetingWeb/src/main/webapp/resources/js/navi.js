@@ -102,8 +102,10 @@ $(function() {
 			
 			$("#view-map").css({
 				"width" : document.body.clientWidth,
-				"height" : document.body.clientHeight
+				"height" : document.documentElement.clientHeight - 139
 			});
+			
+			console.log(document.documentElement.clientHeight);
 			
 			$("#set-location").on("click", function() {
 				$("#view-map").css("visibility", "visible");
@@ -127,6 +129,10 @@ $(function() {
 			
 			$(".chat-lid").css("height",$(window).height() - 164).css("width", $(window).width() - ($("#chat-list-lid").width() + 65));
 			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": $(window).height() - 64})
+			
+			$("#message-btn").on("click", function(){
+				$(this).find(".badge").css("display","none").empty();
+			});
 			break;
 		}
 	}

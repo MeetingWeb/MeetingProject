@@ -45,5 +45,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getChatGroup" resultType = "java.lang.String">
 		SELECT member FROM chatList WHERE master = #{master}
 	</select>
+	
+	<update id="updateUser">
+		UPDATE meeting SET power='MASTER' WHERE id=#{master}
+	</update>
+	
 
 </mapper>

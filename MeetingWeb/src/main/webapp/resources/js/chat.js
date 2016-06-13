@@ -1,7 +1,8 @@
 var check;
 var master;
+var messageNum = 0;
 $(function() {
-	$(document).on("click",".chat-group", function(){
+	$(document).on("click touchstart",".chat-group", function(){
 		$(".chat-group").css("background","#ddd");
 		$(this).css("background","#fff");
 		master = $(this).find("input[type=hidden]").val();
@@ -9,7 +10,7 @@ $(function() {
 	});
 	
 	// var ws = new WebSocket("ws://localhost:8888/MavenWeb/wsinit");
-	var ws = new WebSocket("ws://192.168.8.19:7777/NowMeetingWeb/chat");
+	var ws = new WebSocket("ws://192.168.0.2:7777/NowMeetingWeb/chat");
 
 	ws.onopen = function() {
 		/*var list_ok = connect_cre_list();
@@ -34,10 +35,17 @@ $(function() {
 		if(master == json.master) {
 			if(json.sender == user_id) {
 				$(".chat-lid-in-console").append('<span class="user-msg pull-right">' + json.msg + '</span><br>');
+				
 			} else {
 				$(".chat-lid-in-console").append('<span class=user-msg>' + json.msg + '</span><br>');
 			}
 		}
+		
+		if(location.pathname != "/NowMeetingWeb/web/chatForm") {
+			$("#menu-in ul #message-btn .badge").css("display","block");
+			$("#menu-in ul #message-btn .badge").text(++messageNum);
+		}
+		
 		$console.scrollTop($console.prop("scrollHeight"));
 	};
 
@@ -73,6 +81,7 @@ $(function() {
 		jsonStr = JSON.stringify(obj);
 		ws.send(jsonStr);
 	}
+	
 	 
 	$("#contents .chat-btn").on("click", function() {
 		var master = $(".modal-footer input[name=master]").val();
