@@ -28,6 +28,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 
+import meeting.team.controller.MeetingController;
+import meeting.team.dao.MeetingDao;
 import meeting.team.dao.UserDao;
 import meeting.team.validator.JoinValidator;
 import meeting.team.vo.EmailVo;
@@ -218,6 +220,12 @@ public String join(UserVo user, HttpServletRequest request){
 		List<String> interest=user_dao.getInterest(id);
 		return interest;
 		
+	}
+
+	public void setChatList(String userId) {
+		Map<String, ArrayList<String>>map = MeetingController.chatMap;
+		MeetingDao meeting_dao = sqlSessionTemplate.getMapper(MeetingDao.class);
+		//meeting_dao.getAllChatList();
 	}
 	
 

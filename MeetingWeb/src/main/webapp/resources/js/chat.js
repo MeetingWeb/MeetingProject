@@ -1,5 +1,13 @@
 var check;
+var master;
 $(function() {
+	$(document).on("click",".chat-group", function(){
+		$(".chat-group").css("background","#ddd");
+		$(this).css("background","#fff");
+		master = $(this).find("input[type=hidden]").val();
+		$(".chat-lid-in-console").empty();
+	});
+	
 	// var ws = new WebSocket("ws://localhost:8888/MavenWeb/wsinit");
 	var ws = new WebSocket("ws://192.168.8.19:7777/NowMeetingWeb/chat");
 
@@ -11,7 +19,6 @@ $(function() {
 		$(".chat-lid-in-console").append("<span>접속</span><br>");
 		$('#chatStatus').text('Info: connection opened.');
 		$(document).on('keydown',".msg input[name=msg]" ,function(evt) {
-			console.log(evt.keyCode);
 			if (evt.keyCode == 13) {
 				var msg = $('input[name=msg]').val();
 				send_message(msg);
@@ -23,14 +30,19 @@ $(function() {
 	ws.onmessage = function(event) {
 		var $console = $(".chat-lid-in-console");
 		var json = JSON.parse(event.data);
-
-		$(".chat-lid-in-console").append('<span class=user-msg>' + json.msg + '</span><br>');
 		
+		if(master == json.master) {
+			if(json.sender == user_id) {
+				$(".chat-lid-in-console").append('<span class="user-msg pull-right">' + json.msg + '</span><br>');
+			} else {
+				$(".chat-lid-in-console").append('<span class=user-msg>' + json.msg + '</span><br>');
+			}
+		}
 		$console.scrollTop($console.prop("scrollHeight"));
 	};
 
 	ws.onclose = function(event) {
-		$('#chatStatus').text('Info: connection closed.');
+		$('.chat-lid-in-console').text('Info: connection closed.');
 	};
 
 	function send_message(msg) {
@@ -56,6 +68,8 @@ $(function() {
 			}
 		}*/
 		obj.msg = msg;
+		obj.sender = user_id;
+		obj.master = master;
 		jsonStr = JSON.stringify(obj);
 		ws.send(jsonStr);
 	}
@@ -67,11 +81,10 @@ $(function() {
 		$.ajax({
 			url : "/NowMeetingWeb/meeting/chatInsert",
 			type : "post",
-			data :{user : user_id, master : master},
+			data :{member : user_id, master : master},
 			dataType : "json",
 			success : function(obj){
-				alert(obj.ok);
-				location.href = "NowWebMeeting/web/chatForm";
+				location.href = "/NowMeetingWeb/web/chatForm";
 			},
 			error : function(error, xhr, status) {
 				alert("error");

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,6 +22,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import meeting.team.controller.MeetingController;
 import meeting.team.dao.MeetingDao;
 import meeting.team.vo.MeetingVo;
 
@@ -49,13 +51,13 @@ public class MeetingService {
 			// 가져와야 하는것 추가
 			// ---------------------
 			jsonObj.put("num", list.get(i).getNum());
-			jsonObj.put("contents",list.get(i).getContents());
-			jsonObj.put("endTime",list.get(i).getEnd_time().toString());
-			jsonObj.put("master",list.get(i).getMaster());
-			jsonObj.put("field",list.get(i).getField());
-			jsonObj.put("startTime",list.get(i).getStart_time().toString());			
-			jsonObj.put("title",list.get(i).getTitle());	
-			//---------------------
+			jsonObj.put("contents", list.get(i).getContents());
+			jsonObj.put("endTime", list.get(i).getEnd_time().toString());
+			jsonObj.put("master", list.get(i).getMaster());
+			jsonObj.put("field", list.get(i).getField());
+			jsonObj.put("startTime", list.get(i).getStart_time().toString());
+			jsonObj.put("title", list.get(i).getTitle());
+			// ---------------------
 			jsonArr.add(jsonObj);
 		}
 		return jsonArr.toJSONString();
@@ -84,7 +86,7 @@ public class MeetingService {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		JSONObject json = new JSONObject();
 
-		String id = (String) request.getSession().getAttribute("id");
+		String master = (String) request.getSession().getAttribute("id");
 		String sTime = request.getParameter("s_time");
 		String eTime = request.getParameter("e_time");
 		String meetingDay = request.getParameter("meetingDay");
@@ -95,15 +97,19 @@ public class MeetingService {
 		java.sql.Timestamp e_stamp = java.sql.Timestamp.valueOf(eDate);
 		meeting.setStart_time(s_stamp);
 		meeting.setEnd_time(e_stamp);
-		meeting.setMaster(id);
+		meeting.setMaster(master);
 		meeting.setMap_name(roughMapSave(request));
-		
-		int ok = meeting_dao.insert(meeting);
-		
+		meeting.setDivision("now");
+		Map<String, String> chatMap = new HashMap<String, String>();
+		int chatOk = 0;
 		if(meeting.getDivision().equals("now")) {
-			
+			MeetingController.chatMap.put(meeting.getMaster(), null);
+			chatMap.put("master", master);
+			chatMap.put("member", master);
+			chatOk = meeting_dao.chatInsert(chatMap);
 		}
 
+		int ok = meeting_dao.insert(meeting);
 		if (ok > 0) {
 			json.put("ok", true);
 		} else {
@@ -111,30 +117,28 @@ public class MeetingService {
 		}
 		return json.toJSONString();
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	public String getRecommend(List<String> interests){
-		meeting_dao=sql_temp.getMapper(MeetingDao.class);
-		JSONArray jsonArr=new JSONArray();		
-		for(int i=0 ; i<interests.size(); i++)
-		{
-			List<MeetingVo> meetings=meeting_dao.getRecommend(interests.get(i));
-			for(int j=0; j<meetings.size(); j++)
-			{
-				JSONObject jsonObj=new JSONObject();
-				jsonObj.put("loc",meetings.get(j).getArea());
-				jsonObj.put("num",meetings.get(j).getNum());
-				jsonObj.put("contents",meetings.get(j).getContents());
-				jsonObj.put("endTime",meetings.get(j).getEnd_time().toString());
-				jsonObj.put("master",meetings.get(j).getMaster());			
-				jsonObj.put("startTime",meetings.get(j).getStart_time().toString());			
-				jsonObj.put("title",meetings.get(j).getTitle());
-				jsonObj.put("field",meetings.get(j).getField());
-				jsonArr.add(jsonObj);	
+	public String getRecommend(List<String> interests) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		JSONArray jsonArr = new JSONArray();
+		for (int i = 0; i < interests.size(); i++) {
+			List<MeetingVo> meetings = meeting_dao.getRecommend(interests.get(i));
+			for (int j = 0; j < meetings.size(); j++) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("loc", meetings.get(j).getArea());
+				jsonObj.put("num", meetings.get(j).getNum());
+				jsonObj.put("contents", meetings.get(j).getContents());
+				jsonObj.put("endTime", meetings.get(j).getEnd_time().toString());
+				jsonObj.put("master", meetings.get(j).getMaster());
+				jsonObj.put("startTime", meetings.get(j).getStart_time().toString());
+				jsonObj.put("title", meetings.get(j).getTitle());
+				jsonObj.put("field", meetings.get(j).getField());
+				jsonArr.add(jsonObj);
 			}
-		
+
 		}
-		return jsonArr.toJSONString();		
+		return jsonArr.toJSONString();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -167,7 +171,7 @@ public class MeetingService {
 			fos = new FileOutputStream(new File(pdfPath + fileName));
 			fos.write(imgBytes);
 			fos.close();
-			
+
 			return fileName;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -176,19 +180,39 @@ public class MeetingService {
 	}
 
 	public String chatInsert(HttpServletRequest request) {
-		String user = request.getParameter("user");
+		String member = request.getParameter("member");
 		String master = request.getParameter("master");
+		ArrayList<String> list = MeetingController.chatMap.get(master);
 		Map<String, String> chatMap = new HashMap<String, String>();
-		chatMap.put("user", user);
+		
+		chatMap.put("member", member);
 		chatMap.put("master", master);
 		
 		JSONObject json = new JSONObject();
-		int userInOk = meeting_dao.userExit(user);
-		int ok = meeting_dao.chatInsert(chatMap);
-		if(ok > 0) {
+		int userInOk = meeting_dao.userExit(chatMap);
+		if(userInOk > 0) {
 			json.put("ok", true);
+		} else {
+			int ok = meeting_dao.chatInsert(chatMap);
+			if (ok > 0) {
+				json.put("ok", true);
+			}
 		}
 		return json.toJSONString();
+	}
+
+	public MeetingVo selectOne(int num, HttpSession session) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		if (num == 0) {
+			num = meeting_dao.maxNum((String) session.getAttribute("id"));
+		}
+		return meeting_dao.selectOne(num);
+	}
+
+	public ArrayList<String> getChatList(HttpSession session) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		ArrayList<String> list = meeting_dao.getChatList((String) session.getAttribute("id"));
+		return list;
 	}
 
 }
