@@ -1,5 +1,6 @@
 var body_height = $(window).height();
 var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
+
 $(function() {
 	// ///////메뉴 네비////////////////////////////
 	$("#menu ul li:not(#menu-btn, #logo)").on("click", function() {

@@ -18,7 +18,7 @@
 		<!-- <sec:intercept-url pattern="/web/addForm" access="hasAuthority('MEMBER')" /> -->
 		<sec:intercept-url pattern="/blackUser/**" access="hasAuthority('BLACKUSER')" />
 		<!-- <sec:intercept-url pattern="/web/**" access="isAuthenticated()" /> -->
-		<sec:intercept-url pattern="/meeting/**" access="hasAuthority('MEMBER')" />
+		<!-- <sec:intercept-url pattern="/meeting/**" access="hasAuthority('MEMBER')" /> -->
 		<sec:intercept-url pattern="/**" access="permitAll" />
 		<sec:form-login login-page="/mainPage" login-processing-url="/user/login" username-parameter="id" password-parameter="pw"
 			default-target-url="/web/loginSuccess" authentication-failure-url="/web/main?error=true" />

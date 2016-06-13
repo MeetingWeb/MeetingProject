@@ -23,6 +23,7 @@
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
+	
 	$(function() {
 
 		window.name = "my";

@@ -1,8 +1,7 @@
 package meeting.team.controller;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import meeting.team.service.MeetingService;
 import meeting.team.service.UserService;
 import meeting.team.vo.EmailVo;
-import meeting.team.vo.MeetingVo;
 import meeting.team.vo.UserVo;
 
 @RequestMapping({"/web/"})
@@ -50,7 +48,9 @@ public class WebController {
 	}
 	
 	@RequestMapping("chatForm")
-	public String chatForm(){
+	public String chatForm(Model model, HttpSession session){
+		ArrayList<String> list = ms.getChatList(session);
+		model.addAttribute("list", list);
 		return "include/chat_view";
 	}
 	
@@ -120,10 +120,10 @@ public class WebController {
 	
 	 @RequestMapping({"main",""})
 		public String mainPage(HttpSession session,HttpServletRequest request, Model model) {
-	    	
 	    	String sessionid = request.getParameter("sess");
 	    	String userId = request.getParameter("id");	    	
 	    	if(userId != null) {
+	    		us.setChatList(userId);
 	    		session.setAttribute("id", userId);
 	    		model.addAttribute("id", userId);		    		    		
 	    	}	  	    	    	
