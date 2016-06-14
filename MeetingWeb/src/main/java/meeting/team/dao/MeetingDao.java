@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import meeting.team.vo.MeetingVo;
+import meeting.team.vo.ReplyVo;
 
 public interface MeetingDao {
 
@@ -21,4 +22,6 @@ public interface MeetingDao {
 	ArrayList<String> getChatGroup(String master);
 	int updateUser(String master);
 	ArrayList<MeetingVo> getNotNowMeetingList();
+	int addReply(ReplyVo reply);
+	List<ReplyVo> getReplyList(int num);
 }

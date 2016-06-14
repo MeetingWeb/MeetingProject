@@ -14,44 +14,53 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getRecommend" resultType="meeting.team.vo.MeetingVo" parameterType="java.lang.String">
-		select * from meeting where field=#{interest}	
+		select * from meeting where field=#{interest}
 	</select>
 
 	<insert id="insert" parameterType="meeting.team.vo.MeetingVo">
 		INSERT INTO meeting
 		VALUES(MEETING_NUM_SEQ.NEXTVAL,#{title},#{field},#{contents},#{master},#{area},#{start_time},#{end_time},#{map_name},#{division})
 	</insert>
-	
+
 	<insert id="chatInsert" parameterType="java.util.Map">
 		INSERT INTO chatList VALUES(#{master},#{member})
 	</insert>
-	
+
 	<select id="userExit" resultType="java.lang.Integer" parameterType="java.util.Map">
-		SELECT COUNT(master) FROM chatList WHERE member = #{member} AND master = #{master}
+		SELECT COUNT(master) FROM chatList WHERE member = #{member} AND master =
+		#{master}
 	</select>
-	
-	<select id="maxNum" resultType = "java.lang.Integer">
+
+	<select id="maxNum" resultType="java.lang.Integer">
 		SELECT MAX(num) FROM meeting WHERE master = #{id}
 	</select>
-	
-	<select id="selectOne" resultType = "meeting.team.vo.MeetingVo">
+
+	<select id="selectOne" resultType="meeting.team.vo.MeetingVo">
 		SELECT * FROM meeting WHERE num = #{num}
 	</select>
-	
-	<select id="getChatList" resultType = "java.lang.String">
+
+	<select id="getChatList" resultType="java.lang.String">
 		SELECT master FROM chatList WHERE member = #{id}
 	</select>
-	
-	<select id="getChatGroup" resultType = "java.lang.String">
+
+	<select id="getChatGroup" resultType="java.lang.String">
 		SELECT member FROM chatList WHERE master = #{master}
 	</select>
-	
+
 	<update id="updateUser">
 		UPDATE meeting SET power='MASTER' WHERE id=#{master}
 	</update>
-	
+
 	<select id="getNotNowMeetingList" resultType="meeting.team.vo.MeetingVo">
 		SELECT * FROM meeting WHERE division = 'notnow'
+	</select>
+
+	<insert id="addReply" parameterType="meeting.team.vo.ReplyVo">
+		INSERT INTO res_meeting VALUES(MEETING_REPLY_NUM_SEQ.NEXTVAL, #{ref},#{id},#{contents},sysdate)
+	</insert>
+	
+	<select id="getReplyList" resultType="meeting.team.vo.ReplyVo">
+		SELECT * FROM res_meeting WHERE ref = #{num}
 	</select>
 
 </mapper>

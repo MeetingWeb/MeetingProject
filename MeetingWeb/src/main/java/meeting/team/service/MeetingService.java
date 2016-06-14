@@ -31,13 +31,14 @@ import com.google.code.geocoder.Geocoder;
 import meeting.team.controller.MeetingController;
 import meeting.team.dao.MeetingDao;
 import meeting.team.vo.MeetingVo;
+import meeting.team.vo.ReplyVo;
 
 @Service("meetingservice")
 public class MeetingService {
 	@Autowired
 	private SqlSessionTemplate sql_temp;
 	private MeetingDao meeting_dao;
-	
+
 	double latitude;
 	double longitude;
 	String regionAddress;
@@ -107,16 +108,16 @@ public class MeetingService {
 
 		java.sql.Timestamp s_stamp = java.sql.Timestamp.valueOf(sDate);
 		java.sql.Timestamp e_stamp = java.sql.Timestamp.valueOf(eDate);
-		
+
 		meeting.setStart_time(s_stamp);
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(master);
 		meeting.setMap_name(roughMapSave(request));
 		meeting.setDivision("now");
-		
+
 		Map<String, String> chatMap = new HashMap<String, String>();
 		int chatOk = 0;
-		if(meeting.getDivision().equals("now")) {
+		if (meeting.getDivision().equals("now")) {
 			// MeetingController.chatMap.put(meeting.getMaster(), null);
 			chatMap.put("master", master);
 			chatMap.put("member", master);
@@ -194,19 +195,18 @@ public class MeetingService {
 		return null;
 	}
 
-
 	public String chatInsert(HttpServletRequest request) {
 		String member = request.getParameter("member");
 		String master = request.getParameter("master");
 		ArrayList<String> list = MeetingController.chatMap.get(master);
 		Map<String, String> chatMap = new HashMap<String, String>();
-		
+
 		chatMap.put("member", member);
 		chatMap.put("master", master);
-		
+
 		JSONObject json = new JSONObject();
 		int userInOk = meeting_dao.userExit(chatMap);
-		if(userInOk > 0) {
+		if (userInOk > 0) {
 			json.put("ok", true);
 		} else {
 			int ok = meeting_dao.chatInsert(chatMap);
@@ -217,35 +217,57 @@ public class MeetingService {
 		return json.toJSONString();
 	}
 
-	public String getMeetings(String[] key){
+	@SuppressWarnings("unchecked")
+	public String getMeetings(String[] key) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		JSONArray jsonArr=new JSONArray();
-		for(int i=0; i<key.length; i++)
-		{
-			List<MeetingVo> meetings=meeting_dao.getRecommend(key[i]);
-			for(int j=0; j<meetings.size(); j++)
-			{
-				JSONObject jsonObj=new JSONObject();
-				jsonObj.put("loc",meetings.get(j).getArea());
-				jsonObj.put("num",meetings.get(j).getNum());
-				jsonObj.put("contents",meetings.get(j).getContents());
-				jsonObj.put("endTime",meetings.get(j).getEnd_time().toString());
-				jsonObj.put("master",meetings.get(j).getMaster());			
-				jsonObj.put("startTime",meetings.get(j).getStart_time().toString());			
-				jsonObj.put("title",meetings.get(j).getTitle());
-				jsonObj.put("field",meetings.get(j).getField());
-				jsonArr.add(jsonObj);	
+		JSONArray jsonArr = new JSONArray();
+		for (int i = 0; i < key.length; i++) {
+			List<MeetingVo> meetings = meeting_dao.getRecommend(key[i]);
+			for (int j = 0; j < meetings.size(); j++) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("loc", meetings.get(j).getArea());
+				jsonObj.put("num", meetings.get(j).getNum());
+				jsonObj.put("contents", meetings.get(j).getContents());
+				jsonObj.put("endTime", meetings.get(j).getEnd_time().toString());
+				jsonObj.put("master", meetings.get(j).getMaster());
+				jsonObj.put("startTime", meetings.get(j).getStart_time().toString());
+				jsonObj.put("title", meetings.get(j).getTitle());
+				jsonObj.put("field", meetings.get(j).getField());
+				jsonArr.add(jsonObj);
 			}
-		}	
-		return jsonArr.toJSONString();			
+		}
+		return jsonArr.toJSONString();
 	}
 
-	public MeetingVo selectOne(int num, HttpSession session) {
+	public HashMap<String, Object> selectOne(int num, HttpSession session) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		if (num == 0) {
 			num = meeting_dao.maxNum((String) session.getAttribute("id"));
 		}
-		return meeting_dao.selectOne(num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("data", meeting_dao.selectOne(num));
+		map.put("reply", meeting_dao.getReplyList(num));
+		return map;
+	}
+
+	@SuppressWarnings("unchecked")
+	public String addReply(ReplyVo reply) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		int ok = meeting_dao.addReply(reply);
+		
+		JSONArray arr = new JSONArray();
+		if(ok > 0) {
+			List<ReplyVo> list = meeting_dao.getReplyList(reply.getRef());
+			for(int i = 0; i < list.size(); i++) {
+				JSONObject json = new JSONObject();
+				ReplyVo data = list.get(i);
+				json.put("id", data.getId());
+				json.put("num", data.getNum());
+				json.put("contents", data.getContents());
+				arr.add(json);
+			}
+		}
+		return arr.toJSONString();
 	}
 
 	public ArrayList<String> getChatList(HttpSession session) {
@@ -256,8 +278,8 @@ public class MeetingService {
 
 	public ArrayList<MeetingVo> getNotNowMeetingList() throws Exception {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		ArrayList<MeetingVo>list = meeting_dao.getNotNowMeetingList();
-		for(int i = 0; i < list.size(); i++) {
+		ArrayList<MeetingVo> list = meeting_dao.getNotNowMeetingList();
+		for (int i = 0; i < list.size(); i++) {
 			MeetingVo meeting = list.get(i);
 			String[] addr = meeting.getArea().split(",");
 			this.latitude = Double.parseDouble(addr[0]);
@@ -267,10 +289,9 @@ public class MeetingService {
 		}
 		return list;
 	}
-	
+
 	private String getApiAddress() {
-		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng="
-				+ latitude + "," + longitude + "&language=ko";
+		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&language=ko";
 		return apiURL;
 	}
 
@@ -279,8 +300,7 @@ public class MeetingService {
 		String buf;
 		URL url = new URL(apiURL);
 		URLConnection conn = url.openConnection();
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				conn.getInputStream(), "UTF-8"));
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
 		while ((buf = br.readLine()) != null) {
 			jsonString += buf;
 		}
@@ -297,5 +317,4 @@ public class MeetingService {
 	public String getAddress() {
 		return regionAddress;
 	}
-
 }

@@ -3,6 +3,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 <div id="headernavi">
 	<div id="title_name" class="hidden-sm hidden-xs">come together</div>
+	
 	<div id="buttonclass" class="hidden-sm hidden-xs">
 
 		<sec:authorize access="! isAuthenticated()">
@@ -29,6 +30,10 @@
 			</div>
 			
 		</sec:authorize>
+	</div>
+	<div id="meeting-btn" class="hidden-sm hidden-xs">
+		<div id="now-meeting" class="pull-right" onclick="javascript:location.href='/NowMeetingWeb/web/main'">실시간 모임</div>
+		<div id="not-now-meeting" class="pull-right" onclick="javascript:location.href='/NowMeetingWeb/meeting/notNowList'">예정된 모임</div>
 	</div>
 
 	<div id="mobile-title-name" class="hidden-md hidden-lg">come together</div>
