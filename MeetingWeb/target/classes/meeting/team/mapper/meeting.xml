@@ -58,9 +58,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addReply" parameterType="meeting.team.vo.ReplyVo">
 		INSERT INTO res_meeting VALUES(MEETING_REPLY_NUM_SEQ.NEXTVAL, #{ref},#{id},#{contents},sysdate)
 	</insert>
-	
-	<select id="getReplyList" resultType="meeting.team.vo.ReplyVo">
-		SELECT * FROM res_meeting WHERE ref = #{num}
-	</select>
 
+	<select id="getReplyList" resultType="meeting.team.vo.ReplyVo" parameterType="HashMap">
+		SELECT r2.* FROM
+		(
+		SELECT r1.*, TRUNC((rn -1) / #{showRow} + 1) AS page FROM
+		(
+		SELECT ROWNUM rn, id, contents, ref, num FROM 
+		(
+		SELECT * FROM res_meeting ORDER BY cre_date DESC
+		) WHERE ref = #{ref} 
+		)r1
+		)r2 WHERE page = #{page}
+	</select>
+	
+	<select id="getRowCount" resultType="java.lang.Integer">
+		SELECT CEIL(COUNT(*)/10) FROM res_meeting WHERE ref=#{ref}
+	</select>
+	
+	<delete id="replyDelete" parameterType="HashMap">
+		DELETE FROM res_meeting WHERE num=#{num} AND ref=#{ref}
+	</delete>
 </mapper>

@@ -38,6 +38,9 @@ public class MeetingService {
 	@Autowired
 	private SqlSessionTemplate sql_temp;
 	private MeetingDao meeting_dao;
+	private HashMap<String, Integer> pageMap = new HashMap<String, Integer>();
+	private final int SHOWROW = 10;
+	private final int SHOWNAVIPAGE = 5;
 
 	double latitude;
 	double longitude;
@@ -239,14 +242,22 @@ public class MeetingService {
 		return jsonArr.toJSONString();
 	}
 
-	public HashMap<String, Object> selectOne(int num, HttpSession session) {
+	public HashMap<String, Object> selectOne(int ref, HttpSession session) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		if (num == 0) {
-			num = meeting_dao.maxNum((String) session.getAttribute("id"));
+		if (ref == 0) {
+			ref = meeting_dao.maxNum((String) session.getAttribute("id"));
 		}
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("data", meeting_dao.selectOne(num));
-		map.put("reply", meeting_dao.getReplyList(num));
+		int[] navi = getNaviNum(1);
+		int maxPage = meeting_dao.getRowCount(ref);
+		pageMap.put("page", 1);
+		pageMap.put("ref", ref);
+		pageMap.put("showRow", SHOWROW);
+		map.put("data", meeting_dao.selectOne(ref));
+		map.put("reply", meeting_dao.getReplyList(pageMap));
+		map.put("endPage", navi[0]);
+		map.put("startPage", navi[1]);
+		map.put("maxPage", maxPage);
 		return map;
 	}
 
@@ -254,11 +265,15 @@ public class MeetingService {
 	public String addReply(ReplyVo reply) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		int ok = meeting_dao.addReply(reply);
-		
+
 		JSONArray arr = new JSONArray();
-		if(ok > 0) {
-			List<ReplyVo> list = meeting_dao.getReplyList(reply.getRef());
-			for(int i = 0; i < list.size(); i++) {
+		if (ok > 0) {
+			pageMap.put("page", 1);
+			pageMap.put("ref", reply.getRef());
+			pageMap.put("showRow", SHOWROW);
+			List<ReplyVo> list = meeting_dao.getReplyList(pageMap);
+			int maxPage = meeting_dao.getRowCount(reply.getRef());
+			for (int i = 0; i < list.size(); i++) {
 				JSONObject json = new JSONObject();
 				ReplyVo data = list.get(i);
 				json.put("id", data.getId());
@@ -266,8 +281,71 @@ public class MeetingService {
 				json.put("contents", data.getContents());
 				arr.add(json);
 			}
+			int[] navi = getNaviNum(1);
+			arr.add(navi[0]);
+			arr.add(navi[1]);
+			arr.add(maxPage);
 		}
 		return arr.toJSONString();
+	}
+
+	@SuppressWarnings("unchecked")
+	public String replyNavi(int page, int ref) {
+		JSONArray arr = new JSONArray();
+		pageMap.put("page", page);
+		pageMap.put("ref", ref);
+		pageMap.put("showRow", SHOWROW);
+		List<ReplyVo> list = meeting_dao.getReplyList(pageMap);
+		int maxPage = meeting_dao.getRowCount(ref);
+		for (int i = 0; i < list.size(); i++) {
+			JSONObject json = new JSONObject();
+			ReplyVo data = list.get(i);
+			json.put("id", data.getId());
+			json.put("num", data.getNum());
+			json.put("contents", data.getContents());
+			arr.add(json);
+		}
+		int[] navi = getNaviNum(page);
+		arr.add(navi[0]);
+		arr.add(navi[1]);
+		arr.add(maxPage);
+		return arr.toJSONString();
+	}
+
+	@SuppressWarnings("unchecked")
+	public String replyDelete(int ref, int num, int page) {
+		JSONArray arr = new JSONArray();
+		pageMap.put("page", page);
+		pageMap.put("ref", ref);
+		pageMap.put("num", num);
+		pageMap.put("showRow", SHOWROW);
+		
+		if(meeting_dao.replyDelete(pageMap) > 0) {
+			List<ReplyVo> list = meeting_dao.getReplyList(pageMap);
+			int maxPage = meeting_dao.getRowCount(ref);
+			for (int i = 0; i < list.size(); i++) {
+				JSONObject json = new JSONObject();
+				ReplyVo data = list.get(i);
+				json.put("id", data.getId());
+				json.put("num", data.getNum());
+				json.put("contents", data.getContents());
+				arr.add(json);
+			}
+			int[] navi = getNaviNum(page);
+			arr.add(navi[0]);
+			arr.add(navi[1]);
+			arr.add(maxPage);
+		}
+		return arr.toJSONString();
+	}
+
+	private int[] getNaviNum(int currPage) {
+		int[] navi = new int[2];
+		int endPage = (int) (Math.floor((currPage - 1) / SHOWNAVIPAGE) * SHOWNAVIPAGE + SHOWNAVIPAGE);
+		int startPage = (int) (Math.floor((currPage - 1) / SHOWNAVIPAGE) * SHOWNAVIPAGE + 1);
+		navi[0] = endPage;
+		navi[1] = startPage;
+		return navi;
 	}
 
 	public ArrayList<String> getChatList(HttpSession session) {
@@ -291,7 +369,8 @@ public class MeetingService {
 	}
 
 	private String getApiAddress() {
-		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&language=ko";
+		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude
+				+ "&language=ko";
 		return apiURL;
 	}
 
@@ -317,4 +396,5 @@ public class MeetingService {
 	public String getAddress() {
 		return regionAddress;
 	}
+
 }

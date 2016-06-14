@@ -1,6 +1,7 @@
 package meeting.team.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,5 +24,7 @@ public interface MeetingDao {
 	int updateUser(String master);
 	ArrayList<MeetingVo> getNotNowMeetingList();
 	int addReply(ReplyVo reply);
-	List<ReplyVo> getReplyList(int num);
+	List<ReplyVo> getReplyList(HashMap<String, Integer> pageMap);
+	int getRowCount(int ref);
+	int replyDelete(HashMap<String, Integer> pageMap);
 }

@@ -210,7 +210,7 @@
 	visibility: hidden;
 }
 
-/* 리스트 */
+/* 由ъ뒪�듃 */
 #not-now-list {
 	background: #fff;
 	max-width: 1100px;
@@ -236,7 +236,7 @@
 	text-align: left;
 }
 
-/* 읽기 */
+/* �씫湲� */
 #contents-in {
 	padding: 10%;
 	padding-bottom: 0px;
@@ -306,4 +306,6 @@
 
 #contents-in-reply-list .list-btn {
 	width: 10%;
+	max-width: 120px;
+	min-width: 116px;
 }
