@@ -181,6 +181,15 @@
 	height: 100%;
 }
 
+#rough-map #btn-group {
+	margin: 0px 0px 20px 0px;
+}
+
+#rough-map #btn-group input[type=range] {
+	float: left;
+	margin-right: 20px;
+}
+
 #rough-map-in-img {
 	display: none;
 	visibility: hidden;
@@ -199,6 +208,31 @@
 	width: 200px;
 	height: 200px;
 	visibility: hidden;
+}
+
+#not-now-list {
+	background: #fff;
+	max-width: 1100px;
+	margin: 50px auto;
+}
+
+#not-now-list h2 {
+	margin-bottom: 40px;
+	font-size: 40px;
+}
+
+#not-now-list table tr:first-child th {
+	border-top: 2px solid #000;
+	text-align: center;
+}
+
+#not-now-list table td, th {
+	text-align: center;
+	cursor: default;
+}
+
+#not-now-list table td:nth-child(3) {
+	text-align: left;
 }
 
 /* #map-canvas {

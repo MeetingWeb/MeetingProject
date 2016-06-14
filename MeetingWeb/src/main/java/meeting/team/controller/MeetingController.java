@@ -3,7 +3,6 @@ package meeting.team.controller;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -52,5 +51,10 @@ public class MeetingController {
 	public @ResponseBody String chatInsert(HttpServletRequest request){
 		return meeting_svc.chatInsert(request);
 	}
-
+	
+	@RequestMapping(value = "notNowList", method = RequestMethod.GET)
+	public String getList(Model model) throws Exception {
+		model.addAttribute("list", meeting_svc.getNotNowMeetingList());
+		return "MeetingList";
+	}
 }

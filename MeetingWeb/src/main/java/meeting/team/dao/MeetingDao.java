@@ -20,5 +20,5 @@ public interface MeetingDao {
 	ArrayList<String> getChatList(String id);
 	ArrayList<String> getChatGroup(String master);
 	int updateUser(String master);
-
+	ArrayList<MeetingVo> getNotNowMeetingList();
 }

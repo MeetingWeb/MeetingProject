@@ -90,7 +90,7 @@
 				<a href="/NowMeetingWeb/web/chatForm">CHAT</a>
 			</li>
 			<li>
-				<a href="#">HOME</a>
+				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
 			</li>
 
 		</ul>

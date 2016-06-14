@@ -1,10 +1,13 @@
 package meeting.team.service;
 
 import java.awt.image.BufferedImage;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,9 +21,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.codec.binary.Base64;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.google.code.geocoder.Geocoder;
 
 import meeting.team.controller.MeetingController;
 import meeting.team.dao.MeetingDao;
@@ -31,6 +37,10 @@ public class MeetingService {
 	@Autowired
 	private SqlSessionTemplate sql_temp;
 	private MeetingDao meeting_dao;
+	
+	double latitude;
+	double longitude;
+	String regionAddress;
 
 	public List<MeetingVo> getMeetingList(HttpServletRequest request) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
@@ -218,6 +228,50 @@ public class MeetingService {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		ArrayList<String> list = meeting_dao.getChatList((String) session.getAttribute("id"));
 		return list;
+	}
+
+	public ArrayList<MeetingVo> getNotNowMeetingList() throws Exception {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		ArrayList<MeetingVo>list = meeting_dao.getNotNowMeetingList();
+		for(int i = 0; i < list.size(); i++) {
+			MeetingVo meeting = list.get(i);
+			String[] addr = meeting.getArea().split(",");
+			this.latitude = Double.parseDouble(addr[0]);
+			this.longitude = Double.parseDouble(addr[1]);
+			this.regionAddress = getRegionAddress(getJSONData(getApiAddress()));
+			meeting.setArea(this.regionAddress);
+		}
+		return list;
+	}
+	
+	private String getApiAddress() {
+		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng="
+				+ latitude + "," + longitude + "&language=ko";
+		return apiURL;
+	}
+
+	private String getJSONData(String apiURL) throws Exception {
+		String jsonString = new String();
+		String buf;
+		URL url = new URL(apiURL);
+		URLConnection conn = url.openConnection();
+		BufferedReader br = new BufferedReader(new InputStreamReader(
+				conn.getInputStream(), "UTF-8"));
+		while ((buf = br.readLine()) != null) {
+			jsonString += buf;
+		}
+		return jsonString;
+	}
+
+	private String getRegionAddress(String jsonString) {
+		JSONObject jObj = (JSONObject) JSONValue.parse(jsonString);
+		JSONArray jArray = (JSONArray) jObj.get("results");
+		jObj = (JSONObject) jArray.get(0);
+		return (String) jObj.get("formatted_address");
+	}
+
+	public String getAddress() {
+		return regionAddress;
 	}
 
 }

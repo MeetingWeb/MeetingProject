@@ -83,7 +83,7 @@
 				break;
 			}
 		} */
-		
+
 		$.ajax({
 			url : "/NowMeetingWeb/meeting/insert",
 			type : "post",
@@ -92,7 +92,7 @@
 			success : function(obj) {
 				if (obj.ok) {
 					alert("모임 만들기 성공");
-					location.href="/NowMeetingWeb/web/chatForm";
+					location.href = "/NowMeetingWeb/web/chatForm";
 				} else {
 					alert("모임 만들기 실패");
 				}
@@ -200,12 +200,15 @@
 		</div>
 		<div id="rough-map">
 			<div id="rough-map-in">
-				<!-- <input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="16" style="width: 200px;"> -->
-				<input type="number" value="16" id="zoom-num" max="19" min="9">
-				<button id="rough-map-save-btn" type="button" onclick="roughMapSave()">Save</button>
+				<div id="btn-group">
+					<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="16" style="width: 200px;">
+					<label for="zoom-min" style="color: #fff;">ZOOM: 16</label>
+					<!-- <input type="number" value="16" id="zoom-num" max="19" min="9"> -->
+					<button id="rough-map-cancle-btn" type="button" class="btn btn-default pull-right">Cancle</button>
+					<button id="rough-map-save-btn" type="button" onclick="roughMapSave()" class="btn btn-default pull-right">Save</button>
+				</div>
 				<img src="" id="rough-map-in-img">
 				<canvas id="map-canvas" width="640" height="640"></canvas>
-				<!-- <label for="zoom-min" style="color: #fff;">ZOOM:</label> -->
 			</div>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />

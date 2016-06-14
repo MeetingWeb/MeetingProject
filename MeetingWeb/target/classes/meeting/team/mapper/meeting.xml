@@ -50,5 +50,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE meeting SET power='MASTER' WHERE id=#{master}
 	</update>
 	
+	<select id="getNotNowMeetingList" resultType="meeting.team.vo.MeetingVo">
+		SELECT * FROM meeting WHERE division = 'notnow'
+	</select>
 
 </mapper>

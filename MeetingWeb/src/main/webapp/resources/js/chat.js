@@ -10,7 +10,7 @@ $(function() {
 	});
 	
 	// var ws = new WebSocket("ws://localhost:8888/MavenWeb/wsinit");
-	var ws = new WebSocket("ws://192.168.0.2:7777/NowMeetingWeb/chat");
+	var ws = new WebSocket("ws://192.168.8.19:7777/NowMeetingWeb/chat");
 
 	ws.onopen = function() {
 		/*var list_ok = connect_cre_list();

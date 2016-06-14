@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<style type="text/css">
+</style>
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
@@ -17,41 +19,49 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/reviews_style.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/addMeeting_style.css"/>'>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo" async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
-	var user_id = '<c:out value="${sessionScope.id}"/>';
+	var user_id = '<c:out value="${sessionScope.id}"/>';	
 </script>
 </head>
 <body>
-	<jsp:include page="../include/navi.jsp" />
-	<jsp:include page="../include/header.jsp" />
-	<section id="contents" style="overflow: visible">
-		<a href="#" onclick="javascript:location.href='writeForm'">글쓰기</a>
-		<div class="container-fluid">
-			<div id="list-box" class="row">
+	<jsp:include page="include/navi.jsp" />
+	<jsp:include page="include/header.jsp" />
+	<section id="contents">
+		<div class="table-responsive" id="not-now-list">
+			<h2>예정된 모임 리스트</h2>
+			<table class="table table-hover">
+				<tr>
+					<th>글 번호</th>
+					<th>분야</th>
+					<th>제목</th>
+					<th>글쓴이</th>
+					<th>모임날짜</th>
+					<th>모임장소</th>
+				</tr>
 				<c:forEach var="list" items="${list }">
-					<%-- <div class="img-box col-md-2 col-xs-12 col-sm-2" data-num="${list.num }">
-						<div class="img" style="background:url(../resources/images/${list.mod_file_name }); background-size: cover; background-position: center;"></div>
-						<div class="title">${list.title }</div>
-					</div> --%>
-				 <div class="col-sm-6 col-md-4">
-				    <div class="thumbnail img-box" data-num="${list.num }">
-				      <img src="../resources/images/${list.mod_file_name }" alt="..." class="">
-				      <div class="caption">
-				        <h3>${list.title }</h3>
-				        <p>${list.contents}</p>
-				        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-				      </div>
-				    </div>
-				  </div>
+					<tr class="not-now-list-btn">
+						<td>${list.num }<input type="hidden" name="num" value="${list.num }">
+						</td>
+						<td>${list.field }</td>
+						<td class="title">${list.title }</td>
+						<td>${list.master }</td>
+						<td>${list.start_time }</td>
+						<td>${list.area }</td>
+					</tr>
 				</c:forEach>
-				<div class="clear_f"></div>
-			</div>
+			</table>
 		</div>
-		<jsp:include page="../include/loginForm.jsp" />
-		<jsp:include page="../include/joinForm.jsp" />
+		<jsp:include page="include/loginForm.jsp" />
+		<jsp:include page="include/joinForm.jsp" />
 	</section>
-	<jsp:include page="../include/footer.jsp" />
+	<jsp:include page="include/footer.jsp" />
 </body>
+<c:if test="${param.error==true }">
+	<script type="text/javascript">
+		alert("로그인 실패");
+	</script>
+</c:if>
 </html>
