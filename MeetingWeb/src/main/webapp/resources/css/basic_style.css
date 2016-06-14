@@ -309,7 +309,28 @@ footer {
 	float: right;
 }
 
-#headernavi #joinbtn, #headernavi #member-info-btn {
+#headernavi #meeting-btn {
+	cursor: pointer;
+	height: 100%;
+	width: 200px;
+	margin: 0px auto;
+}
+
+#headernavi #meeting-btn #now-meeting, #headernavi #meeting-btn #not-now-meeting {
+	height: 50%;
+	margin-top: 32px;
+	width: 50%;
+	text-align: center;
+	background: #129994;
+	color: #fff;
+}
+
+#headernavi #meeting-btn #now-meeting:hover, #headernavi #meeting-btn #not-now-meeting:hover {
+	background: #ddd;
+	color: #000;
+}
+
+#headernavi #joinbtn {
 	width: 126px;
 	height: 64px;
 	float: right;
@@ -318,8 +339,15 @@ footer {
 }
 
 #headernavi #member-info-btn {
+	height: 64px;
+	float: right;
+	background: #fff;
+	cursor: pointer;
+}
+
+#headernavi #member-info-btn {
 	padding: 15px 16px 15px 0;
-	width: 200px;
+	//width: 200px;
 }
 
 

@@ -50,6 +50,7 @@ $(function() {
 		;
 
 	});
+	
 	///////////날 보여줘//////////////
 	
 		$('#logo').on('click',function(){		
@@ -143,7 +144,12 @@ $(function() {
 		console.log($(this).attr("data-num"));
 		location.href = "selectOne?num=" + $(this).attr("data-num");
 	});
-
+	
+	//////////////MeetingList js/////////////////////////////////////
+	$(".not-now-list-btn").on("click",function(){
+		var num = $(this).find("input[name=num]").val();
+		location.href = "/NowMeetingWeb/meeting/meetingView?num=" + num;
+	});
 	// 모바일 자바스크립트///////////////////////////////////
 	
 	for ( var txt in mobileArr) {

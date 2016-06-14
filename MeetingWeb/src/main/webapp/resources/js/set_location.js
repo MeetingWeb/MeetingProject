@@ -165,7 +165,7 @@ function searchMap(place) {
 			/*
 			 * iw = new google.maps.InfoWindow({ content : getIWContent(place) })
 			 */
-			iw.open(map, markers[0]);
+			//iw.open(map, markers[0]);
 			map.fitBounds(bounds);
 			map.setZoom(15);
 		} else if (status == google.maps.GeocoderStatus.ERROR) {
