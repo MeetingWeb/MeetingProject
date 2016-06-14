@@ -50,7 +50,7 @@ function modify(){
 		url:"modify",
 		data:
 		{
-			num:'${data.num}',
+			num:${data.num},
 			title:$('input.title').val(),
 			contents:$('textarea.contents').val()
 		},
