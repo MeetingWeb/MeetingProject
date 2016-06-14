@@ -221,6 +221,10 @@ public String join(UserVo user, HttpServletRequest request){
 		return interest;
 		
 	}
+	public List<UserVo> getList(){
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		return user_dao.getList();
+}	
 
 	public void setChatList(String userId) {
 		Map<String, ArrayList<String>>map = MeetingController.chatMap;
@@ -228,6 +232,36 @@ public String join(UserVo user, HttpServletRequest request){
 		//meeting_dao.getAllChatList();
 	}
 	
+	public String powerUpdate(HttpServletRequest request){
+		String[] resultmember=request.getParameterValues("resultmember");
+		String[] resultblack=request.getParameterValues("resultblack");
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		int res=0;
+		int membersize=0;
+		int blacksize=0;
+		if(resultmember!=null){
+			membersize=resultmember.length;
+			for(int i=0; i<resultmember.length; i++)
+			{
+				res+=user_dao.changeToMember(resultmember[i]);
+				
+			}
+		}
+		
+		if(resultblack!=null){
+			blacksize=resultblack.length;
+			for(int i=0; i<resultblack.length; i++)
+			{
+				res+=user_dao.changeToBlack(resultblack[i]);
+			}
+		}		
+		
+		JSONObject jsonObj=new JSONObject();		
+		if(res==(membersize+blacksize)){
+			jsonObj.put("ok", true);
+		}else jsonObj.put("ok", false);
+		return jsonObj.toJSONString();
+	}
 
 
 }
