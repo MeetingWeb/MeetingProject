@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import meeting.team.service.MeetingService;
 import meeting.team.vo.MeetingVo;
+import meeting.team.vo.ReplyVo;
 
 @RequestMapping("/meeting/")
 @Controller
@@ -38,7 +39,7 @@ public class MeetingController {
 	
 	@RequestMapping(value = "meetingView", method = RequestMethod.GET)
 	public String meetingView(@RequestParam int num, Model model, HttpSession session){
-		model.addAttribute("data", meeting_svc.selectOne(num, session));
+		model.addAttribute("map", meeting_svc.selectOne(num, session));
 		return "meetingView";
 	}
 
@@ -56,5 +57,10 @@ public class MeetingController {
 	public String getList(Model model) throws Exception {
 		model.addAttribute("list", meeting_svc.getNotNowMeetingList());
 		return "MeetingList";
+	}
+	
+	@RequestMapping(value = "reply", method = RequestMethod.POST)
+	public @ResponseBody String addReply(ReplyVo reply) {
+		return meeting_svc.addReply(reply);
 	}
 }
