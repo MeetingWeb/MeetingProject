@@ -50,7 +50,7 @@ function modify(){
 		url:"modify",
 		data:
 		{
-			num:${data.num},
+			num:'${data.num}',
 			title:$('input.title').val(),
 			contents:$('textarea.contents').val()
 		},
@@ -204,10 +204,6 @@ $(function(){
 			<button type="button" onclick="cancel()">취소</button>
 			</table>
 		</form>
-
-
-
-
 
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />	
