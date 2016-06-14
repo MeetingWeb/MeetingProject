@@ -4,10 +4,14 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
+<%-- <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script> --%>
+
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/addMeeting_style.css"/>'>
+
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
 
@@ -15,42 +19,32 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script type="text/javascript">
-	var user_id = "${sessionScope.id}";
+<!-- <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDq3jxShghVhbdVBUvU1WoyLbJnNYxoCKA"></script> -->
+<script>
 </script>
 <title>여기여기 붙어라</title>
 </head>
 <body>
-	<jsp:include page="../include/navi.jsp" />
-	<jsp:include page="../include/header.jsp" />
-	<section id="contents">
-		
-		<div id="chat-list-lid" class="pull-left">
-			<div id="chat-list-lid-in">
-				<span>LIST</span>
-				<c:forEach var="list" items="${list }">
-					<div style="width: 100%; height: 100px; background: #ddd;" class="chat-group">${list }
-						<input type="hidden" class="master" value="${list }">
-					</div>
-				</c:forEach>
-			</div>
-		</div>
-		<div class="chat-lid pull-left">
-			<div class="chat-lid-in">
-				<div class="chat-lid-in-title"></div>
-				<div class="chat-lid-in-console"></div>
-				<div class="msg">
-					<input type="text" name="msg">
-				</div>
-			</div>
-		</div>
+	<jsp:include page="include/navi.jsp" />
+	<jsp:include page="include/header.jsp" />
+	<section id="contents" class="contents">
+		<div>예정된 모임 상세보기</div>
+		<c:set var="data" value="${data }"/>
+		<div>${data.master }</div>
+		<div>${data.title}</div>
+		<div>${data.contents}</div>
+		<div>${data.start_time}</div>
+		<div>${data.end_time}</div>
+		<div><img src="../resources/images/${data.map_name }"></div>
 	</section>
-	<jsp:include page="../include/footer.jsp" />
+	<jsp:include page="include/footer.jsp" />
 </body>
-<c:if test="${param.error==true }">
-	<script type="text/javascript">
-		alert("로그인 실패");
-	</script>
-</c:if>
-<script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
+<script type="text/javascript">
+	var user_id = '<c:out value="${sessionScope.id}"/>';
+	/* $(function() {
+		$('#meeting-form-lid').modal({
+			keyboard : true
+		})
+	}); */
+</script>
 </html>

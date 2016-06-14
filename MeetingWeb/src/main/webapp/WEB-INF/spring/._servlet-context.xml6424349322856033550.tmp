@@ -50,7 +50,6 @@
 			<mapping path="/notice/**" />
 			<mapping path="/web/addForm"/>
 			<mapping path="/web/myLocation"/>
-			<mapping path="/web/chatForm"/>
 			<beans:bean class="meeting.team.interceptor.LoginInterceptor" />
 		</interceptor>
 	</interceptors>

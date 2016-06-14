@@ -496,50 +496,71 @@ $(function(){
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<table>
-<caption>글 읽기</caption>
-<tr><th>번호</th><td>${ data.num }</td></tr>
-<tr><th>제목</th><td>${ data.title }</td></tr>
-<tr><th>글쓴이</th><td>${ data.id }</td></tr>
-<tr><th>날짜</th><td>${ data.cre_date }</td></tr>
-<tr><th>내용</th><td>${ data.contents }</td></tr>
-</table>
-<button type="button" onclick="list()">목록</button>
-<button type="button" onclick="modify()">수정</button>
-<button type="button" onclick="del()">삭제</button>
-<br><br><br>
+			<caption>글 읽기</caption>
+			<tr>
+				<th>번호</th>
+				<td>${ data.num }</td>
+			</tr>
+			<tr>
+				<th>제목</th>
+				<td>${ data.title }</td>
+			</tr>
+			<tr>
+				<th>글쓴이</th>
+				<td>${ data.id }</td>
+			</tr>
+			<tr>
+				<th>날짜</th>
+				<td>${ data.cre_date }</td>
+			</tr>
+			<tr>
+				<th>내용</th>
+				<td>${ data.contents }</td>
+			</tr>
+		</table>
+		<button type="button" onclick="list()">목록</button>
+		<button type="button" onclick="modify()">수정</button>
+		<button type="button" onclick="del()">삭제</button>
+		<br>
+		<br>
+		<br>
 
-<div class="replyForm">
-<textarea class="reply"rows="10" cols="40"></textarea><br>
-<button type="button" onclick="replyWrite()">글쓰기</button>
-<br><br>
-</div>
+		<div class="replyForm">
+			<textarea class="reply" rows="10" cols="40"></textarea>
+			<br>
+			<button type="button" onclick="replyWrite()">글쓰기</button>
+			<br>
+			<br>
+		</div>
 
 
-<table class="reply">
-<c:forEach var="list" items="${ map.list }">
-<tr><th>${ list.id }</th><td class="${ list.num }">${ list.contents }</td>
+		<table class="reply">
+			<c:forEach var="list" items="${ map.list }">
+				<tr>
+					<th>${ list.id }</th>
+					<td class="${ list.num }">${ list.contents }</td>
 
-<c:choose>
-<%-- <c:when test="${sessionScope.id eq 'scott'}"> --%>
-<c:when test= "${ 'scott' eq 'scott' }">
-<td>
-<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button> 
-<button type="button" onclick="replyDel(${ list.num })">삭제</button></td>
-</c:when>
-</c:choose>
-</tr>
-</c:forEach>
-</table>
+					<c:choose>
+						<%-- <c:when test="${sessionScope.id eq 'scott'}"> --%>
+						<c:when test="${ 'scott' eq 'scott' }">
+							<td>
+								<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button>
+								<button type="button" onclick="replyDel(${ list.num })">삭제</button>
+							</td>
+						</c:when>
+					</c:choose>
+				</tr>
+			</c:forEach>
+		</table>
 
-<div class="replyMenu">
-<c:if test="${ map.page.listTotal > 5 }">
-<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a><br> 
-</c:if>
-<a href="#none" onClick="allReply(); return false;">전체댓글보기</a><br> 
-</div>
-	
-	
-	
+		<div class="replyMenu">
+			<c:if test="${ map.page.listTotal > 5 }">
+				<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a>
+				<br>
+			</c:if>
+			<a href="#none" onClick="allReply(); return false;">전체댓글보기</a>
+			<br>
+		</div>
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
 	

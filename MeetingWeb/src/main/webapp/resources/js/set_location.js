@@ -76,9 +76,9 @@ function init() {
 			position : place.geometry.location,
 			map : map
 		});
-		iw = new google.maps.InfoWindow({
-			content : getIWContent(place)
-		});
+		/*
+		 * iw = new google.maps.InfoWindow({ content : getIWContent(place) });
+		 */
 		iw.open(map, markers[0]);
 	}
 
@@ -138,10 +138,10 @@ function init() {
 }
 window.addEventListener('load', function() {
 	window.addEventListener('keydown', function(evt) {
-		//evt.returnValue = false;
+		// evt.returnValue = false;
 		if (evt.keyCode == 13) {
 			searchMap(document.getElementById('address').value);
-
+			console.log(document.getElementById('address').value);
 		}
 	});
 });
@@ -162,9 +162,10 @@ function searchMap(place) {
 				}
 			}
 
-			iw = new google.maps.InfoWindow({
-				content : getIWContent(place)
-			})
+			/*
+			 * iw = new google.maps.InfoWindow({ content : getIWContent(place) })
+			 */
+			iw.open(map, markers[0]);
 			map.fitBounds(bounds);
 			map.setZoom(15);
 		} else if (status == google.maps.GeocoderStatus.ERROR) {
@@ -207,60 +208,75 @@ var width = $("#rough-map").width();
 var height = $("#rough-map").height();
 var path = null;
 
-function roughMap(zoom){
+function roughMap(zoom) {
 	lan = $("input[name=area]").val();
-	//$("#rough-map").css("visibility", "visible");
+	// $("#rough-map").css("visibility", "visible");
 	$("#rough-map").css("display", "block");
-	$("#rough-map-in").css({"width":width,"height":height});
-	path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom="+zoom+"&size="+width+"x"+height+"&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
-	if(lan != "") {
-		path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C"+lan+"&zoom="+zoom+"&size="+width+"x"+height+"&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
-	}
 	
+	path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom=" + zoom
+			+ "&size=" + width + "x" + height + "&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
+	if (lan != "") {
+		path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C" + lan + "&zoom=" + zoom + "&size=" + width + "x"
+				+ height + "&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
+	}
+
 	var img = document.getElementById("rough-map-in-img");
 	$("#rough-map img").attr("src", path);
-	$("#rough-map canvas").attr("width", width).attr("height", height);
+	var size = 0;
+	if (width >= height) {
+		size = height - 45;
+	} else {
+		size = width -45;
+	}
+	$("#rough-map canvas").attr("width", size).attr("height", size);
+	
+	$("#rough-map-in").css({
+		"width" : $("#rough-map canvas").attr("width"),
+		"height" : $("#rough-map canvas").attr("width")
+	});
 	drawCanvas();
 }
 
-$("#zoom-num").on("change",function(){
+$("#zoom-num").on("change", function() {
 	var zoom = $(this).val();
 	$("#rough-map-in label").text(zoom);
 	roughMap(zoom);
 });
 
-$("#zoom-min").on("change",function(){
+$("#zoom-min").on("change", function() {
 	var zoom = $(this).val();
-	$("#rough-map-in label").text(zoom);
+	$("#rough-map-in label").text("ZOOM : "+zoom);
 	roughMap(zoom);
-	
+
 });
 
 var canvas = null;
 var context = null;
 var imageObj = null;
-var colorCode = "#000";
+var colorCode = "#375060";
 var p1, p2, ep, sp;
+var drawOk = false;
 
-function drawCanvas(){
+function drawCanvas() {
 	canvas = document.getElementById('map-canvas');
-    context = canvas.getContext('2d');
-    
-    imageObj = new Image();
-    imageObj.setAttribute('crossOrigin', 'anonymous');
-    var img = document.getElementById("rough-map-in-img");
-    imageObj.onload = function() {
-    	context.fillStyle = '#fff';
-        context.fillRect(0, 0, canvas.width, canvas.height);
-    	context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
-    };
-    imageObj.src = path;
-    
-    canvas.addEventListener('mousedown', onMouseDown);
+	context = canvas.getContext('2d');
+
+	imageObj = new Image();
+	imageObj.setAttribute('crossOrigin', 'anonymous');
+	var img = document.getElementById("rough-map-in-img");
+	imageObj.onload = function() {
+		context.fillStyle = '#fff';
+		context.fillRect(0, 0, canvas.width, canvas.height);
+		context.drawImage(imageObj, 0, 0, canvas.width, canvas.height);
+	};
+	imageObj.src = path;
+
+	canvas.addEventListener('mousedown', onMouseDown);
 	canvas.addEventListener('mouseup', onMouseUp);
+	canvas.addEventListener('mousemove', onMouseMove);
 }
 
-function roughMapSave(){
+function roughMapSave() {
 	$("#rough-map").css("display", "none");
 	var img_data = canvas.toDataURL("image/png");
 	$("#rough-map-img").css("visibility", "visible");
@@ -276,19 +292,39 @@ function Pointer(x, y) {
 function onMouseDown(e) {
 	p1 = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
 	sp = p1;
+	drawOk = true;
 }
 
 function onMouseUp(e) {
-	ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+	/*ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
 	context.beginPath();
 	context.moveTo(sp.x, sp.y);
 	context.lineTo(ep.x, ep.y);
 	context.lineWidth = 5;
 	context.strokeStyle = colorCode;
-	context.stroke();
+	context.stroke();*/
+	drawOk = false;
 }
 
-/*$("#rough-map").on("click", function(){
-	$("#rough-map").css("visibility", "hidden");
-});*/
+function onMouseMove(e) {
+	if (drawOk) {
+		p2 = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+		context.beginPath();
+		context.moveTo(p1.x, p1.y);
+		context.lineTo(p2.x, p2.y);
+		context.lineWidth = 5;
+		context.strokeStyle = colorCode;
+		context.stroke();
+		p1 = p2;
+	}
+}
+
+$("#rough-map-cancle-btn").on("click",function(){
+	$("#rough-map").css("display","none");
+});
+
+/*
+ * $("#rough-map").on("click", function(){ $("#rough-map").css("visibility",
+ * "hidden"); });
+ */
 google.maps.event.addDomListener(window, 'load', init);
