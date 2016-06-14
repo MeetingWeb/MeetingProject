@@ -172,7 +172,7 @@ $(function(){
 </form>
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
-		<jsp:include page="../include/chat_view.jsp" />
+
 	</section>
 	<jsp:include page="../include/footer.jsp" />
 </body>

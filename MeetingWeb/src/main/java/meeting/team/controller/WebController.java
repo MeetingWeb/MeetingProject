@@ -180,5 +180,20 @@ public class WebController {
 	 public String search(@RequestParam("data")String[] list){
 	 	return ms.getMeetings(list);
 	 }
+	 @RequestMapping(value="blackList")
+	 public String getBlacklist(Model model){
+		 List<UserVo> list=us.getList();
+		 model.addAttribute("list", list);
+		 return "blackList";
+				 
+	 }
+	 @RequestMapping(value="powerUpdate")
+	 @ResponseBody
+	 public String powerUpdate(HttpServletRequest request){
+		
+		 return us.powerUpdate(request);
+		  
+	 }
+	 
     
 }

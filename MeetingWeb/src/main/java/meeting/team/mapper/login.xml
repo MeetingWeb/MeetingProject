@@ -30,4 +30,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getInterest" resultType="java.lang.String" parameterType="java.lang.String">
 		select interest from interests where id=#{id}
 	</select>
+	
+	<select id="getList" resultType="meeting.team.vo.UserVo">
+		select * from users
+	</select>
+	<update id="changeToMember" parameterType="java.lang.String">
+		update users set power='MEMBER'where id=#{id}
+	</update>
+	<update id="changeToBlack" parameterType="java.lang.String">
+		update users set power='BLACK'where id=#{id}
+	</update>
 </mapper>

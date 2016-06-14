@@ -607,3 +607,70 @@ footer {
 .searchtext{
 	margin-left:35%;
 }
+
+#notice h2.title{
+	font-family:'roboto';
+	font-size:40px;
+	color:#464646;
+	margin-bottom:5px;
+	position:relative;
+	font-weight: normal;
+}
+
+#notice table{
+	
+	width:100%;
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;
+	margin:auto;	
+}
+#notice tr{
+	height:42px;
+	border-bottom: 1px solid #cacaca;
+	text-align: center;
+}
+
+#notice thead tr{
+	height:40px;
+	text-align: center;
+	border-top:2px solid #424242;
+	border-bottom:1px solid #424242;
+}
+
+#notice td {
+	text-align: center;
+}
+#notice th {
+	text-align: center;
+}
+#notice .buttons{
+	text-align:right;
+	padding:35px 0;z	
+}
+#notice .buttontr {
+	border-bottom:none;
+}
+#notice .searchtr{
+	border-bottom:none;
+}
+#notice .pagetr{
+	border-bottom:none;
+}
+
+#notice input{
+	height:28px;
+	line-height:2.2;
+	background-color: #fff;
+	border:1px solid #747474;
+	text-indent: 5px;
+	margin-lift:10px;
+	
+}
+#noticetable{
+	margin-left: 140px;
+	padding-left:125px;
+	min-width:1000px;
+	margin-right: 250px;
+	min-height:600px;
+}
