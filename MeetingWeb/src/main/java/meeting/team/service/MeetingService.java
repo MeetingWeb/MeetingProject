@@ -90,23 +90,28 @@ public class MeetingService {
 		String sTime = request.getParameter("s_time");
 		String eTime = request.getParameter("e_time");
 		String meetingDay = request.getParameter("meetingDay");
+		sTime = sTime.replaceAll("-", "0");
+		eTime = eTime.replaceAll("-", "0");
 		String sDate = meetingDay + " " + sTime + ":00";
 		String eDate = meetingDay + " " + eTime + ":00";
 
 		java.sql.Timestamp s_stamp = java.sql.Timestamp.valueOf(sDate);
 		java.sql.Timestamp e_stamp = java.sql.Timestamp.valueOf(eDate);
+		
 		meeting.setStart_time(s_stamp);
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(master);
 		meeting.setMap_name(roughMapSave(request));
 		meeting.setDivision("now");
+		
 		Map<String, String> chatMap = new HashMap<String, String>();
 		int chatOk = 0;
 		if(meeting.getDivision().equals("now")) {
-			MeetingController.chatMap.put(meeting.getMaster(), null);
+			// MeetingController.chatMap.put(meeting.getMaster(), null);
 			chatMap.put("master", master);
 			chatMap.put("member", master);
 			chatOk = meeting_dao.chatInsert(chatMap);
+			meeting_dao.updateUser(master);
 		}
 
 		int ok = meeting_dao.insert(meeting);
