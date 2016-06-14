@@ -56,7 +56,7 @@
 					</div>
 				</li>
 				<li>
-					<div id="search-btn" class="glyphicon glyphicon-search menu-btn-icon"></div>
+			<div id="search-btn" class="glyphicon glyphicon-search menu-btn-icon"></div>
 					<div class="menu-btn-name" id="search-btn-name">
 						<a href="#">SEARCH</a>
 					</div>
@@ -67,9 +67,6 @@
 						<a href="#">내위치</a>
 					</div>
 				</li>
-
-
-
 			</ul>
 		</nav>
 	</div>
@@ -90,7 +87,7 @@
 				<a href="/NowMeetingWeb/web/chatForm">CHAT</a>
 			</li>
 			<li>
-				<a href="#">HOME</a>
+				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
 			</li>
 
 		</ul>

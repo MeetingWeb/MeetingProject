@@ -495,13 +495,10 @@ $(function(){
 	<jsp:include page="../include/navi.jsp" />
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
-		<table>
+		<table id="noticeRead" class="table">
 			<caption>글 읽기</caption>
-			<tr>
-				<th>번호</th>
-				<td>${ data.num }</td>
-			</tr>
-			<tr>
+			<tr style="border-top:2px solid black">
+				
 				<th>제목</th>
 				<td>${ data.title }</td>
 			</tr>
@@ -513,28 +510,33 @@ $(function(){
 				<th>날짜</th>
 				<td>${ data.cre_date }</td>
 			</tr>
-			<tr>
+			<tr style="border-bottom:2px solid black;height:300px">
 				<th>내용</th>
 				<td>${ data.contents }</td>
 			</tr>
-		</table>
-		<button type="button" onclick="list()">목록</button>
-		<button type="button" onclick="modify()">수정</button>
-		<button type="button" onclick="del()">삭제</button>
-		<br>
-		<br>
-		<br>
-
-		<div class="replyForm">
+			<tr>
+			<td colspan="5">
+			<button type="button" onclick="list()">목록</button>
+			<button type="button" onclick="modify()">수정</button>
+			<button type="button" onclick="del()">삭제</button>
+			</td>
+			<tr>
+			<td colspan="5">
+			<div class="replyForm">
 			<textarea class="reply" rows="10" cols="40"></textarea>
 			<br>
 			<button type="button" onclick="replyWrite()">글쓰기</button>
-			<br>
-			<br>
+			</td>
+			</tr>
+		</table>
+		
+		<br>
+		<br>
+		<br>			
 		</div>
 
 
-		<table class="reply">
+		<table id="noticeReply" class="reply">
 			<c:forEach var="list" items="${ map.list }">
 				<tr>
 					<th>${ list.id }</th>
@@ -551,9 +553,9 @@ $(function(){
 					</c:choose>
 				</tr>
 			</c:forEach>
-		</table>
-
-		<div class="replyMenu">
+			<tr>
+			<td colspan="3">
+			<div class="replyMenu">
 			<c:if test="${ map.page.listTotal > 5 }">
 				<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a>
 				<br>
@@ -561,9 +563,14 @@ $(function(){
 			<a href="#none" onClick="allReply(); return false;">전체댓글보기</a>
 			<br>
 		</div>
+			</td>
+			</tr>
+		</table>
+
+		
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
-		<jsp:include page="../include/chat_view.jsp" />
+	
 	</section>
 	<jsp:include page="../include/footer.jsp" />
 </body>

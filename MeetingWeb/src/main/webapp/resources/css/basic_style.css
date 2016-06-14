@@ -133,7 +133,7 @@ ul {
 
 #contents {
 	width: 100%;
-	background: #F0F9F5;
+	background: #fff;
 	float: right;
 	padding-left: 64px;
 	height: 100%;
@@ -309,7 +309,28 @@ footer {
 	float: right;
 }
 
-#headernavi #joinbtn, #headernavi #member-info-btn {
+#headernavi #meeting-btn {
+	cursor: pointer;
+	height: 100%;
+	width: 200px;
+	margin: 0px auto;
+}
+
+#headernavi #meeting-btn #now-meeting, #headernavi #meeting-btn #not-now-meeting {
+	height: 50%;
+	margin-top: 32px;
+	width: 50%;
+	text-align: center;
+	background: #129994;
+	color: #fff;
+}
+
+#headernavi #meeting-btn #now-meeting:hover, #headernavi #meeting-btn #not-now-meeting:hover {
+	background: #ddd;
+	color: #000;
+}
+
+#headernavi #joinbtn {
 	width: 126px;
 	height: 64px;
 	float: right;
@@ -318,8 +339,15 @@ footer {
 }
 
 #headernavi #member-info-btn {
+	height: 64px;
+	float: right;
+	background: #fff;
+	cursor: pointer;
+}
+
+#headernavi #member-info-btn {
 	padding: 15px 16px 15px 0;
-	width: 200px;
+	//width: 200px;
 }
 
 
@@ -577,16 +605,125 @@ footer {
 	position: absolute;
 	top: 64px;
 	right: 0px;
-	overflow-y: scroll;
+	overflow-y: scroll; 
 	display: none;
 }
 
-#recommend-title {
-	color: gray;
-	font-size: 17px;
-}
+
 
 #recommend-more {
-	color: gray;
+	
 	font-size: 14px;
+	margin-left:40%
+	
+}
+
+#search-menu{
+	background-color: rgba(255, 255, 255, 0);
+	z-index: 50;	
+	position: absolute;
+	top: 64px;
+	left: 64px;
+	display: none;
+	margin-left:1%;
+	margin-top:1%;
+
+ }
+.recommendTable{	
+	margin-left:2%;
+	margin-right:2%;	
+}
+.main{
+	font-size:16px;
+}
+.sub{
+	font-size:12px;
+	color:#9F9F9F;
+}
+.titletd{
+	width:280px;
+	
+	
+}
+.buttontd{
+	width:50px;	
+}
+.recommendfield{
+	font-weight: bold;
+}
+.list-group{
+	width:250px;
+	
+}
+.searchtext{
+	margin-left:35%;
+}
+
+#notice h2.title{
+	font-family:'roboto';
+	font-size:40px;
+	color:#464646;
+	margin-bottom:5px;
+	position:relative;
+	font-weight: normal;
+}
+
+#notice table{
+	
+	
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;		
+	margin:50px auto;	
+	max-width:1100px;
+}
+#notice tr{
+	height:42px;
+	border-bottom: 1px solid #cacaca;
+	text-align: center;
+}
+
+#notice thead tr{
+	height:40px;
+	text-align: center;
+	border-top:2px solid #424242;
+	border-bottom:1px solid #424242;
+}
+
+#notice td {
+	text-align: center;
+}
+#notice th {
+	text-align: center;
+}
+#notice .buttons{
+	text-align:right;
+	padding:35px 0;z	
+}
+#notice .buttontr {
+	border-bottom:none;
+}
+#notice .searchtr{
+	border-bottom:none;
+}
+#notice .pagetr{
+	border-bottom:none;
+}
+
+#notice input{
+	height:28px;
+	line-height:2.2;
+	background-color: #fff;
+	border:1px solid #747474;
+	text-indent: 5px;
+	margin-lift:10px;	
+}
+
+#noticeRead{	
+	max-width:1100px;
+	
+	margin:50px auto;
+}
+#noticeReply{
+	margin:50px auto;
 }

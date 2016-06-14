@@ -165,7 +165,7 @@ function searchMap(place) {
 			/*
 			 * iw = new google.maps.InfoWindow({ content : getIWContent(place) })
 			 */
-			iw.open(map, markers[0]);
+			//iw.open(map, markers[0]);
 			map.fitBounds(bounds);
 			map.setZoom(15);
 		} else if (status == google.maps.GeocoderStatus.ERROR) {
@@ -224,9 +224,9 @@ function roughMap(zoom) {
 	$("#rough-map img").attr("src", path);
 	var size = 0;
 	if (width >= height) {
-		size = height;
+		size = height - 45;
 	} else {
-		size = width;
+		size = width -45;
 	}
 	$("#rough-map canvas").attr("width", size).attr("height", size);
 	
@@ -245,7 +245,7 @@ $("#zoom-num").on("change", function() {
 
 $("#zoom-min").on("change", function() {
 	var zoom = $(this).val();
-	$("#rough-map-in label").text(zoom);
+	$("#rough-map-in label").text("ZOOM : "+zoom);
 	roughMap(zoom);
 
 });
@@ -253,8 +253,9 @@ $("#zoom-min").on("change", function() {
 var canvas = null;
 var context = null;
 var imageObj = null;
-var colorCode = "#000";
+var colorCode = "#375060";
 var p1, p2, ep, sp;
+var drawOk = false;
 
 function drawCanvas() {
 	canvas = document.getElementById('map-canvas');
@@ -272,6 +273,7 @@ function drawCanvas() {
 
 	canvas.addEventListener('mousedown', onMouseDown);
 	canvas.addEventListener('mouseup', onMouseUp);
+	canvas.addEventListener('mousemove', onMouseMove);
 }
 
 function roughMapSave() {
@@ -290,17 +292,36 @@ function Pointer(x, y) {
 function onMouseDown(e) {
 	p1 = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
 	sp = p1;
+	drawOk = true;
 }
 
 function onMouseUp(e) {
-	ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+	/*ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
 	context.beginPath();
 	context.moveTo(sp.x, sp.y);
 	context.lineTo(ep.x, ep.y);
 	context.lineWidth = 5;
 	context.strokeStyle = colorCode;
-	context.stroke();
+	context.stroke();*/
+	drawOk = false;
 }
+
+function onMouseMove(e) {
+	if (drawOk) {
+		p2 = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
+		context.beginPath();
+		context.moveTo(p1.x, p1.y);
+		context.lineTo(p2.x, p2.y);
+		context.lineWidth = 5;
+		context.strokeStyle = colorCode;
+		context.stroke();
+		p1 = p2;
+	}
+}
+
+$("#rough-map-cancle-btn").on("click",function(){
+	$("#rough-map").css("display","none");
+});
 
 /*
  * $("#rough-map").on("click", function(){ $("#rough-map").css("visibility",
