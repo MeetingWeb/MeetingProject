@@ -36,11 +36,13 @@
 		});
 		$("#show_Infomation").css("height", $(window).height() - 64);
 
-		if ("${sessionScope.id}" != "") {
-			console.log(user_id);
+		if ("${sessionScope.id}" != "") {		
 			drawMeetings(map);
-			showMyLocation();
-
+			showMyLocation();			
+			if("${requestScope.search}"=='ok')
+			{
+				$("#search-menu").css('display', 'block');	
+			}
 		}
 
 		<c:if test="${ok == true}">
@@ -129,6 +131,8 @@
 			});
 
 		});
+		
+		
 	});
 
 	function getRecommend() {
@@ -148,11 +152,11 @@
 
 					if (distance < 40) {
 						if (((i != 0) && (data[i - 1].field != data[i].field)) || (i == 0)) {
-							html += "<table><caption>" + data[i].field + "</caption>";
+							html += "<hr><table class='recommendTable'><caption><h4 class='recommendfield'>" + data[i].field + "<h4></caption>";
 						}
-						html += "<tr><td> " + data[i].title + "</td><td> " + data[i].master + "</td><td> 거리" + distance
-								+ "km</td><td> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere(" + meetinglat
-								+ "," + meetinglng + ")'>모임 보기</button></td></tr>";
+						html += "<tr class='main'><td class='titletd'>" + data[i].title +
+								 "</td><td class='buttontd'> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere(" + meetinglat
+								+ "," + meetinglng + ")'>모임 보기</button></td></tr><tr class='sub'><td class='titletd'>주최자:"+data[i].master+",  거리:"+distance+"km</td></tr>";
 						if ((i == (data.length - 1)) || (data[i].field != data[i + 1].field)) {
 							html += "</table>";
 							$('div.recommend-list').append(html);
@@ -251,6 +255,51 @@
 		}
 
 	}
+	
+	function goSearch(){
+		var searchArr=[];
+		var searchList=$('input[name=search]')
+		
+		for(var i=0; i<searchList.length; i++){
+			if(searchList[i].checked==true){
+				searchArr.push(searchList[i].value);
+			}		
+		}	
+		var data={
+			"data":	searchArr
+		}	
+
+		jQuery.ajaxSettings.traditional = true;		
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'search',
+			data : data,
+			success : function(data) {				
+				setMapOnAll(null);
+				markers=[];
+			 	 for(var i=0; i<data.length; i++)
+				{
+					var loc=data[i].loc;
+					var arr=loc.split(',');				
+					var lat=Number(arr[0]);
+					var lng=Number(arr[1]);				 
+					var latlng = new google.maps.LatLng(lat,lng);
+					makeMarker(latlng,data[i]);
+				}  
+
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+
+	}
+	
+	
 </script>
 </head>
 <body>
@@ -283,9 +332,6 @@
 						<button type="button" class="btn btn-success chat-btn">Participation in chat rooms</button>
 
 						<button type="button" class="btn btn-success">Rough map</button>
-
-
-
 					</div>
 
 				</div>
@@ -296,14 +342,97 @@
 		</div>
 		<!-- /.modal -->
 
-		<div class="recommend">
-			<span id="recommend-title">추천목록</span>
-			<br>
-			<div class="recommend-list"></div>
-			<span id="recommend-more">
-				<a href='#none' onClick='getRecommend(); return false;'>새로고침</a>
+		<div class="recommend">		
+			<br>	
+				<span id="recommend-more">
+				<div class="glyphicon glyphicon-retweet menu-btn-icon"></div>				
+				<a href='#none' onClick='getRecommend(); return false;'> 새로고침</a>
 			</span>
+			<div class="recommend-list"></div>
+			<br>
+			
 		</div>
+		
+		
+		
+		
+		
+		
+<div id="search-menu">
+<ul class = "list-group">
+   <li class = "list-group-item"><input type="checkbox" name="search" value="롱보드"><span class="searchtext">롱보드</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value="농구"><span class="searchtext">농구</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
+ <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">
+     검색
+   </button>  
+</ul>
+
+  <!--  <div class = "panel-heading">
+      <h3 class = "panel-title" style="margin-left:17%;">
+      </h3>
+   </div>
+   
+   <div class = "panel-body">
+      			<table class = "table table-striped">			
+  
+  
+     
+   
+   
+   <tbody>
+      <tr>
+         <td></td>
+         <td>롱보드</td>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택1</td>
+      </tr>
+      
+      <tr>
+         <td></td>
+         <td>농구</td>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택1</td>
+      </tr>
+      
+      <tr>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택1</td>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택1</td>
+      </tr>
+      <tr>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택2</td>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택1</td>
+      </tr>
+      <tr>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택3</td>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택1</td>
+      </tr>
+      <tr>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택4</td>
+         <td><input type="checkbox" name="search" value=""></td>
+         <td>선택1</td>
+      </tr>
+   </tbody>
+   
+</table> -->
+					
+			</div> 
+   </div>
+</div>	
+			
+		
+
+		
+		
 		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
