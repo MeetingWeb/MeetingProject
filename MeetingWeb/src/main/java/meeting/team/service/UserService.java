@@ -39,16 +39,15 @@ import meeting.team.vo.UserVo;
 public class UserService implements UserDetailsService {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	@Autowired
 	protected JavaMailSender mailSender;
-	
+
 	@Autowired
 	private MessageSource messageSource;
-	
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
@@ -63,205 +62,194 @@ public class UserService implements UserDetailsService {
 		}
 		return null;
 	}
-	
-	public String check(UserVo user, BindingResult result, HttpServletRequest request){
+
+	public String check(UserVo user, BindingResult result, HttpServletRequest request) {
 		new JoinValidator().validate(user, result);
-		
+
 		JSONObject json = null;
-		if(result.hasErrors()){
+		if (result.hasErrors()) {
 			json = new JSONObject();
-			
+
 			List<FieldError> list = result.getFieldErrors();
-			for(int i=0;i<list.size();i++) {
-				
+			for (int i = 0; i < list.size(); i++) {
+
 				FieldError fe = list.get(i);
-				System.out.println("오류필드:"+fe.getField());
-				
-				if(fe.getField().equals("id")){
+				System.out.println("오류필드:" + fe.getField());
+
+				if (fe.getField().equals("id")) {
 					String idErr = messageSource.getMessage("required.user.id", null, Locale.getDefault());
 					json.put("idErr", idErr);
 
 				}
-				
-				if(fe.getField().equals("ids")){
+
+				if (fe.getField().equals("ids")) {
 					String idErr = messageSource.getMessage("required2.user.ids", null, Locale.getDefault());
 					json.put("idErr", idErr);
 				}
-				
-				if(fe.getField().equals("pw")){
+
+				if (fe.getField().equals("pw")) {
 					String idErr = messageSource.getMessage("required.user.pw", null, Locale.getDefault());
 					json.put("pwdErr", idErr);
 				}
-				
-				if(fe.getField().equals("pws")){
+
+				if (fe.getField().equals("pws")) {
 					String idErr = messageSource.getMessage("required2.user.pws", null, Locale.getDefault());
 					json.put("pwdErr", idErr);
 				}
-				
-				if(fe.getField().equals("pwc")){
+
+				if (fe.getField().equals("pwc")) {
 					String idErr = messageSource.getMessage("required3.user.pwc", null, Locale.getDefault());
 					json.put("pwdErr2", idErr);
 				}
-				
-				if(fe.getField().equals("pwcc")){
+
+				if (fe.getField().equals("pwcc")) {
 					String idErr = messageSource.getMessage("required4.user.pwcc", null, Locale.getDefault());
 					json.put("pwdErr2", idErr);
 				}
-				
-				
 
 			}
 			return json.toJSONString();
 		}
-		
-		
+
 		json = new JSONObject();
 		json.put("idErr", user.getId());
-		return json.toJSONString(); 
+		return json.toJSONString();
 	}
-	
-public String join(UserVo user, HttpServletRequest request){
-		
-		
+
+	public String join(UserVo user, HttpServletRequest request) {
+
 		String id = user.getId();
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
 		String encodedPw = encoder.encode(user.getPw());
 		user.setPw(encodedPw);
 		int n = user_dao.join(user);
-		boolean tf = n > 0 ? true:false;
-	
+		boolean tf = n > 0 ? true : false;
+
 		String[] arr = user.getInterests().split(",");
-		
-		if(tf==true)
-		{
-			for(int i=0;i<arr.length;i++)
-			{
+
+		if (tf == true) {
+			for (int i = 0; i < arr.length; i++) {
 				HashMap<String, Object> map = new HashMap<String, Object>();
 				map.put("a", id);
-				map.put("b",arr[i]);
+				map.put("b", arr[i]);
 				user_dao.joinhabby(map);
-				
+
 			}
 		}
-		
+
 		JSONObject json = new JSONObject();
 		json.put("ok", tf);
-		
+
 		return json.toJSONString();
 	}
-	
-	public String id_check(String id,HttpServletRequest request) {
-	UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
-	UserVo ids = user_dao.id_check(id);
-	JSONObject json = new JSONObject();
-	//System.out.println(ids.getId());
-	if(ids==null)
-	{
-		json.put("msg", id);
-		request.setAttribute("id_check", id);
-		json.put("ok", true);
+
+	public String id_check(String id, HttpServletRequest request) {
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		UserVo ids = user_dao.id_check(id);
+		JSONObject json = new JSONObject();
+		// System.out.println(ids.getId());
+		if (ids == null) {
+			json.put("msg", id);
+			request.setAttribute("id_check", id);
+			json.put("ok", true);
+		} else {
+			json.put("msg", ids.getId());
+			json.put("ok", false);
+		}
+
+		return json.toJSONString();
 	}
-	else
-	{
-		json.put("msg", ids.getId());
-		json.put("ok", false);
-	}
-	
-	
-	return json.toJSONString();
-}
-	
 
 	public boolean email_check(final EmailVo email) throws Exception {
-        try{
-	        mailSender.send(new MimeMessagePreparator() {            
-	            public void prepare(MimeMessage mimeMessage) throws MessagingException {
-	               MimeMessageHelper message=new MimeMessageHelper(mimeMessage,true,"UTF-8");
-	               message.setFrom("red5423@naver.com");
-	               message.setTo(email.getReceiver());
-	               message.setSubject(email.getSubject());
-	               message.setText(email.getContent(),true);
-	            
-	            }
-	         });
-	        
-	        return true;
-        }catch(Exception ex) {
-        	ex.printStackTrace();
-        }
-        return false;
-    }
-	
-	public boolean changeLatlng(HttpServletRequest request){
+		try {
+			mailSender.send(new MimeMessagePreparator() {
+				public void prepare(MimeMessage mimeMessage) throws MessagingException {
+					MimeMessageHelper message = new MimeMessageHelper(mimeMessage, true, "UTF-8");
+					message.setFrom("red5423@naver.com");
+					message.setTo(email.getReceiver());
+					message.setSubject(email.getSubject());
+					message.setText(email.getContent(), true);
+
+				}
+			});
+
+			return true;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean changeLatlng(HttpServletRequest request) {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
-		String latlng=request.getParameter("latlng");
-		String id=(String)request.getSession().getAttribute("id");	
-		UserVo user=new UserVo();
+		String latlng = request.getParameter("latlng");
+		String id = (String) request.getSession().getAttribute("id");
+		UserVo user = new UserVo();
 		user.setId(id);
 		user.setLatlng(latlng);
-		int res=user_dao.changeLatlng(user);
-		if(res==1)return true;
-		else return false;		
+		int res = user_dao.changeLatlng(user);
+		if (res == 1)
+			return true;
+		else
+			return false;
 	}
-	
-	public String getMyLocation(HttpServletRequest request){
-		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);	
-		String id=(String)request.getSession().getAttribute("id");
-		String myLOC=user_dao.getMyLocation(id);		
-		JSONObject jsonObj=new JSONObject();	
+
+	public String getMyLocation(HttpServletRequest request) {
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		String id = (String) request.getSession().getAttribute("id");
+		String myLOC = user_dao.getMyLocation(id);
+		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("latlng", myLOC);
 		return jsonObj.toJSONString();
 	}
-	
-	public List<String> getInterest(HttpServletRequest request)
-	{
+
+	public List<String> getInterest(HttpServletRequest request) {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
-		String id=(String)request.getSession().getAttribute("id");
-		List<String> interest=user_dao.getInterest(id);
+		String id = (String) request.getSession().getAttribute("id");
+		List<String> interest = user_dao.getInterest(id);
 		return interest;
-		
+
 	}
-	public List<UserVo> getList(){
+
+	public List<UserVo> getList() {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
 		return user_dao.getList();
-}	
+	}
 
 	public void setChatList(String userId) {
-		Map<String, ArrayList<String>>map = MeetingController.chatMap;
+		Map<String, ArrayList<String>> map = MeetingController.chatMap;
 		MeetingDao meeting_dao = sqlSessionTemplate.getMapper(MeetingDao.class);
-		//meeting_dao.getAllChatList();
-	}
-	
-	public String powerUpdate(HttpServletRequest request){
-		String[] resultmember=request.getParameterValues("resultmember");
-		String[] resultblack=request.getParameterValues("resultblack");
-		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
-		int res=0;
-		int membersize=0;
-		int blacksize=0;
-		if(resultmember!=null){
-			membersize=resultmember.length;
-			for(int i=0; i<resultmember.length; i++)
-			{
-				res+=user_dao.changeToMember(resultmember[i]);
-				
-			}
-		}
-		
-		if(resultblack!=null){
-			blacksize=resultblack.length;
-			for(int i=0; i<resultblack.length; i++)
-			{
-				res+=user_dao.changeToBlack(resultblack[i]);
-			}
-		}		
-		
-		JSONObject jsonObj=new JSONObject();		
-		if(res==(membersize+blacksize)){
-			jsonObj.put("ok", true);
-		}else jsonObj.put("ok", false);
-		return jsonObj.toJSONString();
+		// meeting_dao.getAllChatList();
 	}
 
+	public String powerUpdate(HttpServletRequest request) {
+		String[] resultmember = request.getParameterValues("resultmember");
+		String[] resultblack = request.getParameterValues("resultblack");
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		int res = 0;
+		int membersize = 0;
+		int blacksize = 0;
+		if (resultmember != null) {
+			membersize = resultmember.length;
+			for (int i = 0; i < resultmember.length; i++) {
+				res += user_dao.changeToMember(resultmember[i]);
+
+			}
+		}
+
+		if (resultblack != null) {
+			blacksize = resultblack.length;
+			for (int i = 0; i < resultblack.length; i++) {
+				res += user_dao.changeToBlack(resultblack[i]);
+			}
+		}
+
+		JSONObject jsonObj = new JSONObject();
+		if (res == (membersize + blacksize)) {
+			jsonObj.put("ok", true);
+		} else
+			jsonObj.put("ok", false);
+		return jsonObj.toJSONString();
+	}
 
 }
