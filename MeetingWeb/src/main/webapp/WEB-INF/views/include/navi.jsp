@@ -17,20 +17,20 @@
 					</div>
 				</li>
 				<sec:authorize access="hasAuthority('MEMBER') || hasAuthority('ADMIN')">
-				<li>
-					<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
-					<div class="menu-btn-name">
-						<a href="/NowMeetingWeb/web/addForm">MEETING</a>
-					</div>
-				</li>
+					<li>
+						<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
+						<div class="menu-btn-name">
+							<a href="/NowMeetingWeb/web/addForm">MEETING</a>
+						</div>
+					</li>
 				</sec:authorize>
 				<sec:authorize access="hasAuthority('MASTER')">
-				<li onclick="javascript:alert('개설할 수 있는 모임은 한정 되어있습니다.')">
-					<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
-					<div class="menu-btn-name">
-						<a href="#">MEETING</a>
-					</div>
-				</li>
+					<li onclick="javascript:alert('개설할 수 있는 모임은 한정 되어있습니다.')">
+						<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
+						<div class="menu-btn-name">
+							<a href="#">MEETING</a>
+						</div>
+					</li>
 				</sec:authorize>
 				<li>
 					<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>
@@ -49,7 +49,7 @@
 				</li>
 				<li id="message-btn">
 					<div class="glyphicon glyphicon-envelope menu-btn-icon" style="width: 100%;">
-						<span class="badge" style="position: absolute; top: -10px; left: 35px;">4</span>
+						<span class="badge" style="position: absolute; top: -10px; left: 35px; display: none;">0</span>
 					</div>
 					<div class="menu-btn-name">
 						<a href="/NowMeetingWeb/web/chatForm">MESSAGE</a>
@@ -57,18 +57,17 @@
 					<div class="menu-btn-name"><a href="/NowMeetingWeb/Inquiry/list">INQUIRY</a></div>
 				</li>
 				<li>
-					<div id="search-btn" class="glyphicon glyphicon-search menu-btn-icon">							
+			<div id="search-btn" class="glyphicon glyphicon-search menu-btn-icon"></div>
+					<div class="menu-btn-name" id="search-btn-name">
+						<a href="#">SEARCH</a>
 					</div>
-				<div class="menu-btn-name" id="search-btn-name"><a href="#">SEARCH</a></div>
 				</li>
 				<li>
-					<div id="mylocation-btn" class="glyphicon glyphicon-flag menu-btn-icon">							
+					<div id="mylocation-btn" class="glyphicon glyphicon-flag menu-btn-icon"></div>
+					<div class="menu-btn-name" id="myLocation-btn-name">
+						<a href="#">내위치</a>
 					</div>
-				<div class="menu-btn-name" id="myLocation-btn-name"><a href="#">내위치</a></div>
 				</li>
-				
-				
-				
 			</ul>
 		</nav>
 	</div>
@@ -86,10 +85,10 @@
 				<a href="/NowMeetingWeb/web/addForm">MEETING</a>
 			</li>
 			<li>
-				<a href="#">HOME</a>
+				<a href="/NowMeetingWeb/web/chatForm">CHAT</a>
 			</li>
 			<li>
-				<a href="#">HOME</a>
+				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
 			</li>
 
 		</ul>

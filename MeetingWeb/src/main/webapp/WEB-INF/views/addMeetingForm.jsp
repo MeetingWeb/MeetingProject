@@ -40,33 +40,67 @@
 		});
 	});
 	function insert() {
-		var division = null;
+		/* var division = null;
 		for ( var txt in mobileArr) {
 			if (navigator.userAgent.match(mobileArr[txt]) != null) {
 				division = $("input[name=division]").val("now");
+				$.ajax({
+					url : "/NowMeetingWeb/meeting/insert",
+					type : "post",
+					data : $("#add-meeting-form").serialize(),
+					dataType : "json",
+					success : function(obj) {
+						if (obj.ok) {
+							alert("모임 만들기 성공");
+						} else {
+							alert("모임 만들기 실패");
+						}
+					},
+					error : function(xhr, error, status) {
+
+					}
+				});
 				break;
 			} else {
 				division = $("input[name=division]").val("notnow");
+				$.ajax({
+					url : "/NowMeetingWeb/meeting/insert",
+					type : "post",
+					data : $("#add-meeting-form").serialize(),
+					dataType : "json",
+					success : function(obj) {
+						if (obj.ok) {
+							alert("모임 만들기 성공");
+							location.href="/NowMeetingWeb/meeting/meetingView?num=0";
+						} else {
+							alert("모임 만들기 실패");
+						}
+					},
+					error : function(xhr, error, status) {
+
+					}
+				});
 				break;
 			}
-			
-			$.ajax({
-				url : "/NowMeetingWeb/meeting/insert",
-				type : "post",
-				data : $("#add-meeting-form").serialize(),
-				dataType : "json",
-				success : function(obj) {
-					if (obj.ok) {
-						alert("모임 만들기 성공");
-					} else {
-						alert("모임 만들기 실패");
-					}
-				},
-				error : function(xhr, error, status) {
+		} */
 
+		$.ajax({
+			url : "/NowMeetingWeb/meeting/insert",
+			type : "post",
+			data : $("#add-meeting-form").serialize(),
+			dataType : "json",
+			success : function(obj) {
+				if (obj.ok) {
+					alert("모임 만들기 성공");
+					location.href = "/NowMeetingWeb/web/chatForm";
+				} else {
+					alert("모임 만들기 실패");
 				}
-			});
-		}
+			},
+			error : function(xhr, error, status) {
+
+			}
+		});
 	}
 </script>
 <title>여기여기 붙어라</title>
@@ -118,7 +152,7 @@
 							</div>
 							<div class="col-sm-2" style="width: 300px;">
 								<button type="button" class="btn btn-default" id="set-location">Set Location</button>
-								<button type="button" class="btn btn-default" id="set-location" onclick="roughMap(17)">Create Map</button>
+								<button type="button" class="btn btn-default" id="set-location" onclick="roughMap(16)">Create Map</button>
 							</div>
 						</div>
 						<div class="form-group">
@@ -166,12 +200,15 @@
 		</div>
 		<div id="rough-map">
 			<div id="rough-map-in">
-				<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="17" style="width: 200px;">
-				<input type="number" value="17" id="zoom-num" max="19" min="9">
-				<button id="rough-map-save-btn" type="button" onclick="roughMapSave()">Save</button>
+				<div id="btn-group">
+					<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="16" style="width: 200px;">
+					<label for="zoom-min" style="color: #fff;">ZOOM: 16</label>
+					<!-- <input type="number" value="16" id="zoom-num" max="19" min="9"> -->
+					<button id="rough-map-cancle-btn" type="button" class="btn btn-default pull-right">Cancle</button>
+					<button id="rough-map-save-btn" type="button" onclick="roughMapSave()" class="btn btn-default pull-right">Save</button>
+				</div>
 				<img src="" id="rough-map-in-img">
 				<canvas id="map-canvas" width="640" height="640"></canvas>
-				<label for="zoom-min" style="color: #fff;">ZOOM:</label>
 			</div>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />

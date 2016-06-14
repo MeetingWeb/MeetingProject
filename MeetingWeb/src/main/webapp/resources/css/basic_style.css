@@ -133,7 +133,7 @@ ul {
 
 #contents {
 	width: 100%;
-	background: #F0F9F5;
+	background: #fff;
 	float: right;
 	padding-left: 64px;
 	height: 100%;
@@ -317,7 +317,13 @@ footer {
 	cursor: pointer;
 }
 
-#headernavi #joinbtn span, #member-info-btn span {
+#headernavi #member-info-btn {
+	padding: 15px 16px 15px 0;
+	width: 200px;
+}
+
+
+#headernavi #joinbtn span{
 	float: left;
 	color: #129994;
 	text-transform: uppercase;
@@ -329,12 +335,29 @@ footer {
 	margin-top: 25px;
 }
 
+#member-info-btn span {
+	display: block;
+    overflow: hidden;
+    color: #94A2AA;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color .3s;
+    font-size: 13px;
+    line-height: 17px;
+    font-weight: 700;
+}
+
 #loginbtn, #logoutbtn, #recommendbtn {
 	width: 126px;
 	height: 64px;
 	float: right;
 	background: #129994;
 	cursor: pointer;
+}
+
+#logoutbtn {
+	background: #375060;
 }
 
 #loginbtn span, #logoutbtn span {
