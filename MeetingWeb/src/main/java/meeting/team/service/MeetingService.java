@@ -217,6 +217,7 @@ public class MeetingService {
 		return json.toJSONString();
 	}
 
+	@SuppressWarnings("unchecked")
 	public String getMeetings(String[] key) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		JSONArray jsonArr = new JSONArray();

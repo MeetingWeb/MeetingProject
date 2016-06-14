@@ -205,10 +205,6 @@ $(function(){
 			</table>
 		</form>
 
-
-
-
-
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />	
 	</section>
