@@ -309,3 +309,11 @@
 	max-width: 120px;
 	min-width: 116px;
 }
+
+#contents-in-reply-list .navi-num {
+	cursor: pointer;
+}
+
+#contents-in-reply-list .pre, #contents-in-reply-list .next {
+	cursor: pointer;
+}

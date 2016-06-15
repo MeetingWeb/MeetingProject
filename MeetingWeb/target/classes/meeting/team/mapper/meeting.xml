@@ -73,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getRowCount" resultType="java.lang.Integer">
-		SELECT CEIL(COUNT(*)/10) FROM res_meeting WHERE ref=#{ref}
+		SELECT CEIL(COUNT(*)/2) FROM res_meeting WHERE ref=#{ref}
 	</select>
 	
 	<delete id="replyDelete" parameterType="HashMap">

@@ -39,7 +39,7 @@ public class MeetingService {
 	private SqlSessionTemplate sql_temp;
 	private MeetingDao meeting_dao;
 	private HashMap<String, Integer> pageMap = new HashMap<String, Integer>();
-	private final int SHOWROW = 10;
+	private final int SHOWROW = 2;
 	private final int SHOWNAVIPAGE = 5;
 
 	double latitude;
