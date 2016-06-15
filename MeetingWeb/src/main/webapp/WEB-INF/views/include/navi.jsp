@@ -44,7 +44,7 @@
 				<li>
 					<div class="glyphicon glyphicon-phone-alt menu-btn-icon"></div>
 					<div class="menu-btn-name">
-						<a href="/NowMeetingWeb/Inquiry/list">INQUIRY</a>
+						<a href="/NowMeetingWeb/inquiry/list?page=1&start=1&check=1">INQUIRY</a>
 					</div>
 				</li>
 				<li id="message-btn">
@@ -67,6 +67,14 @@
 						<a href="#">내위치</a>
 					</div>
 				</li>
+				<sec:authorize access="hasAuthority('ADMIN')">
+				<li>
+					<div id="mylocation-btn" class="glyphicon glyphicon-cog menu-btn-icon"></div>
+					<div class="menu-btn-name" id="myLocation-btn-name">
+						<a href="/NowMeetingWeb/web/blackList">블랙리스트</a>
+					</div>
+				</li>
+				</sec:authorize>
 			</ul>
 		</nav>
 	</div>
@@ -89,7 +97,18 @@
 			<li>
 				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
 			</li>
-
+			<li>
+				<a href="/NowMeetingWeb/meeting/notNowList">예정된 모임</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/notice/getList">NOTICE</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
+			</li>
 		</ul>
 	</nav>
 </div>

@@ -1,0 +1,152 @@
+table{
+	width:80%;
+	margin: auto;
+}
+
+
+
+
+caption {
+    font-family: 'roboto';
+    font-size: 40px;
+    color: #464646;
+    margin-bottom: 5px;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+tr{
+	height: 50px;
+}
+
+th{
+	border-bottom: 1px solid #333333;
+	border-top: 2px solid #333333;
+	
+
+}
+
+td{
+	border-bottom: 1px solid #333333;
+	color:#464646;
+}
+
+#snum{
+	width: 150px;
+	text-align: center;
+}
+
+#stitle{
+	width: 700px;
+	text-align: center;
+	
+}
+
+#sid{
+	width: 200px;
+	text-align: center;
+}
+
+#sday{
+	width: 100px;
+	text-align: center;
+}
+
+#tdnum{
+	width: 150px;
+	text-align: center;
+}
+
+#tdtitle{
+	
+}
+
+#tdid{
+	width: 200px;
+	text-align: center;
+}
+
+#tdday{
+	width: 100px;
+	text-align: center;
+}
+
+#writebtn, #listbtn, #editbtn, #deletebtn, #writebtn2,#reple_btns{
+	float: right;
+	margin: 50px 0px 50px 0px;
+}
+
+
+#btns{
+	width:80%;
+	margin : auto;
+}
+
+#pageNavi{
+	width:10%;
+	margin: 150px auto 50px auto;
+	color:#464646;
+}
+
+a{
+	color:#464646;
+	
+}
+
+#search_btn{
+	width:30%;
+	margin: auto;
+}
+
+
+
+#wtitle,#wcontents,#wfile{
+	width: 80px;
+	text-align: center;
+}
+
+#wtitleinput{
+	border-top: 2px solid #333333;
+}
+
+
+
+#btn{
+	width: 100px;
+}
+
+#replenum{
+	width: 150px;
+	text-align: center;
+}
+
+#repletitle{
+	width: 700px;
+	text-align: center;
+}
+
+#repleid{
+	width: 150px;
+	text-align: center;
+}
+
+#repleday{
+	width: 150px;
+	text-align: center;
+}
+
+
+
+#replyy{
+	width: 80%;
+	margin: auto;
+	float: right;
+}
+
+
+#reply{
+	width:80%;
+	margin: auto auto 150px auto;
+}
+
+

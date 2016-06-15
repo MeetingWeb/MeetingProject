@@ -39,6 +39,16 @@
 	<div id="mobile-title-name" class="hidden-md hidden-lg">come together</div>
 	<div class="glyphicon glyphicon-menu-hamburger hidden-md hidden-lg pull-right" id="m-menu-btn"></div>
 </div>
+	<div class="recommend">		
+			<br>	
+				<span id="recommend-more">
+				<div class="glyphicon glyphicon-retweet menu-btn-icon"></div>				
+				<a href='#none' onClick='getRecommend(); return false;'> 새로고침</a>
+			</span>
+			<div class="recommend-list"></div>
+			<br>
+			
+		</div>
 
 
 

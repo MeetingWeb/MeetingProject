@@ -24,7 +24,8 @@ public interface MeetingDao {
 	int updateUser(String master);
 	ArrayList<MeetingVo> getNotNowMeetingList();
 	int addReply(ReplyVo reply);
-	List<ReplyVo> getReplyList(HashMap<String, Integer> pageMap);
+	List<ReplyVo> getReplyList(HashMap<String, Object> pageMap);
 	int getRowCount(int ref);
-	int replyDelete(HashMap<String, Integer> pageMap);
+	int replyDelete(HashMap<String, Object> pageMap);
+	int replyModify(HashMap<String, Object> pageMap);
 }

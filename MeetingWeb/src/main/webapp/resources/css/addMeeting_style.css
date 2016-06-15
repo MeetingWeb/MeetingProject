@@ -205,9 +205,10 @@
 }
 
 #rough-map-img {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	visibility: hidden;
+	margin: 0px auto;
 }
 
 /* 由ъ뒪�듃 */
@@ -308,4 +309,12 @@
 	width: 10%;
 	max-width: 120px;
 	min-width: 116px;
+}
+
+#contents-in-reply-list .navi-num {
+	cursor: pointer;
+}
+
+#contents-in-reply-list .pre, #contents-in-reply-list .next {
+	cursor: pointer;
 }

@@ -73,4 +73,15 @@ public class MeetingController {
 	public @ResponseBody String replyDelete(@RequestParam("page") int page, @RequestParam("num") int num, @RequestParam("ref") int ref) {
 		return meeting_svc.replyDelete(ref, num, page);
 	}
+	
+	@RequestMapping(value = "replyUpdate", method = RequestMethod.POST)
+	public @ResponseBody String replyUpdate(@RequestParam("page") int page, @RequestParam("num") int num, @RequestParam("ref") int ref, @RequestParam("contents") String contents) {
+		return meeting_svc.replyModify(ref, num, page, contents);
+	}
+	
+	@RequestMapping("modifyForm")
+	public String modifyForm(@RequestParam int num, Model model) throws Exception {
+		model.addAttribute("data", meeting_svc.modifyForm(num));
+		return "modifyMeetingForm";
+	}
 }

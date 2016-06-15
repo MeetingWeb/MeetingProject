@@ -12,7 +12,7 @@ public interface InquiryDao {
 	public int idelete(int num);
 	public int iupdate(InquiryVo ivo);
 	public List<InquiryVo> ilist(int page);
-	public Integer pageTotals();
+	public Integer pageTotals(String id);
 	
 	public List<InquiryVo> serchlist(InquiryVo ivo);
 	public int serchlisttotal(InquiryVo ivo);

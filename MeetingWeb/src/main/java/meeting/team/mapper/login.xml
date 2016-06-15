@@ -40,4 +40,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="changeToBlack" parameterType="java.lang.String">
 		update users set power='BLACK'where id=#{id}
 	</update>
+	
+	
+	<insert id="joinlocation" parameterType="hashmap">
+		insert into my_location(id,location) values(#{id},#{location})
+	</insert>
+	
+	
+	
+	<select id="personal_info" resultType="meeting.team.vo.UserVo" parameterType="java.lang.String">
+		select a.id, a.name, a.email, b.interest, c.location from users a, interests b, my_location c where a.id=#{id}
+	</select>
+	
+	<update id="pwchange" parameterType="hashmap">
+		update users set pw=#{pw} where id=#{id} 
+	</update>
+	
+	<insert id="interestschange" parameterType="hashmap">
+		insert into interests(id,interest) values(#{id},#{interest})
+	</insert>
+	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from interests where id=#{id}
+	</delete>
 </mapper>
