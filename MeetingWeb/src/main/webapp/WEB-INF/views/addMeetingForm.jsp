@@ -42,7 +42,7 @@
 		var division = null;
 		for ( var txt in mobileArr) {
 			if (navigator.userAgent.match(mobileArr[txt]) != null) {
-				division = $("input[name=division]").val("now");
+				// division = $("input[name=division]").val("now");
 				$.ajax({
 					url : "/NowMeetingWeb/meeting/insert",
 					type : "post",
@@ -218,7 +218,10 @@
 </body>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
-	
+	var myLoc = "${data}";
+	var lat = myLoc.split(",")[0];
+	var lng = myLoc.split(",")[1];
+	console.log(lat);
 </script>
 <script type="text/javascript" src="../resources/js/set_location.js"></script>
 </html>

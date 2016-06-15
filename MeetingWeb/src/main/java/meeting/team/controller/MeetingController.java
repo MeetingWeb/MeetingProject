@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import meeting.team.service.MeetingService;
 import meeting.team.vo.MeetingVo;
@@ -35,6 +36,11 @@ public class MeetingController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value="addForm", method = RequestMethod.GET)
+	public ModelAndView addMeetingForm(HttpSession session) {
+		return new ModelAndView("addMeetingForm").addObject("data", meeting_svc.getMyLocation(session));
 	}
 	
 	@RequestMapping(value = "meetingView", method = RequestMethod.GET)
@@ -80,8 +86,9 @@ public class MeetingController {
 	}
 	
 	@RequestMapping("modifyForm")
-	public String modifyForm(@RequestParam int num, Model model) throws Exception {
+	public String modifyForm(@RequestParam int num, Model model, HttpSession session) throws Exception {
 		model.addAttribute("data", meeting_svc.modifyForm(num));
+		model.addAttribute("location", meeting_svc.getMyLocation(session));
 		return "modifyMeetingForm";
 	}
 }

@@ -28,4 +28,5 @@ public interface MeetingDao {
 	int getRowCount(int ref);
 	int replyDelete(HashMap<String, Object> pageMap);
 	int replyModify(HashMap<String, Object> pageMap);
+	String getMyLocation(String id);
 }

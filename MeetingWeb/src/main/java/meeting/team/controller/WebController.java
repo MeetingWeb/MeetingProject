@@ -38,11 +38,6 @@ public class WebController {
 		return us.check(uvo,result,request);
 	}
 	
-	@RequestMapping(value="addForm", method = RequestMethod.GET)
-	public String addMeetingForm() {
-		return "addMeetingForm";
-	}
-	
 	@RequestMapping("mobileLogin")
 	public String mobileLoginForm(){
 		return "mobile/mobileLoginForm";
@@ -132,7 +127,8 @@ public class WebController {
 		}
 	 
 	 @RequestMapping(value="myLocation")
-	 public String myLocationForm(){
+	 public String myLocationForm(Model model, HttpServletRequest request){
+		 model.addAttribute("data", us.getMyLocation(request));
 		 return "myLocation";
 	 }
 	 

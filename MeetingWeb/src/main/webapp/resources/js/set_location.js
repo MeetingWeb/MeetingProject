@@ -9,7 +9,7 @@ var markers = [];
 function init() {
 	map = new google.maps.Map(document.getElementById("location-map"), {
 		zoom : 15,
-		center : new google.maps.LatLng(37.49736948554443, 127.02452659606933),
+		center : new google.maps.LatLng(Number(lat), Number(lng)),
 		mapTypeId : google.maps.MapTypeId.ROADMAP
 	});
 	places = new google.maps.places.PlacesService(map);
@@ -118,6 +118,7 @@ function getAddress(latlng) {
 				}).open(map, marker);
 				ADR = address;
 				LOC = latlng;
+				console.log(LOC);
 			}
 		} else if (status == google.maps.GeocoderStatus.ERROR) {
 			alert("통신중 에러발생！");
@@ -147,21 +148,27 @@ window.addEventListener('load', function() {
 });
 
 function myLocation() {
-	  // Try HTML5 geolocation.
-	  if (navigator.geolocation) {
-	    navigator.geolocation.getCurrentPosition(function(position) {
-	      var pos = {
-	        lat: position.coords.latitude,
-	        lng: position.coords.longitude
-	      };
-	      getAddress(pos);
-	      map.setCenter(pos);
-	    }, function() {
-	     
-	    });
-	  } else {
-	    // Browser doesn't support Geolocation
-	  }
+	for ( var txt in mobileArr) {
+		if (navigator.userAgent.match(mobileArr[txt]) != null) {
+			division = $("input[name=division]").val("now");
+			if (navigator.geolocation) {
+				navigator.geolocation.getCurrentPosition(function(position) {
+					var pos = {
+						lat : position.coords.latitude,
+						lng : position.coords.longitude
+					};
+					getAddress(pos);
+					map.setCenter(pos);
+					if (pre_marker != null)
+						pre_marker.setMap(null);
+				});
+			}
+			break;
+		} else {
+			alert("내 위치는 모바일에서만 가능합니다.");
+			break;
+		}
+	}
 }
 
 function searchMap(place) {
@@ -184,7 +191,7 @@ function searchMap(place) {
 			/*
 			 * iw = new google.maps.InfoWindow({ content : getIWContent(place) })
 			 */
-			//iw.open(map, markers[0]);
+			// iw.open(map, markers[0]);
 			map.fitBounds(bounds);
 			map.setZoom(15);
 		} else if (status == google.maps.GeocoderStatus.ERROR) {
@@ -208,7 +215,12 @@ function searchMap(place) {
 function adrSave() {
 	if (confirm("모임장소로 설정하기겠습니까?")) {
 		$("#meeting-location").val(ADR);
-		$("input[name=area]").val(LOC.toString().replace(/[()]/gi, ''));
+		if(LOC.lat == null){
+			$("input[name=area]").val(LOC.toString().replace(/[()]/gi, ''));
+		}
+		else {
+			$("input[name=area]").val(LOC.lat +"," + LOC.lng);
+		}
 		$("#view-map").css("visibility", "hidden");
 	}
 }
@@ -217,7 +229,7 @@ function setMyLocation() {
 	if (confirm("내 위치로 지정 하시겠습니까?")) {
 		var lat = LOC.lat();
 		var lng = LOC.lng();
-		var latlng = '(' + lat + ',' + lng + ')';
+		var latlng = lat + ',' + lng;
 		location.href = "changeMyLOC?latlng=" + latlng;
 
 	}
@@ -231,7 +243,7 @@ function roughMap(zoom) {
 	lan = $("input[name=area]").val();
 	// $("#rough-map").css("visibility", "visible");
 	$("#rough-map").css("display", "block");
-	
+
 	path = "https://maps.googleapis.com/maps/api/staticmap?markers=color:blue%7Clabel:S%7C37.49736948554443,127.02452659606933&zoom=" + zoom
 			+ "&size=" + width + "x" + height + "&scale=1&key=AIzaSyCsNuSNeaxGpvxJuRSgUuDkXD7RiMmhnzs";
 	if (lan != "") {
@@ -245,10 +257,10 @@ function roughMap(zoom) {
 	if (width >= height) {
 		size = height - 45;
 	} else {
-		size = width -45;
+		size = width - 45;
 	}
 	$("#rough-map canvas").attr("width", size).attr("height", size);
-	
+
 	$("#rough-map-in").css({
 		"width" : $("#rough-map canvas").attr("width"),
 		"height" : $("#rough-map canvas").attr("width")
@@ -264,7 +276,7 @@ $("#zoom-num").on("change", function() {
 
 $("#zoom-min").on("change", function() {
 	var zoom = $(this).val();
-	$("#rough-map-in label").text("ZOOM : "+zoom);
+	$("#rough-map-in label").text("ZOOM : " + zoom);
 	roughMap(zoom);
 
 });
@@ -315,13 +327,12 @@ function onMouseDown(e) {
 }
 
 function onMouseUp(e) {
-	/*ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY - canvas.offsetTop);
-	context.beginPath();
-	context.moveTo(sp.x, sp.y);
-	context.lineTo(ep.x, ep.y);
-	context.lineWidth = 5;
-	context.strokeStyle = colorCode;
-	context.stroke();*/
+	/*
+	 * ep = new Pointer(e.clientX - canvas.offsetLeft, e.clientY -
+	 * canvas.offsetTop); context.beginPath(); context.moveTo(sp.x, sp.y);
+	 * context.lineTo(ep.x, ep.y); context.lineWidth = 5; context.strokeStyle =
+	 * colorCode; context.stroke();
+	 */
 	drawOk = false;
 }
 
@@ -338,8 +349,8 @@ function onMouseMove(e) {
 	}
 }
 
-$("#rough-map-cancle-btn").on("click",function(){
-	$("#rough-map").css("display","none");
+$("#rough-map-cancle-btn").on("click", function() {
+	$("#rough-map").css("display", "none");
 });
 
 /*

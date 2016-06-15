@@ -6,6 +6,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMeetingList" resultType="meeting.team.vo.MeetingVo">
 		select * from meeting
 	</select>
+	<select id="getMyLocation" resultType="java.lang.String">
+		SELECT location FROM my_location WHERE id=#{id}
+	</select>
 	<select id="getAllMeeting" resultType="meeting.team.vo.MeetingVo">
 		select * from meeting WHERE division='now'
 	</select>

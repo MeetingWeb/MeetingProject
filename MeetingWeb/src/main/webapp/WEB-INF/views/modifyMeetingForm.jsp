@@ -53,9 +53,8 @@
 		var division = null;
 		for ( var txt in mobileArr) {
 			if (navigator.userAgent.match(mobileArr[txt]) != null) {
-				division = $("input[name=division]").val("now");
 				$.ajax({
-					url : "/NowMeetingWeb/meeting/insert",
+					url : "/NowMeetingWeb/meeting/modify",
 					type : "post",
 					data : $("#add-meeting-form").serialize(),
 					dataType : "json",
@@ -74,7 +73,7 @@
 			} else {
 				division = $("input[name=division]").val("notnow");
 				$.ajax({
-					url : "/NowMeetingWeb/meeting/insert",
+					url : "/NowMeetingWeb/meeting/modify",
 					type : "post",
 					data : $("#add-meeting-form").serialize(),
 					dataType : "json",
@@ -178,7 +177,7 @@
 							<img style="width: 100%; height: 100%;">
 						</div>
 						<input type="hidden" id="rough-map-data" name="imgData">
-						<input type="hidden" id="division" name="division">
+						<input type="hidden" id="division" name="division" value="${data.division }">
 					</form>
 				</div>
 			</div>
@@ -215,11 +214,9 @@
 </body>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
-	/* $(function() {
-		$('#meeting-form-lid').modal({
-			keyboard : true
-		})
-	}); */
+	var myLoc = "${location}";
+	var lat = myLoc.split(",")[0];
+	var lng = myLoc.split(",")[1];
 </script>
 <script type="text/javascript" src="../resources/js/set_location.js"></script>
 </html>
