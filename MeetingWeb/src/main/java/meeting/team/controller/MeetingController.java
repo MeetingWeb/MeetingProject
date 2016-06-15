@@ -80,7 +80,7 @@ public class MeetingController {
 	}
 	
 	@RequestMapping("modifyForm")
-	public String modifyForm(@RequestParam int num, Model model) {
+	public String modifyForm(@RequestParam int num, Model model) throws Exception {
 		model.addAttribute("data", meeting_svc.modifyForm(num));
 		return "modifyMeetingForm";
 	}

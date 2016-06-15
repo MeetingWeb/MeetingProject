@@ -37,8 +37,64 @@
 			showMonthAfterYear : true,
 			yearSuffix : '년'
 		});
+		
+		var startArr = "${data.start_time}".split(" ");
+		var endArr = "${data.end_time}".split(" ");
+		var startTime = startArr[1].substring(0, 5);
+		var endTime = endArr[1].substring(0, 5);
+		var date = startArr[0];
+		
+		$("input[name=s_time]").val(startTime);
+		$("input[name=e_time]").val(endTime);
+		$("input[name=meetingDay]").val(date);
 	});
+	
+	function modify() {
+		var division = null;
+		for ( var txt in mobileArr) {
+			if (navigator.userAgent.match(mobileArr[txt]) != null) {
+				division = $("input[name=division]").val("now");
+				$.ajax({
+					url : "/NowMeetingWeb/meeting/insert",
+					type : "post",
+					data : $("#add-meeting-form").serialize(),
+					dataType : "json",
+					success : function(obj) {
+						if (obj.ok) {
+							alert("모임 만들기 성공");
+						} else {
+							alert("모임 만들기 실패");
+						}
+					},
+					error : function(xhr, error, status) {
 
+					}
+				});
+				break;
+			} else {
+				division = $("input[name=division]").val("notnow");
+				$.ajax({
+					url : "/NowMeetingWeb/meeting/insert",
+					type : "post",
+					data : $("#add-meeting-form").serialize(),
+					dataType : "json",
+					success : function(obj) {
+						if (obj.ok) {
+							alert("모임 만들기 성공");
+							location.href="/NowMeetingWeb/meeting/meetingView?num=0";
+						} else {
+							alert("모임 만들기 실패");
+						}
+					},
+					error : function(xhr, error, status) {
+
+					}
+				});
+				break;
+			}
+		}
+	}
+	
 </script>
 <title>여기여기 붙어라</title>
 </head>
@@ -88,7 +144,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Location</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="locaion">
+								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="locaion" value="${data.area }">
 								<input type="hidden" name="area">
 							</div>
 							<div class="col-sm-2" style="width: 300px;">
@@ -105,7 +161,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">StartTime</label>
 							<div class="col-sm-2">
-								<input type="time" class="form-control" name="s_time" value="04:00">
+								<input type="time" class="form-control" name="s_time">
 							</div>
 							<label class="col-sm-2 control-label">EndTime</label>
 							<div class="col-sm-2">
@@ -115,7 +171,7 @@
 						<div class="fomr-group"></div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="button" class="btn btn-default" onclick="insert()">CREATE MEETING</button>
+								<button type="button" class="btn btn-default" onclick="modify()">MODIFY MEETING</button>
 							</div>
 						</div>
 						<div id="rough-map-img">

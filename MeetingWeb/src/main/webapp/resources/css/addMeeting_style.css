@@ -205,9 +205,10 @@
 }
 
 #rough-map-img {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	visibility: hidden;
+	margin: 0px auto;
 }
 
 /* 由ъ뒪�듃 */
