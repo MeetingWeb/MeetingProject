@@ -7,7 +7,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from meeting
 	</select>
 	<select id="getAllMeeting" resultType="meeting.team.vo.MeetingVo">
-		select * from meeting
+		select * from meeting WHERE division='now'
 	</select>
 	<select id="getMeeting" resultType="meeting.team.vo.MeetingVo">
 		select * from meeting where num=#{num}
@@ -48,7 +48,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<update id="updateUser">
-		UPDATE meeting SET power='MASTER' WHERE id=#{master}
+		UPDATE users SET power='MASTER' WHERE id=#{master}
 	</update>
 
 	<select id="getNotNowMeetingList" resultType="meeting.team.vo.MeetingVo">

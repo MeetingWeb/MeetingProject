@@ -116,7 +116,7 @@ public class MeetingService {
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(master);
 		meeting.setMap_name(roughMapSave(request));
-		meeting.setDivision("now");
+		//meeting.setDivision("now");
 
 		Map<String, String> chatMap = new HashMap<String, String>();
 		int chatOk = 0;
