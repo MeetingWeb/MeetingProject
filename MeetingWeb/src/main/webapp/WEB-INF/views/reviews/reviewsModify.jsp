@@ -26,10 +26,10 @@ input.title {
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
 
-	function insert() {
+	function modifygo() {
 		var form = new FormData(document.getElementById('insertForm'));
 		$.ajax({
-			url : "insert",
+			url : "modifygo",
 			type : "post",
 			data : form,
 			processData: false,
@@ -38,16 +38,16 @@ input.title {
 			success : function(obj) {
 				var json = JSON.parse(obj);
 				if(json.ok) {
-					alert("글쓰기 성공");
-					location.href="selectOne?num=0";
+					alert("글수정 성공");
+					location.href="latelyRead";
 				} else {
-					alert("글쓰기 실패");
+					alert("글수정 실패");
 				}
 			},
 			complete : function(data) {
 			},
 			error : function(xhr, status, error) {
-				alert("글쓰기에 실패하였습니다.");
+				alert("글수정에 실패하였습니다.");
 			}
 		});
 	}
@@ -59,17 +59,17 @@ input.title {
 	<section id="contents">
 		<form enctype="multipart/form-data" name="insert-form" id="insertForm">
 			<table>
-				<caption>글 쓰기</caption>
+				<caption>글 수정</caption>
 				<tr>
 					<th>제목</th>
 					<td>
-						<input type="text" name="title" class="title">
+						<input type="text" name="title" class="title" value="${ data.title }">
 					</td>
 				</tr>
 				<tr>
 					<th>내용</th>
 					<td>
-						<textarea rows="40" cols="100" name="contents"></textarea>
+						<textarea rows="40" cols="100" name="contents">${ data.contents }</textarea>
 					</td>
 				</tr>
 			</table>
@@ -77,7 +77,11 @@ input.title {
 				<label for="inputfile">File input</label>
 				<input type="file" id="inputfile" name="file">
 			</div>
-			<button type="button" onclick="insert()">글쓰기</button>
+			<img src="../resources/images/${ data.mod_file_name }">
+			<input type="hidden" name="num" value="${data.num}">
+			<input type="hidden" name="mod_file_name" value="${data.mod_file_name}">
+			<input type="hidden" name="ori_file_name" value="${data.ori_file_name}">
+			<button type="button" onclick="modifygo()">글수정</button>
 			<button type="button" onclick="javascript:location.href='list'">취소</button>
 		</form>
 		<jsp:include page="../include/loginForm.jsp" />

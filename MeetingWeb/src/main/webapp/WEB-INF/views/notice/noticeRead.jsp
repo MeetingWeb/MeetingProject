@@ -495,50 +495,78 @@ $(function(){
 	<jsp:include page="../include/navi.jsp" />
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
-<table id="noticeread" class="table">
-<caption><h2 class="title" style="color:#464646;font-size:40px;">Notice</h2></caption>
-<tr style="border-top:2px solid black"><th>제목</th><td>${ data.title }</td><td style="width:10%">${ data.cre_date }</td></tr>
-<tr><th style="width:10%">글쓴이</th><td colspan="2">${ data.id }</td></tr>
-<tr><td colspan="3" style="height:300px">${ data.contents }</td></tr>
-<tr><td colspan="3"><button type="button" onclick="list()">목록</button>
-<c:if test="${sessionScope.id eq data.id }">
-<button type="button" onclick="modify()">수정</button>
-<button type="button" onclick="del()">삭제</button>
-</c:if>
-</td></tr>
+		<table id="noticeRead" class="table">
+			<caption>글 읽기</caption>
+			<tr style="border-top:2px solid black">
+				
+				<th>제목</th>
+				<td>${ data.title }</td>
+			</tr>
+			<tr>
+				<th>글쓴이</th>
+				<td>${ data.id }</td>
+			</tr>
+			<tr>
+				<th>날짜</th>
+				<td>${ data.cre_date }</td>
+			</tr>
+			<tr style="border-bottom:2px solid black;height:300px">
+				<th>내용</th>
+				<td>${ data.contents }</td>
+			</tr>
+			<tr>
+			<td colspan="5">
+			<button type="button" onclick="list()">목록</button>
+			<button type="button" onclick="modify()">수정</button>
+			<button type="button" onclick="del()">삭제</button>
+			</td>
+			<tr>
+			<td colspan="5">
+			<div class="replyForm">
+			<textarea class="reply" rows="10" cols="40"></textarea>
+			<br>
+			<button type="button" onclick="replyWrite()">글쓰기</button>
+			</td>
+			</tr>
+		</table>
+		
+		<br>
+		<br>
+		<br>			
+		</div>
 
-<tr style="border-bottom:2px solid black; border-top:2px solid black"><td colspan="3"><textarea class="reply"rows="10" cols="80"></textarea><button type="button" onclick="replyWrite()">글쓰기</button><br></td></tr>
-</table>
-<br><br>
 
+		<table id="noticeReply" class="reply">
+			<c:forEach var="list" items="${ map.list }">
+				<tr>
+					<th>${ list.id }</th>
+					<td class="${ list.num }">${ list.contents }</td>
 
+					<c:choose>
+						<%-- <c:when test="${sessionScope.id eq 'scott'}"> --%>
+						<c:when test="${ 'scott' eq 'scott' }">
+							<td>
+								<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button>
+								<button type="button" onclick="replyDel(${ list.num })">삭제</button>
+							</td>
+						</c:when>
+					</c:choose>
+				</tr>
+			</c:forEach>
+			<tr>
+			<td colspan="3">
+			<div class="replyMenu">
+			<c:if test="${ map.page.listTotal > 5 }">
+				<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a>
+				<br>
+			</c:if>
+			<a href="#none" onClick="allReply(); return false;">전체댓글보기</a>
+			<br>
+		</div>
+			</td>
+			</tr>
+		</table>
 
-<table class="table" id="noticereply">
-<c:forEach var="list" items="${ map.list }">
-<tr><th style="width:10%">${ list.id }</th><td class="${ list.num }">${ list.contents }</td>
-
-<td style="width:15%">
-<c:if test="${sessionScope.id eq data.id }">
-<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button> 
-<button type="button" onclick="replyDel(${ list.num })">삭제</button>
-</c:if>
-</td>
-
-
-</tr>
-</c:forEach>
-<tr><td colspan="3"><div class="replyMenu">
-<c:if test="${ map.page.listTotal > 5 }">
-<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a><br> 
-</c:if>
-<a href="#none" onClick="allReply(); return false;">전체댓글보기</a><br> 
-</div></td></tr>
-</table>
-
-
-	
-	
-	
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
 	

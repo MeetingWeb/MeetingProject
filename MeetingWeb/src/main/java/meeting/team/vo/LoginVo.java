@@ -1,9 +1,11 @@
 package meeting.team.vo;
 
+import java.util.ArrayList;
+
 public class LoginVo {
 	private String id;
 	private String pw;
-
+	
 	public String getId() {
 		return id;
 	}

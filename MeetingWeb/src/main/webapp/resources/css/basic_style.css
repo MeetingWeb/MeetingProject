@@ -133,7 +133,7 @@ ul {
 
 #contents {
 	width: 100%;
-	background: #F0F9F5;
+	background: #fff;
 	float: right;
 	padding-left: 64px;
 	height: 100%;
@@ -309,7 +309,28 @@ footer {
 	float: right;
 }
 
-#headernavi #joinbtn, #headernavi #member-info-btn {
+#headernavi #meeting-btn {
+	cursor: pointer;
+	height: 100%;
+	width: 200px;
+	margin: 0px auto;
+}
+
+#headernavi #meeting-btn #now-meeting, #headernavi #meeting-btn #not-now-meeting {
+	height: 50%;
+	margin-top: 32px;
+	width: 50%;
+	text-align: center;
+	background: #129994;
+	color: #fff;
+}
+
+#headernavi #meeting-btn #now-meeting:hover, #headernavi #meeting-btn #not-now-meeting:hover {
+	background: #ddd;
+	color: #000;
+}
+
+#headernavi #joinbtn {
 	width: 126px;
 	height: 64px;
 	float: right;
@@ -317,7 +338,20 @@ footer {
 	cursor: pointer;
 }
 
-#headernavi #joinbtn span, #member-info-btn span {
+#headernavi #member-info-btn {
+	height: 64px;
+	float: right;
+	background: #fff;
+	cursor: pointer;
+}
+
+#headernavi #member-info-btn {
+	padding: 15px 16px 15px 0;
+	//width: 200px;
+}
+
+
+#headernavi #joinbtn span{
 	float: left;
 	color: #129994;
 	text-transform: uppercase;
@@ -329,12 +363,29 @@ footer {
 	margin-top: 25px;
 }
 
+#member-info-btn span {
+	display: block;
+    overflow: hidden;
+    color: #94A2AA;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: color .3s;
+    font-size: 13px;
+    line-height: 17px;
+    font-weight: 700;
+}
+
 #loginbtn, #logoutbtn, #recommendbtn {
 	width: 126px;
 	height: 64px;
 	float: right;
 	background: #129994;
 	cursor: pointer;
+}
+
+#logoutbtn {
+	background: #375060;
 }
 
 #loginbtn span, #logoutbtn span {
@@ -618,9 +669,12 @@ footer {
 }
 
 #notice table{
-	
-	margin: 50px auto;
-	max-width:1100px;	
+	border-collapse: collapse;
+	border-spacing: 0;
+	table-layout: fixed;		
+	margin:50px auto;	
+	max-width:1100px;
+
 }
 #notice tr{
 	height:42px;
@@ -661,14 +715,16 @@ footer {
 	background-color: #fff;
 	border:1px solid #747474;
 	text-indent: 5px;
-	margin-lift:10px;
-	
+	margin-lift:10px;	
 }
-#noticetable{
-	margin-left: 140px;
-	padding-left:125px;	
-	margin-right: 250px;
-	min-height:600px;
+
+#noticeRead{	
+	max-width:1100px;
+	
+	margin:50px auto;
+}
+#noticeReply{
+	margin:50px auto;
 }
 
 #noticeread{

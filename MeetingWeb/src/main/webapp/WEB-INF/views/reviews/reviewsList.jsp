@@ -31,19 +31,26 @@
 		<div class="container-fluid">
 			<div id="list-box" class="row">
 				<c:forEach var="list" items="${list }">
-
-					<div class="img-box col-md-2 col-xs-12 col-sm-2" data-num="${list.num }">
+					<%-- <div class="img-box col-md-2 col-xs-12 col-sm-2" data-num="${list.num }">
 						<div class="img" style="background:url(../resources/images/${list.mod_file_name }); background-size: cover; background-position: center;"></div>
 						<div class="title">${list.title }</div>
-					</div>
-
+					</div> --%>
+				 <div class="col-sm-6 col-md-4">
+				    <div class="thumbnail img-box" data-num="${list.num }">
+				      <img src="../resources/images/${list.mod_file_name }" alt="..." class="">
+				      <div class="caption">
+				        <h3>${list.title }</h3>
+				        <p>${list.contents}</p>
+				        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
+				      </div>
+				    </div>
+				  </div>
 				</c:forEach>
 				<div class="clear_f"></div>
 			</div>
 		</div>
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
-		<jsp:include page="../include/chat_view.jsp" />
 	</section>
 	<jsp:include page="../include/footer.jsp" />
 </body>

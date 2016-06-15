@@ -1,5 +1,6 @@
 var body_height = $(window).height();
 var mobileArr = new Array("iPhone", "iPod", "BlackBerry", "Android", "Windows CE", "LG", "MOT", "SAMSUNG", "SonyEricsson");
+
 $(function() {
 	// ///////메뉴 네비////////////////////////////
 	$("#menu ul li:not(#menu-btn, #logo)").on("click", function() {
@@ -49,6 +50,7 @@ $(function() {
 		;
 
 	});
+	
 	///////////날 보여줘//////////////
 	
 		$('#logo').on('click',function(){		
@@ -142,7 +144,12 @@ $(function() {
 		console.log($(this).attr("data-num"));
 		location.href = "selectOne?num=" + $(this).attr("data-num");
 	});
-
+	
+	//////////////MeetingList js/////////////////////////////////////
+	$(".not-now-list-btn").on("click",function(){
+		var num = $(this).find("input[name=num]").val();
+		location.href = "/NowMeetingWeb/meeting/meetingView?num=" + num;
+	});
 	// 모바일 자바스크립트///////////////////////////////////
 	
 	for ( var txt in mobileArr) {
@@ -155,8 +162,10 @@ $(function() {
 			
 			$("#view-map").css({
 				"width" : document.body.clientWidth,
-				"height" : document.body.clientHeight
+				"height" : document.documentElement.clientHeight - 139
 			});
+			
+			console.log(document.documentElement.clientHeight);
 			
 			$("#set-location").on("click", function() {
 				$("#view-map").css("visibility", "visible");
@@ -180,6 +189,10 @@ $(function() {
 			
 			$(".chat-lid").css("height",$(window).height() - 164).css("width", $(window).width() - ($("#chat-list-lid").width() + 65));
 			$("#chat-list-lid").css({/*"width":$(window).width(), */"height": $(window).height() - 64})
+			
+			$("#message-btn").on("click", function(){
+				$(this).find(".badge").css("display","none").empty();
+			});
 			break;
 		}
 	}

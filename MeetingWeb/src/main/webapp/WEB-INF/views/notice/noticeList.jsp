@@ -146,11 +146,21 @@
 			<caption><h2 class="title">Notice</h2></caption>
 			<thead style="text-align:center">
 			<tr>
+<<<<<<< HEAD
 				<th style="width:8%">번호</th>
+=======
+				<th style="width:8%;">번호</th>
+>>>>>>> refs/heads/master
 				<th>제목</th>
+<<<<<<< HEAD
 				<th style="width:10%" >작성자</th>
 				<th style="width:12%">작성일</th>
 				<th style="width:8%">조회수</th>
+=======
+				<th style="width:10%;">작성자</th>
+				<th style="width:10%;">작성일</th>
+				<th style="width:9%;">조회수</th>
+>>>>>>> refs/heads/master
 			</tr>
 			</thead>
 			<c:forEach var="list" items="${ map.list }">
@@ -174,7 +184,8 @@
 			</p>
 			
 			</td></tr>	
-			<tr style="border-top:none"class="pagetr">
+			<tr class="pagetr" style="border-top:none;">
+
 			<td colspan="5">
 			
 			

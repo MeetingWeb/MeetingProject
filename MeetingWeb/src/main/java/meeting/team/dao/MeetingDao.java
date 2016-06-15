@@ -1,9 +1,11 @@
 package meeting.team.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import meeting.team.vo.MeetingVo;
+import meeting.team.vo.ReplyVo;
 
 public interface MeetingDao {
 
@@ -13,6 +15,13 @@ public interface MeetingDao {
 	List<MeetingVo> getRecommend(String interest);
 	int insert(MeetingVo meeting);
 	int chatInsert(Map<String, String> chatMap);
-	int userExit(String user);
-
+	int userExit(Map<String, String> chatMap);
+	int maxNum(String id);
+	MeetingVo selectOne(int num);
+	ArrayList<String> getChatList(String id);
+	ArrayList<String> getChatGroup(String master);
+	int updateUser(String master);
+	ArrayList<MeetingVo> getNotNowMeetingList();
+	int addReply(ReplyVo reply);
+	List<ReplyVo> getReplyList(int num);
 }
