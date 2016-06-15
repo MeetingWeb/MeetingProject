@@ -177,9 +177,10 @@ $(function(){
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<form>
-			<table>
-				<caption>글 수정</caption>
-				<tr>
+
+			<table id="noticemodify" class="table">
+				<caption><h2 class="title" style="color:#464646;position: relative;    font-weight: normal;margin-bottom: 5px; font-size: 40px;">Notice<h2></h2></caption>
+				<tr style="border-top:2px solid black">
 					<th>번호</th>
 					<td>${ data.num }</td>
 				</tr>
@@ -190,20 +191,26 @@ $(function(){
 				<tr>
 					<th>글쓴이</th>
 					<td>${ data.id }</td>
-				</tr>
-				<tr>
-					<th>날짜</th>
-					<td>${ data.cre_date }</td>
-				</tr>
+				</tr>			
 				<tr>
 					<th>내용</th>
-					<td><textarea rows="40" cols="100" class="contents">${ data.contents }</textarea></td>
+					<td><textarea rows="30" cols="100" class="contents">${ data.contents }</textarea></td>
+				</tr>
+				<tr>
+				<td colspan="2" style="text-align:right">
+				<button type="button" onclick="modify()">수정</button>
+				<button type="button" onclick="cancel()">취소</button>
+				</td>
 				</tr>
 			</table>
-			<button type="button" onclick="modify()">수정</button>
-			<button type="button" onclick="cancel()">취소</button>
-			</table>
+			
+			
 		</form>
+
+
+
+
+
 
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />	
