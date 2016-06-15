@@ -79,4 +79,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="replyDelete" parameterType="HashMap">
 		DELETE FROM res_meeting WHERE num=#{num} AND ref=#{ref}
 	</delete>
+	
+	<update id="replyModify" parameterType="HashMap">
+		UPDATE res_meeting SET contents=#{contents} WHERE num=#{num}
+	</update>
 </mapper>

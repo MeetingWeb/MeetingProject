@@ -38,7 +38,7 @@ public class MeetingService {
 	@Autowired
 	private SqlSessionTemplate sql_temp;
 	private MeetingDao meeting_dao;
-	private HashMap<String, Integer> pageMap = new HashMap<String, Integer>();
+	private HashMap<String, Object> pageMap = new HashMap<String, Object>();
 	private final int SHOWROW = 2;
 	private final int SHOWNAVIPAGE = 5;
 
@@ -279,6 +279,7 @@ public class MeetingService {
 				json.put("id", data.getId());
 				json.put("num", data.getNum());
 				json.put("contents", data.getContents());
+				json.put("ref", data.getRef());
 				arr.add(json);
 			}
 			int[] navi = getNaviNum(1);
@@ -303,6 +304,7 @@ public class MeetingService {
 			json.put("id", data.getId());
 			json.put("num", data.getNum());
 			json.put("contents", data.getContents());
+			json.put("ref", data.getRef());
 			arr.add(json);
 		}
 		int[] navi = getNaviNum(page);
@@ -329,6 +331,36 @@ public class MeetingService {
 				json.put("id", data.getId());
 				json.put("num", data.getNum());
 				json.put("contents", data.getContents());
+				json.put("ref", data.getRef());
+				arr.add(json);
+			}
+			int[] navi = getNaviNum(page);
+			arr.add(navi[0]);
+			arr.add(navi[1]);
+			arr.add(maxPage);
+		}
+		return arr.toJSONString();
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String replyModify(int ref, int num, int page, String contents) {
+		JSONArray arr = new JSONArray();
+		pageMap.put("page", page);
+		pageMap.put("ref", ref);
+		pageMap.put("num", num);
+		pageMap.put("showRow", SHOWROW);
+		pageMap.put("contents", contents);
+		
+		if(meeting_dao.replyModify(pageMap) > 0) {
+			List<ReplyVo> list = meeting_dao.getReplyList(pageMap);
+			int maxPage = meeting_dao.getRowCount(ref);
+			for (int i = 0; i < list.size(); i++) {
+				JSONObject json = new JSONObject();
+				ReplyVo data = list.get(i);
+				json.put("id", data.getId());
+				json.put("num", data.getNum());
+				json.put("contents", data.getContents());
+				json.put("ref", data.getRef());
 				arr.add(json);
 			}
 			int[] navi = getNaviNum(page);
@@ -396,5 +428,12 @@ public class MeetingService {
 	public String getAddress() {
 		return regionAddress;
 	}
+
+	public MeetingVo modifyForm(int num) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		return meeting_dao.selectOne(num);
+	}
+
+	
 
 }

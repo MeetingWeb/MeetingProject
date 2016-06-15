@@ -57,7 +57,7 @@
 					</tr>
 				</table>
 				<c:if test="${map.data.master == sessionScope.id }">
-					<div class="pull-left" id="reply-btn" onclick="">MODIFY</div>
+					<div class="pull-left" id="reply-btn" onclick="javascript:location.href='modifyForm?num=${map.data.num}'">MODIFY</div>
 					<div class="pull-left" id="reply-btn">DELETE</div>
 				</c:if>
 			</div>
@@ -75,12 +75,12 @@
 					<c:forEach var="reply" items="${map.reply }">
 						<c:set var="replyid" value="${reply.id }" />
 						<tr class="list">
-							<td class="text-center">${reply.id }<input type="hidden" name="num" value="${reply.num }">
+							<td class="text-center" data-num="${reply.num}">${reply.id }
 							</td>
 							<td>${reply.contents }</td>
 							<td class="list-btn">
 								<c:if test="${reply.id == sessionScope.id }">
-									<button type="button" class="btn btn-success btn-xs" onclick="replyUpdate(${reply.num})">수정</button>
+									<button type="button" class="btn btn-success btn-xs" name="modify" onclick="replyUpdate(${reply.num},${reply.ref })">수정</button>
 									<button type="button" class="btn btn-warning btn-xs" onclick="replyDelete(${reply.num},${reply.ref })">삭제</button>
 								</c:if>
 							</td>
@@ -161,22 +161,54 @@
 	}
 	
 	function replyDelete(num, ref) {
-		$.ajax({
-			url : "/NowMeetingWeb/meeting/replyDelete",
-			type : "post",
-			data : {num : Number(num), ref : Number(ref), page : totalPage},
-			dataType : "json",
-			success : function(obj){
-				creReplyList(obj);
-			},
-			error : function(error, xhr, status) {
-				alert("ERROR");
+		if(confirm("삭제하시겠습니까?")) {
+			$.ajax({
+				url : "/NowMeetingWeb/meeting/replyDelete",
+				type : "post",
+				data : {num : Number(num), ref : Number(ref), page : totalPage},
+				dataType : "json",
+				success : function(obj){
+					creReplyList(obj);
+				},
+				error : function(error, xhr, status) {
+					alert("ERROR");
+				}
+			});
+		}
+	}
+	
+	function replyUpdate(num, ref) {
+		$(".list").each(function(idx) {
+			if($(this).find("td:first-child").attr("data-num") == num) {
+				var contents = $(this).find("td:nth-child(2)").text();
+				$(this).find("td:nth-child(2)").html("<input class=form-control type=text name=contents value="+contents+">");
+				$(this).find("td:nth-child(3)").find("button[name=modify]").text("완료").attr("name","save").attr("onclick","modify("+totalPage+","+num+","+ref+")");
 			}
 		});
 	}
 	
-	function replyUpdate(num) {
+	function modify(page, num, ref) {
+		var contents = null;
+		$(".list").each(function(idx) {
+			if($(this).find("td:first-child").attr("data-num") == num) {
+				contents = $(this).find("td:nth-child(2) input").val();
+			}
+		});
 		
+		if(confirm("수정하시겠습니까?")) {
+			$.ajax({
+				url : "/NowMeetingWeb/meeting/replyUpdate",
+				type : "post",
+				data : {num : Number(num), ref : Number(ref), page : totalPage, contents : contents},
+				dataType : "json",
+				success : function(obj){
+					creReplyList(obj);
+				},
+				error : function(error, xhr, status) {
+					alert("ERROR");
+				}
+			});
+		}
 	}
 	
 	function creReplyList(obj) {
@@ -188,9 +220,9 @@
 		for(var i = 0; i < obj.length; i++) {
 			if(obj.length - 3 > i) {
 				var data = obj[i];
-				var id_td = "<td class='text-center'>"+data.id+"</td>";
+				var id_td = "<td class='text-center' data-num="+data.num+">"+data.id+"</td>";
 				var contents_td = "<td>"+data.contents+"</td>";
-				var btn = "<button type=button class='btn btn-success btn-xs'>수정</button> <button type=button class='btn btn-warning btn-xs'>삭제</button>";
+				var btn = "<button type=button class='btn btn-success btn-xs' name=modify onclick=replyUpdate("+data.num+","+data.ref+")>수정</button> <button type=button class='btn btn-warning btn-xs' onclick=replyDelete("+data.num+","+data.ref+")>삭제</button>";
 				var btn_td = "<td class=list-btn></td>";
 				if(user_id == data.id) {
 					var td = $(btn_td).append(btn);
