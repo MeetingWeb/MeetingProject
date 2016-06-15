@@ -71,7 +71,7 @@
 				<li>
 					<div id="mylocation-btn" class="glyphicon glyphicon-cog menu-btn-icon"></div>
 					<div class="menu-btn-name" id="myLocation-btn-name">
-						<a href="#">블랙리스트	</a>
+						<a href="/NowMeetingWeb/web/blackList">블랙리스트</a>
 					</div>
 				</li>
 				</sec:authorize>

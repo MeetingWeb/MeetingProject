@@ -20,6 +20,7 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
+
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
@@ -134,6 +135,45 @@
 		
 		
 	});
+	
+	function getRecommend() {
+		$.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : '/NowMeetingWeb/web/getRecommend',
+			success : function(data) {
+				$('div.recommend-list').children().remove();
+				var html = "";
+				for (var i = 0; i < data.length; i++) {
+					var loc = data[i].loc;
+					var arr = loc.split(',');
+					var meetinglat = Number(arr[0]);
+					var meetinglng = Number(arr[1]);
+					var distance = calcDistance(mylat, mylng, meetinglat, meetinglng);
+
+					if (distance < 40) {
+						if (((i != 0) && (data[i - 1].field != data[i].field)) || (i == 0)) {
+							html += "<hr><table class='recommendTable'><caption><h4 class='recommendfield'>" + data[i].field + "<h4></caption>";
+						}
+						html += "<tr class='main'><td class='titletd'>" + data[i].title +
+								 "</td><td class='buttontd'> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere(" + meetinglat
+								+ "," + meetinglng + ")'>모임 보기</button></td></tr><tr class='sub'><td class='titletd'>주최자:"+data[i].master+",  거리:"+distance+"km</td></tr>";
+						if ((i == (data.length - 1)) || (data[i].field != data[i + 1].field)) {
+							html += "</table>";
+							$('div.recommend-list').append(html);
+							html = "";
+						}
+					}
+				}
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});
+	}
 
 	
 
@@ -319,71 +359,11 @@
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
- <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">
-     검색
-   </button>  
+ <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">검색</button>  
 </ul>
-
-  <!--  <div class = "panel-heading">
-      <h3 class = "panel-title" style="margin-left:17%;">
-      </h3>
-   </div>
-   
-   <div class = "panel-body">
-      			<table class = "table table-striped">			
-  
-  
-     
-   
-   
-   <tbody>
-      <tr>
-         <td></td>
-         <td>롱보드</td>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택1</td>
-      </tr>
-      
-      <tr>
-         <td></td>
-         <td>농구</td>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택1</td>
-      </tr>
-      
-      <tr>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택1</td>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택1</td>
-      </tr>
-      <tr>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택2</td>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택1</td>
-      </tr>
-      <tr>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택3</td>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택1</td>
-      </tr>
-      <tr>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택4</td>
-         <td><input type="checkbox" name="search" value=""></td>
-         <td>선택1</td>
-      </tr>
-   </tbody>
-   
-</table> -->
-					
-			</div> 
-   </div>
 </div>	
 			
-		
+	
 
 		
 		
