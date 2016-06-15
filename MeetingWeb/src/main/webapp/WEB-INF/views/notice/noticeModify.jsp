@@ -177,6 +177,7 @@ $(function(){
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<form>
+
 			<table id="noticemodify" class="table">
 				<caption><h2 class="title" style="color:#464646;position: relative;    font-weight: normal;margin-bottom: 5px; font-size: 40px;">Notice<h2></h2></caption>
 				<tr style="border-top:2px solid black">
@@ -205,6 +206,7 @@ $(function(){
 			
 			
 		</form>
+
 
 
 

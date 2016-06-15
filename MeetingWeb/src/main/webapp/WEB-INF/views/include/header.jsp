@@ -39,8 +39,7 @@
 	<div id="mobile-title-name" class="hidden-md hidden-lg">come together</div>
 	<div class="glyphicon glyphicon-menu-hamburger hidden-md hidden-lg pull-right" id="m-menu-btn"></div>
 </div>
-
-<div class="recommend">		
+	<div class="recommend">		
 			<br>	
 				<span id="recommend-more">
 				<div class="glyphicon glyphicon-retweet menu-btn-icon"></div>				
@@ -50,47 +49,6 @@
 			<br>
 			
 		</div>
-
-<<script type="text/javascript">
-function getRecommend() {
-	$.ajax({
-		type : 'post',
-		dataType : 'json',
-		url : 'getRecommend',
-		success : function(data) {
-			$('div.recommend-list').children().remove();
-			var html = "";
-			for (var i = 0; i < data.length; i++) {
-				var loc = data[i].loc;
-				var arr = loc.split(',');
-				var meetinglat = Number(arr[0]);
-				var meetinglng = Number(arr[1]);
-				var distance = calcDistance(mylat, mylng, meetinglat, meetinglng);
-
-				if (distance < 40) {
-					if (((i != 0) && (data[i - 1].field != data[i].field)) || (i == 0)) {
-						html += "<hr><table class='recommendTable'><caption><h4 class='recommendfield'>" + data[i].field + "<h4></caption>";
-					}
-					html += "<tr class='main'><td class='titletd'>" + data[i].title +
-							 "</td><td class='buttontd'> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere(" + meetinglat
-							+ "," + meetinglng + ")'>모임 보기</button></td></tr><tr class='sub'><td class='titletd'>주최자:"+data[i].master+",  거리:"+distance+"km</td></tr>";
-					if ((i == (data.length - 1)) || (data[i].field != data[i + 1].field)) {
-						html += "</table>";
-						$('div.recommend-list').append(html);
-						html = "";
-					}
-				}
-			}
-		},
-		complete : function(data) {
-
-		},
-		error : function(xhr, status, error) {
-			alert(error);
-		}
-	});
-}
-</script>
 
 
 
