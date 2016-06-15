@@ -12,7 +12,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<insert id="joinhabby" parameterType="hashmap">
-		insert into interests(id,interests) values(#{a},#{b})
+		insert into interests(id,interest) values(#{a},#{b})
 	</insert>
 
 	<select id="id_check" resultType="meeting.team.vo.UserVo">
@@ -28,7 +28,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getInterest" resultType="java.lang.String" parameterType="java.lang.String">
-		select interests from interests where id=#{id}
+		select interest from interests where id=#{id}
 	</select>
 	
 	<select id="getList" resultType="meeting.team.vo.UserVo">
@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="personal_info" resultType="meeting.team.vo.UserVo" parameterType="java.lang.String">
-		select a.id, a.name, a.email, b.interests, c.location from users a, interests b, my_location c where a.id=#{id}
+		select a.id, a.name, a.email, b.interest, c.location from users a, interests b, my_location c where a.id=#{id}
 	</select>
 	
 	<update id="pwchange" parameterType="hashmap">
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</update>
 	
 	<insert id="interestschange" parameterType="hashmap">
-		insert into interests(id,interests) values(#{id},#{interests})
+		insert into interests(id,interest) values(#{id},#{interest})
 	</insert>
 	
 	<delete id="delete" parameterType="java.lang.String">

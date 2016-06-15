@@ -141,8 +141,8 @@ public String join(UserVo user, HttpServletRequest request){
 		boolean tf = n > 0 ? true:false;
 	
 		
-		if(user.getInterests()==null) user.setInterests("null");
-		String[] arr = user.getInterests().split(",");
+		if(user.getInterest()==null) user.setInterest("null");
+		String[] arr = user.getInterest().split(",");
 		
 		if(tf==true)
 		{
@@ -290,7 +290,7 @@ return json.toJSONString();
 		JSONArray interest = new JSONArray();
 		for(int i=0; i<personal_info.size();i++)
 		{
-			interest.add(personal_info.get(i).getInterests());
+			interest.add(personal_info.get(i).getInterest());
 			//interest[i] = personal_info.get(i).getInterest();
 			//System.out.println("interest"+personal_info.get(i).getInterests());
 		}

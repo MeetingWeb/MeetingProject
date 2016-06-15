@@ -32,15 +32,15 @@
 				<table id="checkBox"  style="margin: 26px 0 0 150px; border:solid 1px; width: 300px;">
 				<tr>
 				<td>
-				<input type="checkbox" name="interests" value="축구" disabled>
+				<input type="checkbox" name="interest" value="축구" disabled>
 				축구  
 				</td>
 				<td>
-				<input type="checkbox" name="interests" value="농구" disabled>
+				<input type="checkbox" name="interest" value="농구" disabled>
 				농구  
 				</td>
 				<td>
-				<input type="checkbox" name="interests" value="야구"disabled>
+				<input type="checkbox" name="interest" value="야구"disabled>
 				야구
 				</td>
 
@@ -48,30 +48,30 @@
 				
 				<tr>
 				<td>
-				<input type="checkbox" name="interests" value="배구"disabled>
+				<input type="checkbox" name="interest" value="배구"disabled>
 				배구
 				</td>
 				<td>
-				<input type="checkbox" name="interests" value="수영" disabled>
+				<input type="checkbox" name="interest" value="수영" disabled>
 				수영
 				</td>
 				<td>
-				<input type="checkbox" name="interests" value="여행" disabled>
+				<input type="checkbox" name="interest" value="여행" disabled>
 				여행
 				</td>
 				
 				</tr>
 				<tr>
 				<td>
-				<input type="checkbox" name="interests" value="영화보기"disabled>
+				<input type="checkbox" name="interest" value="영화보기"disabled>
 				영화보기
 				</td>
 				<td>
-				<input type="checkbox" name="interests" value="밥 먹기"disabled>
+				<input type="checkbox" name="interest" value="밥 먹기"disabled>
 				밥 먹기
 				</td>
 				<td>
-				<input type="checkbox" name="interests" value="자전거" disabled>
+				<input type="checkbox" name="interest" value="자전거" disabled>
 				자전거
 				</td>
 				

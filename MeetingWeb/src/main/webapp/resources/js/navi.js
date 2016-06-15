@@ -219,7 +219,7 @@ $(function() {
 	
 	$('div#interests_changebtn').on("click",function(){
 
-		$('input[name=interests]').prop('disabled', false);
+		$('input[name=interest]').prop('disabled', false);
 		$('#interests_changebtn').text("저 장").attr('onclick','interestssave()').attr('id','i');
 		
 	});
@@ -260,9 +260,9 @@ function pwchangesave() {
 function interestssave() {
 	var id = $('div#pid').text();
 	var interests = "";
-		$("input[name=interests]:checked").each(function(i) {
+		$("input[name=interest]:checked").each(function(i) {
 			interests += $(this).val();
-			if(i+1!=$('input[name=interests]:checked').length)
+			if(i+1!=$('input[name=interest]:checked').length)
 			{
 				interests +=",";
 			}
@@ -278,7 +278,7 @@ function interestssave() {
 			if(data.ok==true)
 			{
 				alert("변경 되었습니다.");
-				$('input[name=interests]').prop('disabled', true);
+				$('input[name=interest]').prop('disabled', true);
 				$('#i').text("관심분야 변경").attr('onclick','#').attr('id','interests_changebtn');
 			}
 			

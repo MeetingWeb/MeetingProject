@@ -46,7 +46,7 @@
 		$("input[name='pw']").prop('disabled', false);
 		$("input[name='pwc']").prop('disabled', false);
 		$("input[name='name']").prop('disabled', false);
-		$("input[name='interests']").prop('disabled', false);
+		$("input[name='interest']").prop('disabled', false);
 		$("input[name='email']").val(email);
 		$('form#joinform').css("display", "block")
 		</c:if>

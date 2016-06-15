@@ -10,8 +10,6 @@
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
-<script type="text/javascript" src='<c:url value="/resources/js/map.js"/>'></script>
-<script type="text/javascript" src='<c:url value="/resources/js/join.js"/>'></script>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/inquiry_style.css"/>'>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
@@ -21,7 +19,6 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
@@ -139,103 +136,9 @@
 			}
 		}
 
-		<c:if test="${ok == true}">
-		var email = '<c:out value="${requestScope.email}"/>';
-		$("input[name='id']").prop('disabled', false);
-		$("input[name='pw']").prop('disabled', false);
-		$("input[name='pwc']").prop('disabled', false);
-		$("input[name='name']").prop('disabled', false);
-		$("input[name='interests']").prop('disabled', false);
-		$("input[name='email']").val(email);
-		$('form#joinform').css("display", "block")
-		</c:if>
+
 	
 	});
-
-	function getRecommend() {
-		$.ajax({
-			type : 'post',
-			dataType : 'json',
-			url : 'getRecommend',
-			success : function(data) {
-				$('div.recommend-list').children().remove();
-				var html = "";
-				for (var i = 0; i < data.length; i++) {
-					var loc = data[i].loc;
-					var arr = loc.split(',');
-					var meetinglat = Number(arr[0]);
-					var meetinglng = Number(arr[1]);
-					var distance = calcDistance(mylat, mylng, meetinglat, meetinglng);
-
-					if (distance < 40) {
-						if (((i != 0) && (data[i - 1].field != data[i].field)) || (i == 0)) {
-							html += "<hr><table class='recommendTable'><caption><h4 class='recommendfield'>" + data[i].field + "<h4></caption>";
-						}
-						html += "<tr class='main'><td class='titletd'>" + data[i].title +
-								 "</td><td class='buttontd'> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere(" + meetinglat
-								+ "," + meetinglng + ")'>모임 보기</button></td></tr><tr class='sub'><td class='titletd'>주최자:"+data[i].master+",  거리:"+distance+"km</td></tr>";
-						if ((i == (data.length - 1)) || (data[i].field != data[i + 1].field)) {
-							html += "</table>";
-							$('div.recommend-list').append(html);
-							html = "";
-						}
-					}
-				}
-			},
-			complete : function(data) {
-
-			},
-			error : function(xhr, status, error) {
-				alert(error);
-			}
-		});
-	}
-
-
-	
-	function goSearch(){
-		var searchArr=[];
-		var searchList=$('input[name=search]')
-		
-		for(var i=0; i<searchList.length; i++){
-			if(searchList[i].checked==true){
-				searchArr.push(searchList[i].value);
-			}		
-		}	
-		var data={
-			"data":	searchArr
-		}	
-
-		jQuery.ajaxSettings.traditional = true;		
-		$.ajax({
-			type : 'post',
-			dataType : 'json',
-			url : 'search',
-			data : data,
-			success : function(data) {				
-				setMapOnAll(null);
-				markers=[];
-			 	 for(var i=0; i<data.length; i++)
-				{
-					var loc=data[i].loc;
-					var arr=loc.split(',');				
-					var lat=Number(arr[0]);
-					var lng=Number(arr[1]);				 
-					var latlng = new google.maps.LatLng(lat,lng);
-					makeMarker(latlng,data[i]);
-				}  
-
-			},
-			complete : function(data) {
-
-			},
-			error : function(xhr, status, error) {
-				alert(error);
-			}
-		});
-
-	}
-	
 	
 	function deletes() {
 		if (confirm("삭제 하시겠습니까?") == true)
@@ -350,10 +253,10 @@
 <input type="hidden" name="num" value="${ivo.num} ">
 <input type="hidden" name="img_name" value="null">
 <div id="btns">
-<a id="listbtn" href='list?page=1&start=1&check=1' style="cursor: pointer;"><img src="http://localhost:8088/NowMeetingWeb/resources/images/list.png"></a>
-<a id="editbtn" onclick="location.href='update?num=${ivo.num}'" style="cursor: pointer;"><img src="http://localhost:8088/NowMeetingWeb/resources/images/edit.png"></a>
-<a id="deletebtn" onclick="javascript:deletes()" style="cursor: pointer;"><img src="http://localhost:8088/NowMeetingWeb/resources/images/delete.png"></a>
-<a id="writebtn2" href="writeForm" style="cursor: pointer;"><img src="http://localhost:8088/NowMeetingWeb/resources/images/write2.png"></a>
+<a id="listbtn" href='list?page=1&start=1&check=1' style="cursor: pointer;"><img src="/NowMeetingWeb/resources/images/list.png"></a>
+<a id="editbtn" onclick="location.href='update?num=${ivo.num}'" style="cursor: pointer;"><img src="/NowMeetingWeb/resources/images/edit.png"></a>
+<a id="deletebtn" onclick="javascript:deletes()" style="cursor: pointer;"><img src="/NowMeetingWeb/resources/images/delete.png"></a>
+<a id="writebtn2" href="writeForm" style="cursor: pointer;"><img src="/NowMeetingWeb/resources/images/write2.png"></a>
 
 </div>
 </form>
@@ -367,7 +270,7 @@
 <input type="file" name="file" style="display: none;">
 <textarea rows="3" cols="208" name="contents" id="con" placeholder="내용을 입력해 주세요."></textarea><br>
 <div id="reple_btns">
-<a style="cursor: pointer;" onclick="javascript:replysave()"><img src="http://localhost:8088/NowMeetingWeb/resources/images/replewrite.png"></a><br>
+<a style="cursor: pointer;" onclick="javascript:replysave()"><img src="/NowMeetingWeb/resources/images/replewrite.png"></a><br>
 </div>
 </form>
 
@@ -413,43 +316,6 @@
 
 
 
-
-
-
-		<!-- Button trigger modal -->
-		<!-- Modal -->
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
-
-			<div class="modal-dialog">
-				<div class="modal-content">
-
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-
-						<h4 class="modal-title" id="myModalLabel">This Modal title</h4>
-					</div>
-
-					<div class="modal-body" id="myModalBody">Press ESC button to exit.</div>
-
-					<div class="modal-footer">
-						<input type="hidden" name="master">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-						<button type="button" class="btn btn-success" onclick="direction()">Directions</button>
-
-						<button type="button" class="btn btn-success chat-btn">Participation in chat rooms</button>
-
-						<button type="button" class="btn btn-success">Rough map</button>
-					</div>
-
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
-
-		</div>
-		<!-- /.modal -->
-
 		<div class="recommend">		
 			<br>	
 				<span id="recommend-more">
@@ -462,32 +328,6 @@
 		</div>
 		
 		
-		
-		
-		
-		
-<div id="search-menu">
-<ul class = "list-group">
-   <li class = "list-group-item"><input type="checkbox" name="search" value="롱보드"><span class="searchtext">롱보드</span></li>
-   <li class = "list-group-item"><input type="checkbox" name="search" value="농구"><span class="searchtext">농구</span></li>
-   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
-   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
-   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
- <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">
-     검색
-   </button>  
-</ul>
-
-
-					
-</div> 
-
-			
-		
-
-		
-		
-		<div id="map" style="width: 100%; height: 100%;"></div>
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
 	</section>

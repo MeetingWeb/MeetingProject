@@ -15,7 +15,7 @@ public class UserVo {
 	@NotEmpty
 	private String email;
 	private String power;
-	private String interests; 
+	private String interest; 
 	private String latlng;
 	private String location;
 	
@@ -32,6 +32,17 @@ public class UserVo {
 	private String emailfalse;
 	
 	
+	
+	
+	
+
+	public String getInterest() {
+		return interest;
+	}
+
+	public void setInterest(String interest) {
+		this.interest = interest;
+	}
 
 	public String getLocation() {
 		return location;
@@ -81,13 +92,7 @@ public class UserVo {
 		this.latlng = latlng;
 	}
 
-	public String getInterests() {
-		return interests;
-	}
-
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
+	
 
 	public String getPwc() {
 		return pwc;
