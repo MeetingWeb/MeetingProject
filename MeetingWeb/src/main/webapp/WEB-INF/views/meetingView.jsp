@@ -31,7 +31,8 @@
 				<table class="table">
 					<tr>
 						<td>제목</td>
-						<td colspan="3">${map.data.title}</td>
+						<td colspan="3">${map.data.title}<input type="hidden" name="num" value="${map.data.num }">
+						</td>
 					</tr>
 					<tr>
 						<td>작성자</td>
@@ -49,10 +50,14 @@
 							<br>
 							<br>
 							<br>
-							<img src="../resources/images/${map.data.map_name }">
+							<c:if test="${map.data.map_name != 'none' }">
+								<img src="../resources/images/${map.data.map_name }">
+							</c:if>
 						</td>
 					</tr>
 				</table>
+				<div class="pull-left" id="reply-btn" onclick="addReply(${map.data.num})">MODIFY</div>
+				<div class="pull-left" id="reply-btn" onclick="addReply(${map.data.num})">DELETE</div>
 			</div>
 			<div id="contents-in-reply">
 				<textarea class="form-control" rows="3" name="reply-contents"></textarea>
@@ -66,17 +71,45 @@
 						<th colspan="2">내용</th>
 					</tr>
 					<c:forEach var="reply" items="${map.reply }">
+						<c:set var="replyid" value="${reply.id }" />
 						<tr class="list">
-							<td class="text-center">${reply.id }<input type="hidden" name="num" value="${reply.id }">
+							<td class="text-center">${reply.id }<input type="hidden" name="num" value="${reply.num }">
 							</td>
 							<td>${reply.contents }</td>
 							<td class="list-btn">
-								<button type="button" class="btn btn-success btn-sm">수정</button>
-								<button type="button" class="btn btn-warning btn-sm">삭제</button>
+								<c:if test="${reply.id == sessionScope.id }">
+									<button type="button" class="btn btn-success btn-xs" onclick="replyUpdate(${reply.num},${reply.ref })">수정</button>
+									<button type="button" class="btn btn-warning btn-xs" onclick="replyDelete(${reply.num},${reply.ref })">삭제</button>
+								</c:if>
 							</td>
 						</tr>
 					</c:forEach>
 				</table>
+				<nav>
+					<ul class="pagination">
+						<c:if test="${map.startPage > 5 }">
+							<li>
+								<a href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								</a>
+							</li>
+						</c:if>
+						<c:forEach var="page" begin="${map.startPage }" end="${map.endPage }">
+							<c:if test="${page <= map.maxPage }">
+								<li class="navi-num">
+									<span onclick="replyNavi(${page})">${page }</span>
+								</li>
+							</c:if>
+						</c:forEach>
+						<c:if test="${!(map.endPage <= map.maxPage) }">
+							<li>
+								<a href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								</a>
+							</li>
+						</c:if>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</section>
@@ -84,6 +117,7 @@
 </body>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
+	var totalPage = 1;
 		function addReply(num) {
 			$.ajax({
 				url : "/NowMeetingWeb/meeting/reply",
@@ -91,17 +125,79 @@
 				data : {ref : num, contents : $("textarea[name=reply-contents]").val(), id : user_id},
 				dataType : "json",
 				success : function(obj){
-					$(".list").empty();
-					var tr = "<tr class='list'></tr>";
-					for(var i = 0; i < obj.length; i++) {
-						var data = obj[i];
-						$(tr).appendTo("#contents-in-reply-list table").append("<td class='text-center'>"+data.id+"</td>").append("<td>"+data.contents+"</td>");
-					}
+					creReplyList(obj);
 				},
 				error : function(error, xhr, status) {
 					alert("ERROR");
 				}
 			});
 		}
+		
+	function replyNavi(page) {
+		$.ajax({
+			url : "/NowMeetingWeb/meeting/replyNavi",
+			type : "post",
+			data : {page:page, ref : $("input[name=num]").val()},
+			dataType : "json",
+			success : function(obj){
+				creReplyList(obj);
+				totalPage = Number(page);
+			},
+			error : function(error, xhr, status) {
+				alert("ERROR");
+			}
+		});
+	}
+	
+	function replyDelete(num, ref) {
+		$.ajax({
+			url : "/NowMeetingWeb/meeting/replyDelete",
+			type : "post",
+			data : {num : Number(num), ref : Number(ref), page : totalPage},
+			dataType : "json",
+			success : function(obj){
+				creReplyList(obj);
+			},
+			error : function(error, xhr, status) {
+				alert("ERROR");
+			}
+		});
+	}
+	
+	function creReplyList(obj) {
+		$(".list").empty();
+		var tr = "<tr class='list'></tr>";
+		var startPage = obj[obj.length - 3];
+		var endPage = obj[obj.length - 2];
+		var maxPage = obj[obj.length - 1];
+		for(var i = 0; i < obj.length; i++) {
+			if(obj.length - 3 > i) {
+				var data = obj[i];
+				var id_td = "<td class='text-center'>"+data.id+"</td>";
+				var contents_td = "<td>"+data.contents+"</td>";
+				var btn = "<button type=button class='btn btn-success btn-xs'>수정</button> <button type=button class='btn btn-warning btn-xs'>삭제</button>";
+				var btn_td = "<td class=list-btn></td>";
+				if(user_id == data.id) {
+					var td = $(btn_td).append(btn);
+					$(tr).appendTo("#contents-in-reply-list table").append(id_td).append(contents_td).append(td);
+				} else {
+					$(tr).appendTo("#contents-in-reply-list table").append(id_td).append(contents_td).append(btn_td);
+				}
+			}
+		}
+		
+		
+		/* for(var i = 0; i < obj.length - 3; i++) {
+			var data = obj[i];
+			var btn = "<button type=button class='btn btn-success btn-xs'>수정</button><button type=button class='btn btn-warning btn-xs'>삭제</button>";
+			$(".list").eq(i).find("td:nth-child(1)").html(data.id+"<input type=hidden name=num value="+data.num+">");
+			$(".list").eq(i).find("td:nth-child(2)").html(data.contents);
+			if(user_id == data.id) {
+				$(".list").eq(i).find("td:nth-child(3)").html(btn);	
+			} else {
+				$(".list").eq(i).find("td:nth-child(3)").html();
+			}
+		} */
+	}
 </script>
 </html>
