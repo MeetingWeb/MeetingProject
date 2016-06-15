@@ -534,13 +534,79 @@ footer {
 }
 
 #joinform {
-	background: #4374D9;
-	width: 560px;
+	background-color: rgba(33, 61, 78, 0.85);
+	width: 820px;
 	height: 100%;
 	position: absolute;
 	top: 64px;
 	left: 64px;
 	display: none;
+}
+
+#join_title{
+	margin: 40px 0 40px 0;
+	font-size: 34px;
+	color:#33B573;
+	font-family: Montserrat-bold;
+	
+}
+
+#joinform #join_group{
+	float: right;
+	margin: 0 25px;
+}
+
+
+
+
+#joinform #join_group input[name=email],input[name=id],input[name=pw],input[name=pwc],input[name=name]{
+	display: block; 
+	margin: 0 0 16px;
+	padding: 8px;
+	width: 252px;
+	height: 24px;
+	background-color: #b6c8cd;
+	color: #213D4E;
+	font-size: 13px;
+	transition: background-color .2s;
+	outline: 0;
+	border: none;
+	box-shadow: none;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	box-sizing: initial;
+	
+}
+
+
+
+#joinform #join_group div#emailcheck,div#id_checktext,div#ids_check,div#pwc_checktext,div#pw_checktext,div#email_text	{
+	
+	background-color: #ed4238; 
+	width: 267.5px; 
+	height: 40px; 
+	padding: 8px; 
+	margin: -15.9px 0px 16px 186px;
+	color:#FBD9D7;
+	display: none;
+	font-size: 13px;
+	text-align: center;
+}
+
+
+
+#joinform #join_group label {
+	display: block;
+	float: left;
+	padding: 0 16px 0 0;
+	width: 170px;
+	color: #788994;
+	text-align: right;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 12px;
+	line-height: 40px;
+	box-sizing: initial;
 }
 
 #login-form #login-btn-group {

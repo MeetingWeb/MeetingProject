@@ -89,8 +89,6 @@ public class InquiryService {
 		if(tf==true)
 		{
 			json.put("ok", true);
-			
-			
 		}
 		else
 		{
@@ -167,7 +165,7 @@ public class InquiryService {
 		return json.toJSONString();	
 	}
 
-	public List<InquiryVo> ilist(int page, HttpServletRequest request, int check) 
+	public List<InquiryVo> ilist(int page, HttpServletRequest request, int check, String id) 
 	{
 		InquiryDao idao = sqlSessionTemplate.getMapper(InquiryDao.class);
 		List<InquiryVo> list = null;
@@ -177,7 +175,7 @@ public class InquiryService {
 		{
 			request.setAttribute("check", 1);
 			list = idao.ilist(page);
-			ptotal = idao.pageTotals();
+			ptotal = idao.pageTotals(id);
 		}
 		
 		else if(check==2)

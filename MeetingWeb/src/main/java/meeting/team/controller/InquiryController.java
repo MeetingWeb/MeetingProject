@@ -107,10 +107,11 @@ public class InquiryController {
 	}
 	
 	@RequestMapping(value="list",method=RequestMethod.GET)
-	public String list(HttpServletRequest request, @RequestParam("page") int page, @RequestParam("start") int start, @RequestParam("check") int check)
+	public String list(HttpServletRequest request,@RequestParam("page") int page, @RequestParam("start") int start, @RequestParam("check") int check)
 	{
+		String id = (String) request.getSession().getAttribute("id");
 		request.setAttribute("start", start);
-		List<InquiryVo> list = is.ilist(page,request,check);
+		List<InquiryVo> list = is.ilist(page,request,check,id);
 		request.setAttribute("list", list);
 		return "inquiry/inquiryList";
 	}

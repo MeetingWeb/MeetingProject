@@ -12,10 +12,12 @@ public class UserVo {
 	@NotEmpty
 	private String pwc;
 	private String name;
+	@NotEmpty
 	private String email;
 	private String power;
 	private String interests; 
 	private String latlng;
+	private String location;
 	
 	@NotEmpty
 	private String ids;
@@ -26,7 +28,26 @@ public class UserVo {
 	@NotEmpty
 	private String pwcc;
 	
+	@NotEmpty
+	private String emailfalse;
 	
+	
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getEmailfalse() {
+		return emailfalse;
+	}
+
+	public void setEmailfalse(String emailfalse) {
+		this.emailfalse = emailfalse;
+	}
 
 	public String getIds() {
 		return ids;
