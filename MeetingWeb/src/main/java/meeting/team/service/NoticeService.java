@@ -27,6 +27,7 @@ public class NoticeService {
 		NoticeDAO ntDAO=sqlSessionTemplate.getMapper(NoticeDAO.class);
 		JSONObject jsonObj=new JSONObject();
 		NoticeVO board=new NoticeVO();
+		board.setId(request.getParameter("id"));
 		board.setTitle(request.getParameter("title"));
 		board.setContents(request.getParameter("contents"));
 		board.setRef(0);

@@ -142,21 +142,21 @@
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<div id="noticetable">
-		<table>
+		<table class="table">
 			<caption><h2 class="title">Notice</h2></caption>
 			<thead style="text-align:center">
 			<tr>
-				<th>번호</th>
+				<th style="width:8%">번호</th>
 				<th>제목</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
+				<th style="width:10%" >작성자</th>
+				<th style="width:12%">작성일</th>
+				<th style="width:8%">조회수</th>
 			</tr>
 			</thead>
 			<c:forEach var="list" items="${ map.list }">
 				<tr>
 					<td>${ list.num }</td>
-					<td><a href="read?num=${ list.num }">${ list.title }</a></td>
+					<td style="text-align:left;"><a href="read?num=${ list.num }">${ list.title }</a></td>
 					<td>${ list.id }</td>
 					<td>${ list.cre_date }</td>
 					<td>${ list.hit }</td>
@@ -165,16 +165,16 @@
 			
 			
 			<tfoot style="vertical-align:inherit;">
-			<tr class="buttontr"><td colspan="5">
+			<tr  style="border-bottom:none" class="buttontr"><td colspan="5">
 			<p class="buttons">
 			
 		
-			<button type="button" onclick="allList()">전체보기</button>
+			<button type="button" onclick="allList()">전체보기</button>		
 			<button type="button" onclick="writeForm()">글쓰기</button>
 			</p>
 			
 			</td></tr>	
-			<tr class="pagetr">
+			<tr style="border-top:none"class="pagetr">
 			<td colspan="5">
 			
 			
