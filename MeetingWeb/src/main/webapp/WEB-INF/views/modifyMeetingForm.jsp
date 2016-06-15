@@ -56,13 +56,13 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label" id="title">Title</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="meeting-title" placeholder="제목" name="title">
+								<input type="text" class="form-control" id="meeting-title" placeholder="제목" name="title" value="${data.title }">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Contents</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" id="meeting-contents" rows="10" placeholder="내용" name="contents"></textarea>
+								<textarea class="form-control" id="meeting-contents" rows="10" placeholder="내용" name="contents">${data.contents }</textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -75,9 +75,13 @@
 									<option>족구</option>
 									<option>배드민턴</option>
 									<option>보드타기</option>
-									<option>자전거타기</option>
+									<option>자전거</option>
 									<option>술먹기</option>
-									<option>동현이 죽빵 때리기</option>
+									<option>영화보기</option>
+									<option>밥 먹기</option>
+									<option>배구</option>
+									<option>수영</option>
+									<option>코딩하기</option>
 								</select>
 							</div>
 						</div>
@@ -95,13 +99,13 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Date</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="datepicker1" name='meetingDay' placeholder="모임 날짜 선택">
+								<input type="text" class="form-control" id="datepicker1" name='meetingDay' placeholder="모임 날짜 선택" value="">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">StartTime</label>
 							<div class="col-sm-2">
-								<input type="time" class="form-control" name="s_time">
+								<input type="time" class="form-control" name="s_time" value="04:00">
 							</div>
 							<label class="col-sm-2 control-label">EndTime</label>
 							<div class="col-sm-2">

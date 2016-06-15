@@ -431,9 +431,8 @@ public class MeetingService {
 
 	public MeetingVo modifyForm(int num) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		return meeting_dao.selectOne(num);
+		MeetingVo meeting = meeting_dao.selectOne(num);
+		meeting.getStart_time();
+		return null;
 	}
-
-	
-
 }
