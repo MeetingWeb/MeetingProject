@@ -25,7 +25,7 @@ $(function() {
 
 	$("#joinbtn").click(function() {
 		$("#joinform").toggle(flip2++ % 2 == 0);
-		$("#loginform").css('display', 'none');
+		$("#login-form").css('display', 'none');
 		flip = 0;
 	});
 
