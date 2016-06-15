@@ -146,21 +146,14 @@
 			<caption><h2 class="title">Notice</h2></caption>
 			<thead style="text-align:center">
 			<tr>
-<<<<<<< HEAD
+
 				<th style="width:8%">번호</th>
-=======
-				<th style="width:8%;">번호</th>
->>>>>>> refs/heads/master
 				<th>제목</th>
-<<<<<<< HEAD
+
 				<th style="width:10%" >작성자</th>
 				<th style="width:12%">작성일</th>
 				<th style="width:8%">조회수</th>
-=======
-				<th style="width:10%;">작성자</th>
-				<th style="width:10%;">작성일</th>
-				<th style="width:9%;">조회수</th>
->>>>>>> refs/heads/master
+
 			</tr>
 			</thead>
 			<c:forEach var="list" items="${ map.list }">
@@ -184,12 +177,14 @@
 			</p>
 			
 			</td></tr>	
-			<tr class="pagetr" style="border-top:none;">
-
-			<td colspan="5">
-			
-			
-				<c:choose>
+					
+		</tfoot>
+		
+		</table>
+		</div>
+		<table>
+		<tr><td>
+			<c:choose>
 			<c:when test="${map.condition eq 'normal'}">
 				<c:if test="${ map.page.currPage > 3 }">
 					<a href="getPage?page=${ map.page.startPage-1 }">PREV</a>
@@ -236,28 +231,14 @@
 				</c:if>
 			</c:when>
 		</c:choose>
-			
-			
-			
-			
-			</td>
-			</tr>	
-			<tr class="searchtr">
-			<td colspan="5">
-				<input type="text" class="key">
+		</td></tr>
+		<tr><td>
+			<input type="text" class="key">
 			<button type="button" onclick="search()">검색</button>
-			
-			</td>
-			</tr>
-		
-	
-
-
-		
-		</tfoot>
-		
+		</td></tr>
 		</table>
-		</div>
+		
+		
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
 

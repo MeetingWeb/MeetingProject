@@ -46,17 +46,19 @@ function replyModifyGo(num){
 		dataType:"json",
 		success:function(data)
 		{	
-			$('table.reply').children().remove();
-			$('div.replyMenu').children().remove();
+			$('#noticeReply').children().remove();
+			$('#replyMenu').children().remove();
 			$('textarea.reply').val("");			
 			for(var i=0; i<data.list.length; i++)
 			{
-				var html="<tr><th>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
-				//조건문 if()
-				html+="<td><button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
-				"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button></td>";				
-				html+="</tr>";
-				$('table.reply').append(html);
+				var html="<tr><th style='width:10%'>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
+				html+="<td style='width:10%'>";
+				if(user_id==data.list[i].id){
+					html+="<button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
+					"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button>";
+				} 								
+				html+="</td></tr>";
+				$('#noticeReply').append(html);
 			}
 			var menu="";			
 			if(data.page.totalPage>data.page.currPage)
@@ -69,7 +71,7 @@ function replyModifyGo(num){
 			}
 			
 			menu+="<a href='#none' onClick='allReply(); return false;'>전체댓글보기</a><br>";
-			$('div.replyMenu').append(menu);
+			$('#replyMenu').append(menu);
 		
 		},
 		complete:function(data)
@@ -111,20 +113,23 @@ function replyDel(num){
 			dataType:"json",
 			success:function(data)
 			{
-				$('table.reply').children().remove();
-				$('div.replyMenu').children().remove();
+				$('#noticeReply').children().remove();
+				$('#replyMenu').children().remove();
 				$('textarea.reply').val("");				
 				for(var i=0; i<data.list.length; i++)
 				{
-					var html="<tr><th>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
-					//조건문 if()
-					html+="<td><button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
-					"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button></td>";				
-					html+="</tr>";
-					$('table.reply').append(html);
+					var html="<tr><th style='width:10%'>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
+					html+="<td style='width:10%'>";
+					if(user_id==data.list[i].id){
+						html+="<button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
+						"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button>";				
+							
+					}
+					html+="</td></tr>";
+					$('#noticeReply').append(html);
 				}
 				var menu="";			
-				
+		
 				if(data.page.totalPage>data.page.currPage)
 				{				
 					menu+="<a href='#none' onClick='nextReply(); return false;'>다음댓글보기</a><br>";
@@ -135,7 +140,7 @@ function replyDel(num){
 				}
 				
 				menu+="<a href='#none' onClick='allReply(); return false;'>전체댓글보기</a><br>";
-				$('div.replyMenu').append(menu);
+				$('#replyMenu').append(menu);
 				
 			},
 			complete:function(data)
@@ -161,19 +166,22 @@ function allReply(){
 		dataType:"json",
 		success:function(data)
 		{
-			$('table.reply').children().remove();
-			$('div.replyMenu').children().remove();
+			$('#noticeReply').children().remove();
+			$('#replyMenu').children().remove();
 			for(var i=0; i<data.length; i++)
 			{
-				var html="<tr><th>"+data[i].id+"</th><td class='"+data[i].num+"'>"+data[i].contents+"</td>";
-				//조건문 if()
-				html+="<td><button type='button' class='"+data[i].num+"' onclick='replyModify("+data[i].num+")'>수정</button>"+ 
-				"<button type='button' onclick='replyDel("+data[i].num+")'>삭제</button></td>";			
-				html+="</tr>";
-				$('table.reply').append(html);
+				var html="<tr><th style='width:10%'>"+data[i].id+"</th><td class='"+data[i].num+"'>"+data[i].contents+"</td>";
+				html+="<td style='width:10%'>"
+				if(user_id==data[i].id){
+					html+="<button type='button' class='"+data[i].num+"' onclick='replyModify("+data[i].num+")'>수정</button>"+ 
+					"<button type='button' onclick='replyDel("+data[i].num+")'>삭제</button>";			
+						
+				}
+				html+="</td></tr>";
+				$('#noticeReply').append(html);
 			}
 			var menu="<a href='#none' onClick='firstReply(); return false;'>처음댓글보기</a>";
-			$('div.replyMenu').append(menu);
+			$('#replyMenu').append(menu);
 		},
 		complete:function(data)
 		{
@@ -197,16 +205,19 @@ function firstReply(){
 		dataType:"json",
 		success:function(data)
 		{
-			$('table.reply').children().remove();
-			$('div.replyMenu').children().remove();
+			$('#noticeReply').children().remove();
+			$('#replyMenu').children().remove();
 			for(var i=0; i<data.list.length; i++)
 			{
-				var html="<tr><th>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
-				//조건문 if()
-				html+="<td><button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
-				"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button></td>";					
-				html+="</tr>";
-				$('table.reply').append(html);
+				var html="<tr><th style='width:10%'>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
+				html+="<td style='width:10%'>"
+				if(user_id==data.list[i].id){
+					html+="<button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
+					"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button>";					
+						
+				}
+				html+="</td></tr>";
+				$('#noticeReply').append(html);
 			}
 			var menu="";
 			
@@ -215,7 +226,7 @@ function firstReply(){
 				menu+="<a href='#none' onclick='nextReply(); return false;'>다음댓글보기</a><br>";
 			}
 			menu+="<a href='#none' onclick='allReply(); return false;'>전체댓글보기</a><br>";
-			$('div.replyMenu').append(menu);
+			$('#replyMenu').append(menu);
 			
 		},
 		complete:function(data)
@@ -243,25 +254,31 @@ function nextReply(){
 		success:function(data)
 		{
 			replyPage++;
-			$('table.reply').children().remove();
-			$('div.replyMenu').children().remove();
+			$('#noticeReply').children().remove();
+			$('#replyMenu').children().remove();
 			for(var i=0; i<data.list.length; i++)
 			{
-				var html="<tr><th>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
-				//조건문 if()
-				html+="<td><button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
-				"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button></td>";					
-				html+="</tr>";
-				$('table.reply').append(html);
+				var html="<tr><th style='width:10%'>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
+				html+="<td style='width:10%'>"
+				if(user_id==data.list[i].id){
+					html+="<button type='button' class='"+data.list[i].num+"' onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
+					"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button>";					
+						
+				}
+				html+="</td></tr>";
+				
+				$('#noticeReply').append(html);
 			}
-			var menu="";			
+			var menu="";
+		
 			if(data.page.currPage<data.page.totalPage)
-			{
+			{					
 				menu+="<a href='#none' onClick='nextReply(); return false;'>다음댓글보기</a><br>";
 			}
 			menu+="<a href='#none' onClick='prevReply(); return false;'>이전댓글보기</a><br>";
 			menu+="<a href='#none' onClick='allReply(); return false;'>전체댓글보기</a>";
-			$('div.replyMenu').append(menu);
+		
+			$('#replyMenu').append(menu);
 		},
 		complete:function(data)
 		{
@@ -287,16 +304,19 @@ function prevReply(){
 		success:function(data)
 		{
 			replyPage--;
-			$('table.reply').children().remove();
-			$('div.replyMenu').children().remove();
+			$('#noticeReply').children().remove();
+			$('#replyMenu').children().remove();
 			for(var i=0; i<data.list.length; i++)
 			{
-				var html="<tr><th>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
-				//조건문 if()
-				html+="<td><button type='button' class='"+data.list[i].num+"'  onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
-				"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button></td>";		;			
-				html+="</tr>";
-				$('table.reply').append(html);
+				var html="<tr><th style='width:10%'>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
+				html+="<td style='width:10%'>"
+				if(user_id==data.list[i].id){
+					html+="<button type='button' class='"+data.list[i].num+"'  onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
+					"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button>";		;			
+						
+				}
+				html+="</td></tr>";
+				$('#noticeReply').append(html);
 			}
 			var menu="";			
 			
@@ -306,7 +326,7 @@ function prevReply(){
 				menu+="<a href='#none' onClick='prevReply(); return false;'>이전댓글보기</a><br>";					
 			}			
 			menu+="<a href='#none' onClick='allReply(); return false;'>전체댓글보기</a>";
-			$('div.replyMenu').append(menu);
+			$('#replyMenu').append(menu);
 		},
 		complete:function(data)
 		{
@@ -366,26 +386,30 @@ function replyWrite(){
 			dataType:"json",
 			success:function(data)
 			{
-				$('table.reply').children().remove();
-				$('div.replyMenu').children().remove();
+				$('#noticeReply').children().remove();
+				$('#replyMenu').children().remove();
 				$('textarea.reply').val("");
 				replyPage=1;
 				for(var i=0; i<data.list.length; i++)
 				{
-					var html="<tr><th>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
-					//조건문 if()
-					html+="<td><button type='button' class='"+data.list[i].num+"'  onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
-					"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button></td>";		;			
-					html+="</tr>";
-					$('table.reply').append(html);
+					var html="<tr><th style='width:10%'>"+data.list[i].id+"</th><td class='"+data.list[i].num+"'>"+data.list[i].contents+"</td>";
+					html+="<td style='width:10%'>"
+					if(user_id==data.list[i].id){
+						html+="<button type='button' class='"+data.list[i].num+"'  onclick='replyModify("+data.list[i].num+")'>수정</button>"+ 
+						"<button type='button' onclick='replyDel("+data.list[i].num+")'>삭제</button>";		;			
+						
+					}
+					html+="</td></tr>";
+					$('#noticeReply').append(html);
 				}
 				var menu="";				
 				if(data.page.totalPage>5)
 				{
+					
 					menu+="<a href='#none' onClick='nextReply(); return false;'>다음댓글보기</a><br>";
 				}
 				menu+="<a href='#none' onClick='allReply(); return false;'>전체댓글보기</a><br>";
-				$('div.replyMenu').append(menu);
+				$('#replyMenu').append(menu);
 				
 			},
 			complete:function(data)
@@ -496,7 +520,7 @@ $(function(){
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<table id="noticeRead" class="table">
-			<caption>글 읽기</caption>
+			<caption><h2 class="title" style="color:#464646;position: relative;    font-weight: normal;margin-bottom: 5px; font-size: 40px;">Notice</h2></caption>
 			<tr style="border-top:2px solid black">
 				
 				<th>제목</th>
@@ -511,23 +535,27 @@ $(function(){
 				<td>${ data.cre_date }</td>
 			</tr>
 			<tr style="border-bottom:2px solid black;height:300px">
-				<th>내용</th>
-				<td>${ data.contents }</td>
+				
+				<td colspan="2">${ data.contents }</td>
 			</tr>
 			<tr>
 			<td colspan="5">
 			<button type="button" onclick="list()">목록</button>
+			<c:if test="${sessionScope.id eq data.id}">
 			<button type="button" onclick="modify()">수정</button>
 			<button type="button" onclick="del()">삭제</button>
+			</c:if>
 			</td>
 			<tr>
 			<td colspan="5">
 			<div class="replyForm">
-			<textarea class="reply" rows="10" cols="40"></textarea>
-			<br>
+			<textarea class="reply form-control" cols="40"></textarea>			
 			<button type="button" onclick="replyWrite()">글쓰기</button>
 			</td>
 			</tr>
+			<div class="reply">
+			
+			</div>		
 		</table>
 		
 		<br>
@@ -536,26 +564,32 @@ $(function(){
 		</div>
 
 
-		<table id="noticeReply" class="reply">
+		<table id="noticeReply"  class="table">
 			<c:forEach var="list" items="${ map.list }">
 				<tr>
-					<th>${ list.id }</th>
+					<th style="width:10%">${ list.id }</th>
 					<td class="${ list.num }">${ list.contents }</td>
-
+					<td style="width:10%">
 					<c:choose>
-						<%-- <c:when test="${sessionScope.id eq 'scott'}"> --%>
-						<c:when test="${ 'scott' eq 'scott' }">
-							<td>
+						<c:when test="${sessionScope.id eq list.id}"> 
+						
+							
 								<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button>
-								<button type="button" onclick="replyDel(${ list.num })">삭제</button>
-							</td>
+								<button type="button" onclick="replyDel(${ list.num })">삭제</button>							
 						</c:when>
 					</c:choose>
+					</td>
 				</tr>
 			</c:forEach>
 			<tr>
 			<td colspan="3">
-			<div class="replyMenu">
+			
+			</td>
+			</tr>
+		</table>
+		<table id="replyMenu" class="table" style="max-width:1100px; margin:50px auto ; text-align:center">
+		<tr><td>
+		<div id="replyMenu">
 			<c:if test="${ map.page.listTotal > 5 }">
 				<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a>
 				<br>
@@ -563,10 +597,9 @@ $(function(){
 			<a href="#none" onClick="allReply(); return false;">전체댓글보기</a>
 			<br>
 		</div>
-			</td>
-			</tr>
+		</td><tr>		
 		</table>
-
+		
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
 	

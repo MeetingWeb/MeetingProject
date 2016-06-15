@@ -163,7 +163,7 @@ $(function(){
 	<section id="contents">
 		<form>
 <table id="noticewrite" class="table">
-<caption><h2 class="title" style="color:#464646;font-size:40px;">Notice</h2></caption>
+<caption><h2 class="title" style="color:#464646;position: relative;    font-weight: normal;margin-bottom: 5px; font-size: 40px;">Notice</h2></caption>
 <tr style="border-top:2px solid black"><th>제목</th><td><input type="text" name="title" class="title"></td></tr>
 <tr><th>내용</th><td><textarea rows="30" cols="100" name="contents"></textarea></td></tr>
 <tr><td colspan="2" style="text-align:right;"><button type="button" onclick="insert()">글쓰기</button> 
