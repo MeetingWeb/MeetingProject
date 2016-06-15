@@ -21,7 +21,8 @@ public class JoinValidator implements Validator
 		if(pw==null) pw="";
 		String pwc = uvo.getPwc();
 		if(pwc==null) pwc="";
-		
+		String email = uvo.getEmail();
+		if(email==null) email="";
 		
 		System.out.println(pw);
 		System.out.println(pwc);
@@ -29,8 +30,19 @@ public class JoinValidator implements Validator
 		
 		String regex = "^[a-zA-Z]{1}[a-zA-Z0-9]{4,11}$";
 		String pass = "^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,16}$";
-		
+		String emails = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
 	
+			if(email.matches(emails))
+			{
+				errors.rejectValue("email", "required5");
+			}
+			
+			if(!(email.matches(emails)))
+			{
+				errors.rejectValue("emailfalse", "required6");
+			}
+		
+		
 			if(!(id.matches(regex)))
 			{
 				errors.rejectValue("id", "required");

@@ -196,4 +196,101 @@ $(function() {
 			break;
 		}
 	}
+	
+	
+	
+/////게인정보///////
+	
+	var flips = 0;
+	$('div#member-info-btn').on("click",function(){
+
+		location.href='/NowMeetingWeb/web/personal_form';
+	});
+	
+
+	
+
+	$('div#pass_changebtn').on("click",function(){
+
+		$('div#pass_changeform').css("display","block");
+		$('#pass_changebtn').text("저 장").attr('onclick','javascript:pwchangesave();').attr('id','ii');
+	});
+	
+	
+	$('div#interests_changebtn').on("click",function(){
+
+		$('input[name=interests]').prop('disabled', false);
+		$('#interests_changebtn').text("저 장").attr('onclick','interestssave()').attr('id','i');
+		
+	});
+	
+	
 });
+
+
+function pwchangesave() {
+	var id = $('div#pid').text();
+	var pw = $('input#pw').val();
+
+	$.ajax({
+		type : 'post',
+		dataType : 'json',
+		data : {id:id,pw:pw},
+		url : 'pwchange',			
+		success : function(data) {
+			if(data.ok==true)
+			{
+				alert("변경 되었습니다.");
+				$('#ii').text("비밀번호 변경").attr('onclick','#').attr('id','pass_changebtn');
+				$('div#pass_changeform').css("display","none");
+			}
+			
+			
+		},
+		complete : function(data) {
+
+		},
+		error : function(xhr, status, error) {
+			alert(error);
+		}
+	});
+	
+}
+
+function interestssave() {
+	var id = $('div#pid').text();
+	var interests = "";
+		$("input[name=interests]:checked").each(function(i) {
+			interests += $(this).val();
+			if(i+1!=$('input[name=interests]:checked').length)
+			{
+				interests +=",";
+			}
+			
+		});
+
+	$.ajax({
+		type : 'post',
+		dataType : 'json',
+		data : {interests:interests,id:id},
+		url : 'interests',			
+		success : function(data) {
+			if(data.ok==true)
+			{
+				alert("변경 되었습니다.");
+				$('input[name=interests]').prop('disabled', true);
+				$('#i').text("관심분야 변경").attr('onclick','#').attr('id','interests_changebtn');
+			}
+			
+			
+			
+		},
+		complete : function(data) {
+
+		},
+		error : function(xhr, status, error) {
+			alert(error);
+		}
+	});
+	
+}
