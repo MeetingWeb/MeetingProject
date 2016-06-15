@@ -39,7 +39,7 @@
 		});
 	});
 	function insert() {
-		/* var division = null;
+		var division = null;
 		for ( var txt in mobileArr) {
 			if (navigator.userAgent.match(mobileArr[txt]) != null) {
 				division = $("input[name=division]").val("now");
@@ -81,9 +81,9 @@
 				});
 				break;
 			}
-		} */
+		}
 
-		$.ajax({
+		/* $.ajax({
 			url : "/NowMeetingWeb/meeting/insert",
 			type : "post",
 			data : $("#add-meeting-form").serialize(),
@@ -99,7 +99,7 @@
 			error : function(xhr, error, status) {
 
 			}
-		});
+		}); */
 	}
 </script>
 <title>여기여기 붙어라</title>

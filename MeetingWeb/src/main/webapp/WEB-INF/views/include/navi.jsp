@@ -97,6 +97,18 @@
 			<li>
 				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
 			</li>
+			<li>
+				<a href="/NowMeetingWeb/meeting/notNowList">예정된 모임</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/notice/getList">NOTICE</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
+			</li>
+			<li>
+				<a href="/NowMeetingWeb/reviews/list">REVIWS</a>
+			</li>
 		</ul>
 	</nav>
 </div>
