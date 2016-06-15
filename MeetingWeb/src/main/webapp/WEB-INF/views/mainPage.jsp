@@ -21,6 +21,7 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
+
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
@@ -51,12 +52,12 @@
 		</c:if>
 	
 	});
-
+	
 	function getRecommend() {
 		$.ajax({
 			type : 'post',
 			dataType : 'json',
-			url : 'getRecommend',
+			url : '/NowMeetingWeb/web/getRecommend',
 			success : function(data) {
 				$('div.recommend-list').children().remove();
 				var html = "";
@@ -90,6 +91,8 @@
 			}
 		});
 	}
+
+	
 
 
 	
@@ -179,16 +182,7 @@
 		</div>
 		<!-- /.modal -->
 
-		<div class="recommend">		
-			<br>	
-				<span id="recommend-more">
-				<div class="glyphicon glyphicon-retweet menu-btn-icon"></div>				
-				<a href='#none' onClick='getRecommend(); return false;'> 새로고침</a>
-			</span>
-			<div class="recommend-list"></div>
-			<br>
-			
-		</div>
+		
 		
 		
 		
@@ -202,17 +196,13 @@
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
- <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">
-     검색
-   </button>  
-</ul>
-
-
-					
+ <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">검색</button>  
+</ul>		
 </div> 
 
+
 			
-		
+	
 
 		
 		

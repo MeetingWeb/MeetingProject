@@ -52,7 +52,7 @@ function replyWrite(){
 			data:
 			{
 				contents:$('textarea.reply').val(),
-				id:'scott',	
+				id:'${sessionScope.id}',	
 				ref:${data.num}
 			},	
 			dataType:"json",

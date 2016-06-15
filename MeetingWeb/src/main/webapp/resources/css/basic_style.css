@@ -735,17 +735,15 @@ footer {
 }
 
 #notice table{
-	
-	
 	border-collapse: collapse;
 	border-spacing: 0;
 	table-layout: fixed;		
 	margin:50px auto;	
 	max-width:1100px;
+
 }
 #notice tr{
-	height:42px;
-	border-bottom: 1px solid #cacaca;
+	height:42px;	
 	text-align: center;
 }
 
@@ -792,4 +790,24 @@ footer {
 }
 #noticeReply{
 	margin:50px auto;
+	max-width:1100px;
+}
+
+#noticeread{
+	margin:50px auto;
+	max-width:1100px;
+}
+#noticereply{
+	margin:50px auto;
+	max-width:1100px;
+}
+
+#noticewrite{
+	max-width:1100px;
+	margin:50px auto
+}
+
+#noticemodify{
+	max-width:1100px;
+	margin:50px auto
 }

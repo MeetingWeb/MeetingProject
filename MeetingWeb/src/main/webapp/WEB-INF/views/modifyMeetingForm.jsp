@@ -38,69 +38,7 @@
 			yearSuffix : '년'
 		});
 	});
-	function insert() {
-		/* var division = null;
-		for ( var txt in mobileArr) {
-			if (navigator.userAgent.match(mobileArr[txt]) != null) {
-				division = $("input[name=division]").val("now");
-				$.ajax({
-					url : "/NowMeetingWeb/meeting/insert",
-					type : "post",
-					data : $("#add-meeting-form").serialize(),
-					dataType : "json",
-					success : function(obj) {
-						if (obj.ok) {
-							alert("모임 만들기 성공");
-						} else {
-							alert("모임 만들기 실패");
-						}
-					},
-					error : function(xhr, error, status) {
 
-					}
-				});
-				break;
-			} else {
-				division = $("input[name=division]").val("notnow");
-				$.ajax({
-					url : "/NowMeetingWeb/meeting/insert",
-					type : "post",
-					data : $("#add-meeting-form").serialize(),
-					dataType : "json",
-					success : function(obj) {
-						if (obj.ok) {
-							alert("모임 만들기 성공");
-							location.href="/NowMeetingWeb/meeting/meetingView?num=0";
-						} else {
-							alert("모임 만들기 실패");
-						}
-					},
-					error : function(xhr, error, status) {
-
-					}
-				});
-				break;
-			}
-		} */
-
-		$.ajax({
-			url : "/NowMeetingWeb/meeting/insert",
-			type : "post",
-			data : $("#add-meeting-form").serialize(),
-			dataType : "json",
-			success : function(obj) {
-				if (obj.ok) {
-					alert("모임 만들기 성공");
-					location.href = "/NowMeetingWeb/web/chatForm";
-				} else {
-					alert("모임 만들기 실패");
-				}
-			},
-			error : function(xhr, error, status) {
-
-			}
-		});
-	}
 </script>
 <title>여기여기 붙어라</title>
 </head>
@@ -130,7 +68,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Division</label>
 							<div class="col-sm-3">
-								<select class="form-control" name="field">
+								<select class="form-control" name="field" >
 									<option>농구</option>
 									<option>야구</option>
 									<option>축구</option>
