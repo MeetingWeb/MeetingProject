@@ -440,4 +440,9 @@ public class MeetingService {
 		
 		return meeting;
 	}
+
+	public String getMyLocation(HttpSession session) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		return meeting_dao.getMyLocation((String) session.getAttribute("id"));
+	}
 }

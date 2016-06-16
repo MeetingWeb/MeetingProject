@@ -9,5 +9,63 @@
 	padding: 0px;
 }
 
-.img-box .img {
+.reviews-img {
+	height: 500px;
+	border-radius: 8px;
+}
+
+@media ( max-width : 991px) {
+	.reviews-img {
+		height: 300px;
+	}
+}
+
+@media ( max-width : 768px) {
+	.reviews-img {
+		height: 250px;
+	}
+}
+
+.thumbnail {
+	border-radius: 8px;
+}
+
+#more-btn-box {
+	width: 100%;
+	height: 50px;
+	border-radius: 8px;
+	cursor: pointer;
+	padding-left: 15px;
+	padding-right: 15px;
+	margin-bottom: 50px;
+}
+
+#more-btn-box div{
+	width: 100%;
+	background: #ddd;
+	text-align: center;
+	height: 50px;
+	border-radius: 8px;
+	font-size: 15px;
+	padding-top: 17px;
+	cursor: pointer;
+}
+
+#more-btn-box div:hover {
+	background: #aaa;
+}
+
+#reviews-write {
+	width: 80px;
+	height: 100px;
+}
+
+.reviews-write-table {
+	max-width: 1100px;
+	margin: 50px auto;
+}
+
+.reviews-write-table table th.title,.reviews-write-table table th.contents{
+	vertical-align: middle;
+	text-align: center;
 }

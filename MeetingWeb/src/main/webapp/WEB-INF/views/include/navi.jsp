@@ -20,7 +20,7 @@
 					<li>
 						<div class="glyphicon glyphicon-plus menu-btn-icon"></div>
 						<div class="menu-btn-name">
-							<a href="/NowMeetingWeb/web/addForm">MEETING</a>
+							<a href="/NowMeetingWeb/meeting/addForm">MEETING</a>
 						</div>
 					</li>
 				</sec:authorize>
@@ -89,7 +89,7 @@
 				<a href="/NowMeetingWeb/web/mobileLogin">LOGIN</a>
 			</li>
 			<li>
-				<a href="/NowMeetingWeb/web/addForm">MEETING</a>
+				<a href="/NowMeetingWeb/meeting/addForm">MEETING</a>
 			</li>
 			<li>
 				<a href="/NowMeetingWeb/web/chatForm">CHAT</a>

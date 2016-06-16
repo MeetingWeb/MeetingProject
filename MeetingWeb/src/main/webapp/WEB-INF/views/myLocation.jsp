@@ -48,6 +48,10 @@
 	<jsp:include page="include/footer.jsp" />
 </body>
 <script type="text/javascript">
+var myLoc = JSON.parse('${data}');
+var lat = myLoc.latlng.split(",")[0];
+var lng = myLoc.latlng.split(",")[1];
+console.log(myLoc);
 </script>
 <script type="text/javascript" src="../resources/js/set_location.js"></script>
 </html>
