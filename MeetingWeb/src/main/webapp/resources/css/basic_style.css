@@ -807,6 +807,7 @@ footer {
    margin:50px auto
 }
 
+<<<<<<< HEAD
 #searchID {
    display: block;
    padding: 24px 0 0 24px;
@@ -823,3 +824,58 @@ footer {
    cursor: pointer;
    box-sizing: initial;
 }
+=======
+div#personal_title{
+	text-align: center;
+	font-size: 5em;
+	margin: 50px 0 50px 0px;
+}
+
+#personal_info #personal_group div#pid, div#pname, div#pemail, input.pws, input.pwcs{
+ text-align: left;
+ padding: 3px;
+
+
+}
+
+#personal_info #personal_group{
+
+}
+
+#personal_info #personal_group label{
+	width:40%;
+	float: left;
+	text-align: right;
+	margin:5px 30px 5px auto;
+	font-size: 13px;
+}
+
+#personal_info #personal_group div#person_btn{
+	text-align: center;
+    width: 200px;
+    margin: 50px auto;
+	height: 100px;
+	
+}
+
+#personal_info #personal_group div#pass_changebtn, div#ii{
+	cursor: pointer;
+	float: left;
+	width: 100px;
+
+}
+
+#personal_info #personal_group div#interests_changebtn, div#i{
+	cursor: pointer;
+	float: left;
+	width: 100px;
+
+	
+}
+
+
+#create_join{
+	width:0px;
+	margin: 50px auto 50px auto;
+}
+>>>>>>> refs/heads/lee
