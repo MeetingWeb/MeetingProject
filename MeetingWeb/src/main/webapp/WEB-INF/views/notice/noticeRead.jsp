@@ -13,25 +13,25 @@
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
-
+ 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
 	crossorigin="anonymous">
-
+ 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 var user_id = '<c:out value="${sessionScope.id}"/>';
 var replyPage=1;
-
+ 
 function list(){	
 	location.href="getList";
 }
-
+ 
 function modify(){	
 	location.href="modifyForm?num="+${data.num};	
 }
-
+ 
 function replyModifyGo(num){	
 	$.ajax({
 		type:"get",
@@ -93,10 +93,10 @@ function replyModify(num){
 	$('button.'+num).text('완료');
 	$('button.'+num).removeAttr('onclick');
 	$('button.'+num).attr('onclick','replyModifyGo('+num+')');	
-
+ 
 		
 }
-
+ 
 function replyDel(num){
 	
 	if(confirm('정말 삭제 하시겠습니까?'))
@@ -154,7 +154,7 @@ function replyDel(num){
 		});		
 	}
 }
-
+ 
 function allReply(){
 	$.ajax({
 		type:"get",
@@ -193,7 +193,7 @@ function allReply(){
 		}
 	});	
 }
-
+ 
 function firstReply(){
 	$.ajax({
 		type:"get",
@@ -239,7 +239,7 @@ function firstReply(){
 		}
 	});		
 }
-
+ 
 function nextReply(){	
 	
 	$.ajax({
@@ -290,7 +290,7 @@ function nextReply(){
 		}
 	});
 }
-
+ 
 function prevReply(){
 	$.ajax({
 		type:"get",
@@ -339,8 +339,8 @@ function prevReply(){
 	});
 	
 }
-
-
+ 
+ 
 function del(){
 	if(confirm('정말 삭제하시겠습니까?'))
 	{
@@ -370,7 +370,7 @@ function del(){
 		});		
 	}	
 }
-
+ 
 function replyWrite(){
 	if(confirm('정말 등록 하시겠습니까?'))
 	{
@@ -438,7 +438,7 @@ $(function(){
 		});
 	 
 });
-
+ 
 	function email_check() {
 	 var email = $('#email').val();
 	 $.ajax({
@@ -453,7 +453,7 @@ $(function(){
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
@@ -461,8 +461,8 @@ $(function(){
 		});
 		
 	}
-
-
+ 
+ 
 	function id_check() {
 		var id = $('input#id').val();
 		$.ajax({
@@ -483,15 +483,15 @@ $(function(){
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
 			}
 		});
-
+ 
 	}
-
+ 
 	function joinsave() {
 		var data = $('#joinform').serialize();
 		$.ajax({
@@ -505,13 +505,13 @@ $(function(){
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
 			}
 		});
-
+ 
 	}
 </script>
 </head>
@@ -540,17 +540,17 @@ $(function(){
 			</tr>
 			<tr>
 			<td colspan="5">
-			<button type="button" onclick="list()">목록</button>
+			<a  onclick="list()" style="cursor: pointer;"><img src="/NowMeetingWeb/resources/images/list.png"></button>
 			<c:if test="${sessionScope.id eq data.id}">
-			<button type="button" onclick="modify()">수정</button>
-			<button type="button" onclick="del()">삭제</button>
+			<a  onclick="modify()" style="cursor: pointer;" ><img src="/NowMeetingWeb/resources/images/edit.png"></button>
+			<a  onclick="del()" style="cursor: pointer;"><img src="/NowMeetingWeb/resources/images/delete.png"></button>
 			</c:if>
 			</td>
 			<tr>
 			<td colspan="5">
 			<div class="replyForm">
 			<textarea class="reply form-control" cols="40"></textarea>			
-			<button type="button" onclick="replyWrite()">글쓰기</button>
+			<a  onclick="replyWrite()" style="cursor: pointer;"><img src="/NowMeetingWeb/resources/images/write2.png"></button>
 			</td>
 			</tr>
 			<div class="reply">
@@ -562,20 +562,20 @@ $(function(){
 		<br>
 		<br>			
 		</div>
-
-
+ 
+ 
 		<table id="noticeReply"  class="table">
 			<c:forEach var="list" items="${ map.list }">
 				<tr>
 					<th style="width:10%">${ list.id }</th>
 					<td class="${ list.num }">${ list.contents }</td>
-					<td style="width:10%">
+					<td style="width:20%">
 					<c:choose>
 						<c:when test="${sessionScope.id eq list.id}"> 
 						
 							
-								<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button>
-								<button type="button" onclick="replyDel(${ list.num })">삭제</button>							
+								<button type="button" class="${ list.num } btn btn-default btn-sm" onclick="replyModify(${ list.num })">수정</button>
+								<button type="button"  class = "btn btn-default btn-sm" onclick="replyDel(${ list.num })">삭제</button>							
 						</c:when>
 					</c:choose>
 					</td>

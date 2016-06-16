@@ -98,13 +98,13 @@ $(function() {
 
 	
 	//////////내위치 정하기////////////////
-	$('#mylocation-btn').on('click',function(){
-		location.href="myLocation";
+	/*$('#mylocation-btn').on('click',function(){
+		location.href="/NowMeetingWeb/web/myLocation";
 	});
 	$('#myLocation-btn-name').on('click',function(){
-		location.href="myLocation";
+		location.href="/NowMeetingWeb/web/myLocation";
 		
-	});
+	});*/
 	// ///////메뉴///////////////////////
 	var bool = false;
 	$("#menu #menu-btn").on("click", function() {

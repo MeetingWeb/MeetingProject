@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getRecommend" resultType="meeting.team.vo.MeetingVo" parameterType="java.lang.String">
-		select * from meeting where field=#{interest}
+		select * from meeting where field=#{interest} and division='now'
 	</select>
 
 	<insert id="insert" parameterType="meeting.team.vo.MeetingVo">

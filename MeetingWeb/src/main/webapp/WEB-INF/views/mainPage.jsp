@@ -61,20 +61,20 @@
 			success : function(data) {
 				$('div.recommend-list').children().remove();
 				var html = "";
-				for (var i = 0; i < data.length; i++) {
+				for (var i = 0; i < data.length; i++) {					
 					var loc = data[i].loc;
 					var arr = loc.split(',');
+					var meeting=JSON.stringify(data[i]);
 					var meetinglat = Number(arr[0]);
 					var meetinglng = Number(arr[1]);
 					var distance = calcDistance(mylat, mylng, meetinglat, meetinglng);
-
+ 
 					if (distance < 40) {
 						if (((i != 0) && (data[i - 1].field != data[i].field)) || (i == 0)) {
 							html += "<hr><table class='recommendTable'><caption><h4 class='recommendfield'>" + data[i].field + "<h4></caption>";
 						}
 						html += "<tr class='main'><td class='titletd'>" + data[i].title +
-								 "</td><td class='buttontd'> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere(" + meetinglat
-								+ "," + meetinglng + ")'>모임 보기</button></td></tr><tr class='sub'><td class='titletd'>주최자:"+data[i].master+",  거리:"+distance+"km</td></tr>";
+								 "</td><td class='buttontd'> <button type = 'button' class = 'btn btn-default btn-sm' onclick='showHere("+meeting+")'>모임 보기</button></td></tr><tr class='sub'><td class='titletd'>주최자:"+data[i].master+",  거리:"+distance+"km</td></tr>";
 						if ((i == (data.length - 1)) || (data[i].field != data[i + 1].field)) {
 							html += "</table>";
 							$('div.recommend-list').append(html);
@@ -84,7 +84,7 @@
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
@@ -151,37 +151,36 @@
 		<!-- Button trigger modal -->
 		<!-- Modal -->
 		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="false">
-
+ 
 			<div class="modal-dialog">
 				<div class="modal-content">
-
+ 
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-
+ 
 						<h4 class="modal-title" id="myModalLabel">This Modal title</h4>
 					</div>
-
+ 
 					<div class="modal-body" id="myModalBody">Press ESC button to exit.</div>
-
+ 
 					<div class="modal-footer">
 						<input type="hidden" name="master">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-						<button type="button" class="btn btn-success" onclick="direction()">Directions</button>
-
+ 
+						<button type="button" id="complete-btn" class="btn btn-success" >Complete</button>
+ 
 						<button type="button" class="btn btn-success chat-btn">Participation in chat rooms</button>
-
-						<button type="button" class="btn btn-success">Rough map</button>
+ 
+						<button type="button" id="modify-btn"class="btn btn-success">Modify</button>
 					</div>
-
+ 
 				</div>
 				<!-- /.modal-content -->
 			</div>
 			<!-- /.modal-dialog -->
-
+ 
 		</div>
 		<!-- /.modal -->
-
 		
 		
 		

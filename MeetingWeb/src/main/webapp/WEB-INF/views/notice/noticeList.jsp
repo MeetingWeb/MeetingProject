@@ -22,12 +22,12 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
-
+ 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
 	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
 	crossorigin="anonymous">
-
+ 
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
@@ -48,7 +48,7 @@
 	function allList() {
 		location.href = "getList";
 	}
-
+ 
 	$(function() {
 		window.name = "my";
 		$("#pwc").keyup(function() {
@@ -58,9 +58,9 @@
 				$('#pw_checktext').text("아니야.");
 			}
 		});
-
+ 
 	});
-
+ 
 	function email_check() {
 		var email = $('#email').val();
 		$.ajax({
@@ -76,15 +76,15 @@
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
 			}
 		});
-
+ 
 	}
-
+ 
 	function id_check() {
 		var id = $('input#id').val();
 		$.ajax({
@@ -104,15 +104,15 @@
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
 			}
 		});
-
+ 
 	}
-
+ 
 	function joinsave() {
 		var data = $('#joinform').serialize();
 		$.ajax({
@@ -126,13 +126,13 @@
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
 			}
 		});
-
+ 
 	}
 </script>
 </head>
@@ -146,14 +146,14 @@
 			<caption><h2 class="title">Notice</h2></caption>
 			<thead style="text-align:center">
 			<tr>
-
+ 
 				<th style="width:8%">번호</th>
 				<th>제목</th>
-
+ 
 				<th style="width:10%" >작성자</th>
 				<th style="width:12%">작성일</th>
 				<th style="width:8%">조회수</th>
-
+ 
 			</tr>
 			</thead>
 			<c:forEach var="list" items="${ map.list }">
@@ -169,42 +169,45 @@
 			
 			<tfoot style="vertical-align:inherit;">
 			<tr  style="border-bottom:none" class="buttontr"><td colspan="5">
-			<p class="buttons">
 			
+	
+			
+			<p class="buttons">			
 		
-			<button type="button" onclick="allList()">전체보기</button>		
-			<button type="button" onclick="writeForm()">글쓰기</button>
+			<a   style="cursor: pointer;"onclick="allList()" ><img src="/NowMeetingWeb/resources/images/list.png"></a>		
+			<a   style="cursor: pointer;"onclick="writeForm()" ><img src="/NowMeetingWeb/resources/images/write.png"></a>
 			</p>
 			
 			</td></tr>	
 					
 		</tfoot>
-		
+ 
 		</table>
 		</div>
-		<table>
+		<table>	
 		<tr><td>
+			<ul class = "pagination pagination-lg">
 			<c:choose>
 			<c:when test="${map.condition eq 'normal'}">
 				<c:if test="${ map.page.currPage > 3 }">
-					<a href="getPage?page=${ map.page.startPage-1 }">PREV</a>
+					<li><a href="getPage?page=${ map.page.startPage-1 }">&laquo;</a></li>
 				</c:if>
 			</c:when>
 			<c:when test="${map.condition eq 'search'}">
 				<c:if test="${ map.page.currPage > 3 }">
-					<a
-						href="searchPage?key=${ map.key }&page=${ map.page.startPage-1 }">PREV</a>
+					<li><a
+						href="searchPage?key=${ map.key }&page=${ map.page.startPage-1 }">&laquo;</a></li>
 				</c:if>
 			</c:when>
 		</c:choose>
-
-
+ 
+ 
 		<c:choose>
 			<c:when test="${map.condition eq 'normal'}">
 				<c:forEach var="no" begin="${ map.page.startPage }"
 					end="${ map.page.endPage }">
 					<c:if test="${ no <= map.page.totalPage }">
-						<a href="getPage?page=${ no }">${ no }</a>
+						<li><a href="getPage?page=${ no }">${ no }</a></li>
 					</c:if>
 				</c:forEach>
 			</c:when>
@@ -212,39 +215,41 @@
 				<c:forEach var="no" begin="${ map.page.startPage }"
 					end="${ map.page.endPage }">
 					<c:if test="${ no <= map.page.totalPage }">
-						<a href="searchPage?key=${ map.key }&page=${ no }">${ no }</a>
+						<li><a href="searchPage?key=${ map.key }&page=${ no }">${ no }</a></li>
 					</c:if>
 				</c:forEach>
 			</c:when>
 		</c:choose>
-
-
+ 
+ 
 		<c:choose>
 			<c:when test="${map.condition eq 'normal'}">
 				<c:if test="${ map.page.endPage < map.page.totalPage }">
-					<a href="getPage?page=${ map.page.endPage+1 }">NEXT</a>
+					<li><a href="getPage?page=${ map.page.endPage+1 }">&raquo;</a></li>
 				</c:if>
 			</c:when>
 			<c:when test="${map.condition eq 'search'}">
 				<c:if test="${ map.page.endPage < map.page.totalPage }">
-					<a href="searchPage?key=${ map.key }&page=${ map.page.endPage+1 }">NEXT</a>
+					<li><a href="searchPage?key=${ map.key }&page=${ map.page.endPage+1 }">&raquo;</a></li>
 				</c:if>
 			</c:when>
 		</c:choose>
+		</ul>
 		</td></tr>
 		<tr><td>
 			<input type="text" class="key">
-			<button type="button" onclick="search()">검색</button>
+			<button type="button" onclick="search()" class = "btn btn-default">검색</button>
 		</td></tr>
 		</table>
+		
 		
 		
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
-
+ 
 	</section>
 	
-
+ 
 	<jsp:include page="../include/footer.jsp" />
 	</div>
 </body>
