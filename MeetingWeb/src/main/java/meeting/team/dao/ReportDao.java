@@ -6,6 +6,7 @@ import java.util.Map;
 import meeting.team.vo.BoardResVo;
 import meeting.team.vo.BoardVo;
 
+
 public interface ReportDao {
 	
 	// 글 조회(리스트)

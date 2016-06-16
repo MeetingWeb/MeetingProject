@@ -5,8 +5,13 @@ import java.util.List;
 
 import org.springframework.security.core.userdetails.UserDetails;
 
-import meeting.team.vo.LoginVo;
+
+
+import meeting.team.vo.MeetingVo;
 import meeting.team.vo.UserVo;
+
+
+
 
 public interface UserDao {
 	public int join(UserVo uvo);
@@ -24,4 +29,6 @@ public interface UserDao {
 	public int pwchange(HashMap<String, Object> map);
 	public int interestschange(HashMap<String, Object> map);
 	public int delete(String id);
-} 
+	public List<MeetingVo> create_join(String id);
+}
+
