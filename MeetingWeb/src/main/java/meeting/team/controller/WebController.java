@@ -196,6 +196,11 @@ public class WebController {
 		 return us.powerUpdate(request);
 		  
 	 }
+	 @RequestMapping(value="complete")
+	 @ResponseBody
+	 public String complete(@RequestParam("num")int num){
+		 return ms.complete(num);
+	 }
 	 
 	 
 	 @RequestMapping(value="personal_info")

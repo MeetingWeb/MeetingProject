@@ -87,8 +87,8 @@ function changePower(){
 		},
 		success : function(data) {
 			if(data.ok){
-				alert('업데이트 성공');
-				
+				alert('수정이 완료되었습니다.');
+				location.href='main';
 			}else alert('업데이트 실패');
 			
 		},
@@ -130,11 +130,14 @@ function gomain(){
 
 	<jsp:include page="include/navi.jsp" />
 	<jsp:include page="include/header.jsp" />
+	<div id="blacklist-background">
+	<section id="contents" style="background-color:rgba(255,255,255,0.7)">
 	
 	
-	<table class="table" style="max-width:1100px; margin:50px auto;">
-	<tr>	
-	
+	<table  style="max-width:1100px; margin:50px auto; text-align:center;">
+	<tr><td colspan="3"><h2 class="title" style="color:#464646;position: relative;    font-weight: normal;margin-bottom: 5px; font-size: 40px;">Authority change</h2><br><br></td></tr>
+	<tr><td style="width:400px"><h4><b>Member</b></h4></td><td></td><td  style="width:400px"><h4><b>Blacklist</b></h4></td></tr>
+	<tr>		
 	<td>
 	<select id="member" size="20" style="width:300px">
 	<c:forEach var="list" items="${ list }">
@@ -146,8 +149,15 @@ function gomain(){
 	</td>	
 	
 	<td>
-	<button type="button" onclick="goblack()">>></button>
-	<button type="button" onclick="gomember()"><<</button>
+
+	
+	 <button type = "button" onclick="goblack()" class = "btn btn-danger btn-lg">
+    		ADD >>
+    </button><br><br><br>
+    <button type = "button" onclick="gomember()" class = "btn btn-success btn-lg">
+      		<< SUB
+   </button>
+   
 	</td>	
 	
 	<td>
@@ -161,14 +171,16 @@ function gomain(){
 	</td>
 	
 	</tr>
-	<tr>
-	<td>
-	<button type="button" onclick="changePower()">수정</button>
-	<button type="button" onclick="gomain()">취소</button>
+	<tr style="height:100px">
+	<td colspan="3">	
+	<button type = "button"  onclick="changePower()" class = "btn btn-default btn-lg">수정</button>
+	 <button type = "button" onclick="gomain()" class = "btn btn-default btn-lg">취소</button>
+	
 	</td>
 	</tr>
 	</table>
-	
+	</section>
+	</div>
 	<jsp:include page="include/footer.jsp" />
 </body>
 </html>

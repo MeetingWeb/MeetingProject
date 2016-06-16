@@ -198,8 +198,8 @@ $(function(){
 				</tr>
 				<tr>
 				<td colspan="2" style="text-align:right">
-				<button type="button" onclick="modify()">수정</button>
-				<button type="button" onclick="cancel()">취소</button>
+				<button type="button" onclick="modify()" class = "btn btn-default ">수정</button>
+				<button type="button" onclick="cancel()" class = "btn btn-default ">취소</button>
 				</td>
 				</tr>
 			</table>

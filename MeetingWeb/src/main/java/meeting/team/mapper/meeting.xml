@@ -83,4 +83,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<update id="replyModify" parameterType="HashMap">
 		UPDATE res_meeting SET contents=#{contents} WHERE num=#{num}
 	</update>
+	
+	<delete id="complete" parameterType="java.lang.Integer" >
+		delete from meeting where num=#{num}
+	</delete>
 </mapper>
