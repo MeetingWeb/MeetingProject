@@ -7,9 +7,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		select * from meeting
 	</select>
 	<select id="getAllMeeting" resultType="meeting.team.vo.MeetingVo">
-		select * from meeting	
+		select * from meeting
 	</select>
 	<select id="getMeeting" resultType="meeting.team.vo.MeetingVo">
 		select * from meeting where num=#{num}
 	</select>
+	<insert id="insert" parameterType="meeting.team.vo.MeetingVo">
+		INSERT INTO meeting
+		VALUES(MEETING_NUM_SEQ.NEXTVAL,#{title},#{meetingType},#{contents},#{master},#{area},#{start_time},#{end_time},#{map_name},#{division})
+	</insert>
 </mapper>
