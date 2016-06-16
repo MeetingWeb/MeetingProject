@@ -10,5 +10,5 @@ public interface MeetingDao {
 	List<MeetingVo> getAllMeeting();
 	MeetingVo getMeeting(int num);
 	int insert(MeetingVo meeting);
-
+	List<MeetingVo> getRecommend(String interest);
 }

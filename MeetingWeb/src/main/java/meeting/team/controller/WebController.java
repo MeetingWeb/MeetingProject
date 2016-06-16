@@ -2,6 +2,7 @@ package meeting.team.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -127,6 +128,13 @@ public class WebController {
 	 public String getMyLocation(HttpServletRequest request)
 	 {		
 		 return us.getMyLocation(request);		 
+	 }
+	 
+	 @RequestMapping(value="getRecommend")
+	 @ResponseBody
+	 public String getRecommend(HttpServletRequest request)
+	 {	
+		 return ms.getRecommend(us.getInterest(request));		 
 	 }
     
 }
