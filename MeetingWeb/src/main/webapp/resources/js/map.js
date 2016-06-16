@@ -77,10 +77,132 @@ function direction(){
 
 
 
-function showHere(lat,lng){   
-   var latlng = new google.maps.LatLng(lat,lng);
-   drawMeetings();
-   map.panTo(latlng);
+function showHere(meeting){	
+	
+	var loc = meeting.loc;
+	var arr = loc.split(',');
+	var meetinglat = Number(arr[0]);
+	var meetinglng = Number(arr[1]);	
+	var latlng = new google.maps.LatLng(meetinglat,meetinglng);
+	
+	var master=meeting.master;
+	var title=meeting.title;
+	var num=meeting.num;
+	
+	//drawMeetings();
+	map.panTo(latlng);
+	for(var i=0; i<markers.length; i++)
+	{
+		if(markers[i].position.lat()==meetinglat && markers[i].position.lng()==meetinglng)
+		{
+ 
+			console.log(markers[i].getLabel());
+		/*	markers[i].setMap(null);
+			var marker=new google.maps.Marker({
+				position: latlng,
+				map:map,
+				title:num
+			});
+			markers.push(marker);*/
+			var simpleInfo=""+
+			"<span class = 'label label-success'>Longboard</span> <b>  Host: </b>"+master+"<br><br>"+		
+				title+
+			" <br><br><button type = 'button' class = 'btn btn-default btn-xs' onclick='showDetail("+num+")'>"+
+		      "show detail"+
+		   "</button>";
+ 
+			var simpleInfoWindow=new google.maps.InfoWindow({
+				content : simpleInfo
+			});
+			simpleInfoWindow.open(markers[i].get('map'), markers[i]);			
+		}
+	}
+	
+}
+
+function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+	  directionsService.route({
+	    origin: new google.maps.LatLng(mylat,mylng),
+	    destination: new google.maps.LatLng(deslat,deslng),
+	    travelMode: google.maps.TravelMode.DRIVING
+	  }, function(response, status) {
+	    if (status === google.maps.DirectionsStatus.OK) {
+	      directionsDisplay.setDirections(response);
+	    } else {
+	      window.alert('Directions request failed due to ' + status);
+	    }
+	  });
+	}
+
+function showDetail(num){
+	$.ajax({
+		type:"get",
+		url:"getMeeting",
+		data:
+		{
+			num:num
+		},	
+		dataType:"json",
+		success:function(meeting)
+		{
+		
+			var num=meeting.num;
+			var contents=meeting.contents;
+			
+			var end_time=meeting.endTime;
+			var start_time=meeting.startTime;
+			
+			var master=meeting.master;
+			var type=meeting.type;
+			var title=meeting.title;
+			var mapname=meeting.mapname;
+			
+			var startTimeArr=start_time.split(" ");
+			var s=startTimeArr[1].split(":");
+			var start=s[0]+"시 "+s[1]+"분";
+			
+			var endTimeArr=end_time.split(" ");
+			var e=endTimeArr[1].split(":");
+			var end=e[0]+"시 "+e[1]+"분";
+			
+			if(master!=user_id){
+				$('#complete-btn').remove();
+				$('#modify-btn').remove();
+				
+			}else{
+				$('#complete-btn').on('click',function(){
+					complete(num);
+				});
+			}
+			var html="<table class='table'><tr><td colspan='2'>"+contents+"</td></tr>" +
+					"<tr><td>주최자</td><td>"+master+"</td></tr>"+
+					"<tr><td>종목</td><td>"+type+"</td></tr>"+
+					"<tr><td>시작시간</td><td>"+start+"</td></tr>"+
+					"<tr><td>끝나는시간</td><td>"+end+"</td></tr>"+					
+					"<tr><td colspan='2'><img style='width:100%;'src='../resources/images/"+mapname+"'></td></tr><table>";
+			$('#myModalLabel').text(title);
+			$('#myModalBody').html(html);		
+			$('#myModal').modal({keyboard: true});
+			$(".modal-footer input[name=master]").val(master);
+			
+			var loc=meeting.loc;
+			var arr=loc.split(',');				
+			var lat=Number(arr[0]);
+			var lng=Number(arr[1]);	
+			deslat=lat;
+			deslng=lng;
+			
+		},
+		complete:function(data)
+		{
+			
+		},
+		error:function(xhr,status,error)
+		{
+			alert(error);
+		}		
+	});
+	
    
 }
 
@@ -242,6 +364,38 @@ function myMarker(latlng){
    
 }
 
+<<<<<<< HEAD
+=======
+function complete(mettingnum){
+	if(confirm('모임을 끝내시겠습니까??'))
+	{
+		
+		 $.ajax({
+			type : 'post',
+			dataType : 'json',
+			url : 'complete',
+			data : {
+				num:mettingnum
+				
+			},
+			success : function(evt) {
+				if(evt.ok){
+					alert('완료처리 되었습니다.');
+					location.href="main";
+				}else alert('완료처리가 되지 않았습니다.')
+				
+			},
+			complete : function(data) {
+
+			},
+			error : function(xhr, status, error) {
+				alert(error);
+			}
+		});			 
+	}		
+}
+
+>>>>>>> refs/heads/JUN
 function makeMarker(latlng,meeting){
    var num=String(meeting.num);
    var marker=new google.maps.Marker({

@@ -12,10 +12,10 @@
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
-
+ 
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
 	crossorigin="anonymous">
-
+ 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo&callback=initMap" async defer></script>
 <title>여기여기 붙어라</title>
@@ -30,9 +30,9 @@ var changeMembers=new Array();
 var changeBlacks=new Array();
 var resultMembers=new Array();
 var resultBlacks=new Array();
-
+ 
 function changePower(){
-
+ 
 	$('#member>option').each(function(){
 		var id=$(this).text();
 		changeMembers.push(id);		
@@ -74,7 +74,7 @@ function changePower(){
 		}
 	}
 		
-
+ 
  	jQuery.ajaxSettings.traditional = true;
 	$.ajax({
 		type : 'post',
@@ -87,13 +87,13 @@ function changePower(){
 		},
 		success : function(data) {
 			if(data.ok){
-				alert('업데이트 성공');
-				
+				alert('수정이 완료되었습니다.');
+				location.href='main';
 			}else alert('업데이트 실패');
 			
 		},
 		complete : function(data) {
-
+ 
 		},
 		error : function(xhr, status, error) {
 			alert(error);
@@ -102,14 +102,14 @@ function changePower(){
 	
 	
 }
-
+ 
 function goblack(){
 	var id=$('#member option:selected').text();
 	$('#member option:selected').remove();
 	var html="<option>"+id+"</option>";
 	$('#black').append(html);
 }
-
+ 
 function gomember(){
 	var id=$('#black option:selected').text();
 	$('#black option:selected').remove();
@@ -127,14 +127,17 @@ function gomain(){
 </script>
 </head>
 <body>
-
+ 
 	<jsp:include page="include/navi.jsp" />
 	<jsp:include page="include/header.jsp" />
+	<div id="blacklist-background">
+	<section id="contents" style="background-color:rgba(255,255,255,0.7)">
 	
 	
-	<table class="table" style="max-width:1100px; margin:50px auto;">
-	<tr>	
-	
+	<table  style="max-width:1100px; margin:50px auto; text-align:center;">
+	<tr><td colspan="3"><h2 class="title" style="color:#464646;position: relative;    font-weight: normal;margin-bottom: 5px; font-size: 40px;">Authority change</h2><br><br></td></tr>
+	<tr><td style="width:400px"><h4><b>Member</b></h4></td><td></td><td  style="width:400px"><h4><b>Blacklist</b></h4></td></tr>
+	<tr>		
 	<td>
 	<select id="member" size="20" style="width:300px">
 	<c:forEach var="list" items="${ list }">
@@ -146,8 +149,15 @@ function gomain(){
 	</td>	
 	
 	<td>
-	<button type="button" onclick="goblack()">>></button>
-	<button type="button" onclick="gomember()"><<</button>
+ 
+	
+	 <button type = "button" onclick="goblack()" class = "btn btn-danger btn-lg">
+    		ADD >>
+    </button><br><br><br>
+    <button type = "button" onclick="gomember()" class = "btn btn-success btn-lg">
+      		<< SUB
+   </button>
+   
 	</td>	
 	
 	<td>
@@ -161,14 +171,16 @@ function gomain(){
 	</td>
 	
 	</tr>
-	<tr>
-	<td>
-	<button type="button" onclick="changePower()">수정</button>
-	<button type="button" onclick="gomain()">취소</button>
+	<tr style="height:100px">
+	<td colspan="3">	
+	<button type = "button"  onclick="changePower()" class = "btn btn-default btn-lg">수정</button>
+	 <button type = "button" onclick="gomain()" class = "btn btn-default btn-lg">취소</button>
+	
 	</td>
 	</tr>
 	</table>
-	
+	</section>
+	</div>
 	<jsp:include page="include/footer.jsp" />
 </body>
 </html>

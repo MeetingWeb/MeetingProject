@@ -22,12 +22,12 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
 	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
-
+ 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
 	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r"
 	crossorigin="anonymous">
-
+ 
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
 	integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS"
@@ -72,7 +72,7 @@ function modify(){
 		
 	}); 	
 }
-
+ 
 function cancel(){
 	if(confirm('글 수정을 취소하시겠습니까??'))
 	{		
@@ -80,7 +80,7 @@ function cancel(){
 	}
 	
 }
-
+ 
 $(function(){
 	window.name="my";
 	 $("#pwc").keyup (function() {
@@ -95,7 +95,7 @@ $(function(){
 		});
 	 
 });
-
+ 
 	function email_check() {
 	 var email = $('#email').val();
 	 $.ajax({
@@ -110,7 +110,7 @@ $(function(){
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
@@ -118,8 +118,8 @@ $(function(){
 		});
 		
 	}
-
-
+ 
+ 
 	function id_check() {
 		var id = $('input#id').val();
 		$.ajax({
@@ -140,15 +140,15 @@ $(function(){
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
 			}
 		});
-
+ 
 	}
-
+ 
 	function joinsave() {
 		var data = $('#joinform').serialize();
 		$.ajax({
@@ -162,13 +162,13 @@ $(function(){
 				}
 			},
 			complete : function(data) {
-
+ 
 			},
 			error : function(xhr, status, error) {
 				alert(error);
 			}
 		});
-
+ 
 	}
 </script>
 </head>
@@ -177,7 +177,7 @@ $(function(){
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<form>
-
+ 
 			<table id="noticemodify" class="table">
 				<caption><h2 class="title" style="color:#464646;position: relative;    font-weight: normal;margin-bottom: 5px; font-size: 40px;">Notice<h2></h2></caption>
 				<tr style="border-top:2px solid black">
@@ -197,21 +197,23 @@ $(function(){
 					<td><textarea rows="30" cols="100" class="contents">${ data.contents }</textarea></td>
 				</tr>
 				<tr>
+				
+				
 				<td colspan="2" style="text-align:right">
-				<button type="button" onclick="modify()">수정</button>
-				<button type="button" onclick="cancel()">취소</button>
+				<a style="cursor: pointer;" onclick="modify()" ><img src="/NowMeetingWeb/resources/images/write.png"></a>
+				<a style="cursor: pointer;" onclick="cancel()" ><img src="/NowMeetingWeb/resources/images/list.png"></a>
 				</td>
 				</tr>
 			</table>
 			
 			
 		</form>
-
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
+ 
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />	
 	</section>

@@ -105,20 +105,20 @@ $(function() {
       location.href="myLocation";
       
    });
-   // ///////메뉴///////////////////////
-   var bool = false;
-   $("#menu #menu-btn").on("click", function() {
-      if (bool == false) {
-         $("#menu #menu-in").animate({
-            width : "208px"
-         }, 500);
-         $("#menu .menu-btn-name").addClass("menu-btn-name-active");
-         bool = true;
-      } else {
-         $("#menu #menu-in").animate({
-            width : "64px"
-         }, 250);
-         $("#menu .menu-btn-name").removeClass("menu-btn-name-active");
+	// ///////메뉴///////////////////////
+	var bool = false;
+	$("#menu #menu-btn").on("click", function() {
+		if (bool == false) {
+			$("#menu #menu-in").animate({
+				width : "208px"
+			}, 500);
+			$("#menu .menu-btn-name").addClass("menu-btn-name-active");
+			bool = true;
+		} else {
+			$("#menu #menu-in").animate({
+				width : "64px"
+			}, 250);
+			$("#menu .menu-btn-name").removeClass("menu-btn-name-active");
 
          bool = false;
       }

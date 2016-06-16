@@ -807,7 +807,6 @@ footer {
    margin:50px auto
 }
 
-<<<<<<< HEAD
 #searchID {
    display: block;
    padding: 24px 0 0 24px;
@@ -824,7 +823,6 @@ footer {
    cursor: pointer;
    box-sizing: initial;
 }
-=======
 div#personal_title{
 	text-align: center;
 	font-size: 5em;
@@ -879,3 +877,17 @@ div#personal_title{
 	margin: 50px auto 50px auto;
 }
 >>>>>>> refs/heads/lee
+=======
+#blacklist-background{
+	z-index:10;
+	top:64px;
+	left:0px;
+	background-position:center 0;
+	position:absolute;
+	width:100%;
+	background-image:url("../images/map.jpg");
+	background-repeat:no-repeat;
+	height:1011px;
+	
+}
+>>>>>>> refs/heads/JUN

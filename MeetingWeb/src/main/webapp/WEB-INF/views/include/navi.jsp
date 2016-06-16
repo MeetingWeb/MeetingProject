@@ -67,7 +67,7 @@
 				<li>
 					<div id="mylocation-btn" class="glyphicon glyphicon-flag menu-btn-icon"></div>
 					<div class="menu-btn-name" id="myLocation-btn-name">
-						<a href="#">내위치</a>
+						<a href="/NowMeetingWeb/web/myLocation">내위치</a>
 					</div>
 				</li>
 				<sec:authorize access="hasAuthority('ADMIN')">
