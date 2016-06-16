@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import meeting.team.vo.MeetingPageVo;
 import meeting.team.vo.MeetingVo;
 import meeting.team.vo.ReplyVo;
 
@@ -22,7 +23,7 @@ public interface MeetingDao {
 	ArrayList<String> getChatList(String id);
 	ArrayList<String> getChatGroup(String master);
 	int updateUser(String master);
-	ArrayList<MeetingVo> getNotNowMeetingList();
+	ArrayList<MeetingVo> getNotNowMeetingList(MeetingPageVo page);
 	int addReply(ReplyVo reply);
 	List<ReplyVo> getReplyList(HashMap<String, Object> pageMap);
 	int getRowCount(int ref);
@@ -31,4 +32,5 @@ public interface MeetingDao {
 	String getMyLocation(String id);
 	int chatDelete(String master);
 	int updateMeeting(MeetingVo meeting);
+	int getMeetingRowCount();
 }

@@ -23,7 +23,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyALsCWQfq_e5wj4Dcna1ZR99Ik1fM0CXLo" async defer></script>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
-	var user_id = '<c:out value="${sessionScope.id}"/>';	
+	var user_id = '<c:out value="${sessionScope.id}"/>';
 </script>
 </head>
 <body>
@@ -41,7 +41,7 @@
 					<th>모임날짜</th>
 					<th>모임장소</th>
 				</tr>
-				<c:forEach var="list" items="${list }">
+				<c:forEach var="list" items="${map.list }">
 					<tr class="not-now-list-btn">
 						<td>${list.num }<input type="hidden" name="num" value="${list.num }">
 						</td>
@@ -53,6 +53,37 @@
 					</tr>
 				</c:forEach>
 			</table>
+			<div>
+				<select>
+					<option>분야</option>
+				</select>
+				<input type="text">
+			</div>
+			<nav id="meeting-navi">
+				<ul class="pagination">
+					<c:if test="${map.page.startPage > 5 }">
+						<li>
+							<a href="#" aria-label="Previous">
+								<span aria-hidden="true">&laquo;</span>
+							</a>
+						</li>
+					</c:if>
+					<c:forEach var="page" begin="${map.page.startPage }" end="${map.page.endPage }">
+						<c:if test="${page <= map.page.maxPage }">
+							<li>
+								<a href="#" onclick="navi(${page})">${page }</a>
+							</li>
+						</c:if>
+					</c:forEach>
+					<c:if test="${map.page.endPage <= map.page.maxPage }">
+					<li>
+						<a href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+					</li>
+					</c:if>
+				</ul>
+			</nav>
 		</div>
 		<jsp:include page="include/loginForm.jsp" />
 		<jsp:include page="include/joinForm.jsp" />
@@ -64,4 +95,9 @@
 		alert("로그인 실패");
 	</script>
 </c:if>
+<script type="text/javascript">
+	function navi(page, status) {
+		location.href = "/NowMeetingWeb/meeting/notNowList?page=" + page + "&status=" + status;
+	}
+</script>
 </html>

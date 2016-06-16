@@ -26,10 +26,9 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.google.code.geocoder.Geocoder;
-
 import meeting.team.controller.MeetingController;
 import meeting.team.dao.MeetingDao;
+import meeting.team.vo.MeetingPageVo;
 import meeting.team.vo.MeetingVo;
 import meeting.team.vo.ReplyVo;
 
@@ -39,20 +38,12 @@ public class MeetingService {
 	private SqlSessionTemplate sql_temp;
 	private MeetingDao meeting_dao;
 	private HashMap<String, Object> pageMap = new HashMap<String, Object>();
-	private final int SHOWROW = 2;
+	private final int SHOWROW = 10;
 	private final int SHOWNAVIPAGE = 5;
 
 	double latitude;
 	double longitude;
 	String regionAddress;
-
-	public List<MeetingVo> getMeetingList(HttpServletRequest request) {
-		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		HttpSession session = request.getSession();
-		String id = (String) request.getParameter("id");
-		session.setAttribute("id", id);
-		return meeting_dao.getMeetingList(id);
-	}
 
 	@SuppressWarnings("unchecked")
 	public String getAllMeeting() {
@@ -386,9 +377,9 @@ public class MeetingService {
 		return list;
 	}
 
-	public ArrayList<MeetingVo> getNotNowMeetingList() throws Exception {
+	public HashMap<String, Object> getNotNowMeetingList(MeetingPageVo page) throws Exception {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		ArrayList<MeetingVo> list = meeting_dao.getNotNowMeetingList();
+		ArrayList<MeetingVo> list = meeting_dao.getNotNowMeetingList(page);
 		for (int i = 0; i < list.size(); i++) {
 			MeetingVo meeting = list.get(i);
 			String[] addr = meeting.getArea().split(",");
@@ -397,7 +388,15 @@ public class MeetingService {
 			this.regionAddress = getRegionAddress(getJSONData(getApiAddress()));
 			meeting.setArea(this.regionAddress);
 		}
-		return list;
+		int[] navi = getNaviNum(page.getCurrPage());
+		int maxPage = meeting_dao.getMeetingRowCount();
+		page.setMaxPage(maxPage);
+		page.setEndPage(navi[0]);
+		page.setStartPage(navi[1]);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		map.put("page", page);
+		return map;
 	}
 
 	private String getApiAddress() {
@@ -428,6 +427,15 @@ public class MeetingService {
 	public String getAddress() {
 		return regionAddress;
 	}
+	
+	public List<MeetingVo> getMeetingList(HttpServletRequest request) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		HttpSession session = request.getSession();
+		String id = (String) request.getParameter("id");
+		session.setAttribute("id", id);
+		return meeting_dao.getMeetingList(id);
+	}
+
 
 	public MeetingVo modifyForm(int num) throws Exception {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);

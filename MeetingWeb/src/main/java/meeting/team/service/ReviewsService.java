@@ -29,6 +29,7 @@ import meeting.team.vo.ReviewsVo;
 public class ReviewsService {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate;
+	private final int SHOWROW = 8;
 
 	public String fileUpload(ReviewsVo uploadedFile, HttpServletRequest request) {
 		ReviewsDao reviews_dao = sqlSessionTemplate.getMapper(ReviewsDao.class);
@@ -145,9 +146,33 @@ public class ReviewsService {
 		return reviews;
 	}
 
-	public List<ReviewsVo> getList() {
+	public List<ReviewsVo> getList(int page) {
 		ReviewsDao reviews_dao = sqlSessionTemplate.getMapper(ReviewsDao.class);
-		return reviews_dao.getList();
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("page", page);
+		map.put("showRow", SHOWROW);
+		return reviews_dao.getList(map);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public String moreList(int page) {
+		ReviewsDao reviews_dao = sqlSessionTemplate.getMapper(ReviewsDao.class);
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+		map.put("page", page);
+		map.put("showRow", SHOWROW);
+		List<ReviewsVo> list = reviews_dao.getList(map);
+		JSONArray jsonArr = new JSONArray();
+		
+		for(int i = 0; i < list.size(); i++) {
+			JSONObject json = new JSONObject();
+			ReviewsVo rVo = list.get(i);
+			json.put("num", rVo.getNum());
+			json.put("title", rVo.getTitle());
+			json.put("fileName", rVo.getMod_file_name());
+			jsonArr.add(json);
+		}
+		jsonArr.add(reviews_dao.getMaxPage(SHOWROW));
+		return jsonArr.toJSONString();
 	}
 
 	public String delete(int num) {
@@ -364,8 +389,5 @@ public class ReviewsService {
 	public ReviewsVo latelyRead(){		
 		ReviewsDao reviews_dao = sqlSessionTemplate.getMapper(ReviewsDao.class);
 		return reviews_dao.latelyRead();		
-	}
-	
-	
-	
+	}	
 }

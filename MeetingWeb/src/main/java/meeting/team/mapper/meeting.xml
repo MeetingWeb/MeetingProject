@@ -30,8 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<select id="userExit" resultType="java.lang.Integer" parameterType="java.util.Map">
-		SELECT COUNT(master) FROM chatList WHERE member = #{member} AND master =
-		#{master}
+		SELECT COUNT(master) FROM chatList WHERE member = #{member} AND master =#{master}
 	</select>
 
 	<select id="maxNum" resultType="java.lang.Integer">
@@ -54,8 +53,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE users SET power='MASTER' WHERE id=#{master}
 	</update>
 
-	<select id="getNotNowMeetingList" resultType="meeting.team.vo.MeetingVo">
-		SELECT * FROM meeting WHERE division = 'notnow'
+	<select id="getNotNowMeetingList" resultType="meeting.team.vo.MeetingVo" parameterType="meeting.team.vo.MeetingPageVo">
+		SELECT r2.* FROM
+		(
+		SELECT r1.*, TRUNC((rn -1) / 10 + 1) AS currPage FROM
+		(
+		SELECT ROWNUM rn, master, title, contents, division, area,num, field, start_time FROM
+		(
+		SELECT * FROM meeting ORDER BY start_time DESC
+		)
+		)r1
+		)r2 WHERE currPage =#{currPage} AND division='notnow'
+		<choose>
+			<when test="search != null">
+				AND #{search}=#{searchComm}
+			</when>
+		</choose>
 	</select>
 
 	<insert id="addReply" parameterType="meeting.team.vo.ReplyVo">
@@ -77,7 +90,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 
 	<select id="getRowCount" resultType="java.lang.Integer">
-		SELECT CEIL(COUNT(*)/2) FROM res_meeting WHERE ref=#{ref}
+		SELECT CEIL(COUNT(*)/10) FROM res_meeting WHERE ref=#{ref}
+	</select>
+	
+	<select id="getMeetingRowCount" resultType="java.lang.Integer">
+		SELECT CEIL(COUNT(*)/10) FROM meeting WHERE division='notnow'
 	</select>
 
 	<delete id="replyDelete" parameterType="HashMap">

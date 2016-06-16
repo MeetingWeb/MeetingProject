@@ -140,7 +140,7 @@ $(function() {
 	});
 
 	// ////////////review js////////////////////////
-	$(".img-box").on("click", function() {
+	$(document).on("click", ".img-box",function() {
 		console.log($(this).attr("data-num"));
 		location.href = "selectOne?num=" + $(this).attr("data-num");
 	});

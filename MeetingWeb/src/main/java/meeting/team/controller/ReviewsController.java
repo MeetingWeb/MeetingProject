@@ -32,9 +32,18 @@ public class ReviewsController {
 	}
 	
 	@RequestMapping("list")
-	public String list(Model model) {
-		model.addAttribute("list", reviews_svc.getList());
+	public String list(Model model, HttpServletRequest request) {
+		String sPage = request.getParameter("page");
+		int page = 1;
+		if(sPage != null)
+			page = Integer.parseInt(sPage);
+		model.addAttribute("list", reviews_svc.getList(page));
 		return "reviews/reviewsList";
+	}
+	
+	@RequestMapping(value = "moreList", method = RequestMethod.POST)
+	public @ResponseBody String moreList(@RequestParam int page) {
+		return reviews_svc.moreList(page);
 	}
 
 	@RequestMapping(value = "insert", method = RequestMethod.POST)

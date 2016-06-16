@@ -204,8 +204,8 @@
 					<input type="range" max="19" min="9" step="1" id="zoom-min" name="zoom-min" value="16" style="width: 200px;">
 					<label for="zoom-min" style="color: #fff;">ZOOM: 16</label>
 					<!-- <input type="number" value="16" id="zoom-num" max="19" min="9"> -->
-					<button id="rough-map-cancle-btn" type="button" class="btn btn-dange pull-right">Cancle</button>
-					<button id="rough-map-save-btn" type="button" onclick="roughMapSave()" class="btn btn-success pull-right">Save</button>
+					<button id="rough-map-cancle-btn" type="button" class="btn btn-default pull-right">Cancle</button>
+					<button id="rough-map-save-btn" type="button" onclick="roughMapSave()" class="btn btn-success pull-right" style="margin-right: 10px;">Save</button>
 				</div>
 				<img src="" id="rough-map-in-img">
 				<canvas id="map-canvas" width="640" height="640"></canvas>

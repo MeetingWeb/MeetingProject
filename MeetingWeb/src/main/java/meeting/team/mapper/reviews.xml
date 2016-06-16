@@ -8,9 +8,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		insert into reviews
 		values(REVIEWS_NUM_SEQ.NEXTVAL,#{id},#{title},SYSDATE,#{contents},#{ori_file_name},#{mod_file_name},#{ref})
 	</insert>
-	
+
 	<update id="modify" parameterType="meeting.team.vo.ReviewsVo">
-		update reviews set title=#{title},contents=#{contents},cre_date=sysdate,mod_file_name=#{mod_file_name},ori_file_name=#{ori_file_name} where num=#{num}
+		update reviews set
+		title=#{title},contents=#{contents},cre_date=sysdate,mod_file_name=#{mod_file_name},ori_file_name=#{ori_file_name} where num=#{num}
 	</update>
 
 	<select id="fileOverLapCnt" resultType="java.lang.Integer">
@@ -22,25 +23,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="selectOne" resultType="meeting.team.vo.ReviewsVo">
 		SELECT * FROM reviews WHERE num=#{num}
 	</select>
-	<select id="getList" resultType="meeting.team.vo.ReviewsVo">
-		SELECT * FROM reviews  where ref=0 ORDER BY cre_date DESC 
+	<select id="getList" resultType="meeting.team.vo.ReviewsVo" parameterType="HashMap">
+		SELECT r2.* FROM (SELECT TRUNC((rn-1) / #{showRow} + 1) AS page,r1.* FROM (SELECT ROWNUM rn, r.* FROM (SELECT * FROM
+		reviews WHERE ref=0 ORDER BY cre_date DESC )r )r1 )r2 WHERE page = #{page}
 	</select>
 	<delete id="delete">
 		DELETE FROM reviews WHERE num=#{num}
 	</delete>
-	
-	
+
+
 	<select id="getReplyList" parameterType="java.util.Map" resultType="meeting.team.vo.NoticeVO">
- 	select *
-	from 
-	(
-	select floor((rownum-1)/5)+1 page,num,title,contents,CRE_DATE,ID,REF
-	from reviews
-	where ref=#{num}
-	)	
-	where page=#{page}
+		select *
+		from
+		(
+		select floor((rownum-1)/5)+1
+		page,num,title,contents,CRE_DATE,ID,REF
+		from reviews
+		where ref=#{num}
+		)
+		where page=#{page}
 	</select>
-	
+
 	<select id="getReplyTotal" resultType="java.lang.Integer">
 		select count(num) from reviews where ref=#{num}
 	</select>
@@ -48,21 +51,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getAllReply" resultType="meeting.team.vo.NoticeVO">
 		select * from reviews where ref=#{num}
 	</select>
-	
+
 	<select id="getLatelyNum" resultType="java.lang.Integer">
 		select num from reviews where cre_date = (
 		select max(cre_date) from reviews )
 	</select>
-	
+
 	<update id="replyModify" parameterType="meeting.team.vo.NoticeVO">
 		update reviews set contents=#{contents} where num=#{num}
 	</update>
-	
+
 	<select id="latelyRead" resultType="meeting.team.vo.ReviewsVo">
-	select * from reviews where CRE_DATE = ( select max(cre_date) from reviews )
+		select * from reviews where CRE_DATE = ( select max(cre_date) from reviews )
 	</select>
-	
-	
-	
+
+	<select id="getMaxPage" resultType="java.lang.Integer">
+		SELECT CEIL(COUNT(*)/#{sHOWROW}) FROM reviews WHERE ref=0
+	</select>
+
 </mapper>
 

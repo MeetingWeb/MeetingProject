@@ -74,8 +74,8 @@
 					<label for="inputfile">File input</label>
 					<input type="file" id="inputfile" name="file">
 				</div>
-				<button type="button" class="btn" onclick="insert()">글쓰기</button>
-				<button type="button" class="btn" onclick="javascript:location.href='list'">취소</button>
+				<div class="write-btn pull-right" onclick="insert()">WRITE</div>
+				<div class="write-btn pull-right" onclick="javascript:location.href='list'">CANCLE</div>
 			</div>
 		</form>
 		<jsp:include page="../include/loginForm.jsp" />

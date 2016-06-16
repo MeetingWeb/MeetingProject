@@ -1,5 +1,6 @@
 package meeting.team.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public interface ReviewsDao {
 
 	ReviewsVo selectOne(int num);
 
-	List<ReviewsVo> getList();
+	List<ReviewsVo> getList(HashMap<String, Integer> map);
 
 	int delete(int num);
 	
@@ -27,4 +28,6 @@ public interface ReviewsDao {
 	public List<NoticeVO> getAllReply(int num);
 	public int getLatelyNum();
 	public int replyModify(NoticeVO board);
+
+	int getMaxPage(int sHOWROW);
 }

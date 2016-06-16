@@ -16,6 +16,7 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/reviews_style.css"/>'>
 <title>여기여기 붙어라</title>
 <script type="text/javascript">
 var user_id = '<c:out value="${sessionScope.id}"/>';
@@ -393,80 +394,79 @@ function prevReply(){
 	<jsp:include page="../include/navi.jsp" />
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
-		<table>
-			<caption>글 읽기</caption>
-			<tr>
-				<th>번호</th>
-				<td>${ data.num }</td>
-			</tr>
-			<tr>
-				<th>제목</th>
-				<td>${ data.title }</td>
-			</tr>
-			<tr>
-				<th>글쓴이</th>
-				<td>${ data.id }</td>
-			</tr>
-			<tr>
-				<th>날짜</th>
-				<td>${ data.cre_date }</td>
-			</tr>
-			<tr>
-				<th>내용</th>
-				<td>${ data.contents }</td>
-			</tr>
-			<tr>
-				<th>이미지</th>
-				<td><img src="../resources/images/${data.mod_file_name }"></td>
-			</tr>
-		</table>
-		<button type="button" onclick="javascript:location.href='list'">목록</button>
-		<button type="button" onclick="modify()">수정</button>
-		<button type="button" onclick="del(${data.num})">삭제</button>
-		<br>
-		<br>
-		<br>
-
-		<div class="replyForm">
-			<textarea class="reply" rows="10" cols="40"></textarea>
-			<br>
-			<button type="button" onclick="replyWrite()">글쓰기</button>
-			<br>
-			<br>
-		</div>
-		
-		
-		<table class="reply">
-			<c:forEach var="list" items="${ map.list }">
-				<tr>
-					<th>${ list.id }</th>
-					<td class="${ list.num }">${ list.contents }</td>
-
-					<c:choose>
-						<%-- <c:when test="${sessionScope.id eq 'scott'}"> --%>
-						<c:when test="${ 'scott' eq 'scott' }">
-							<td>
-								<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button>
-								<button type="button" onclick="replyDel(${ list.num })">삭제</button>
-							</td>
-						</c:when>
-					</c:choose>
-				</tr>
-			</c:forEach>
-		</table>
-		
-		<div class="replyMenu">
-			<c:if test="${ map.page.listTotal > 5 }">
-				<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a>
-				<br>
+		<div id="contents-in">
+			<h2>REVIEWS READ</h2>
+			<div id="contents-in-board">
+				<table class="table">
+					<tr>
+						<td style="width: 15%;">제목</td>
+						<td>${ data.title }<input type="hidden" name="num" value="${data.num }">
+						</td>
+					</tr>
+					<tr>
+						<td>작성자</td>
+						<td>${data.id }</td>
+					</tr>
+					<tr>
+						<td>작성일</td>
+						<td>${data.cre_date}</td>
+					</tr>
+					<tr>
+						<td colspan="2" style="text-align: left;">${data.contents}<br>
+							<br>
+							<br>
+							<br>
+							<br>
+							<c:if test="${data.mod_file_name != 'none' }">
+								<img src="../resources/images/${data.mod_file_name }">
+							</c:if>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="pull-left" id="reply-btn" onclick="javascript:location.href='/NowMeetingWeb/reviews/list'">LIST</div>
+			<c:if test="${data.id == sessionScope.id }">
+				<div class="pull-left" id="reply-btn" onclick="modify()">MODIFY</div>
+				<div class="pull-left" id="reply-btn" onclick="del(${data.num})">DELETE</div>
 			</c:if>
-			<a href="#none" onClick="allReply(); return false;">전체댓글보기</a>
 			<br>
-		</div>
-		
+			<br>
+			<br>
 
-		<jsp:include page="../include/loginForm.jsp" />
-		<jsp:include page="../include/joinForm.jsp" />
+			<div class="replyForm contents-in-reply">
+				<textarea class="reply form-control" rows="3"></textarea>
+				<div class="pull-right" id="reply-btn" onclick="replyWrite()">REPLY</div>
+			</div>
+
+
+			<table class="reply table">
+				<c:forEach var="list" items="${ map.list }">
+					<tr>
+						<th>${ list.id }</th>
+						<td class="${ list.num }">${ list.contents }</td>
+
+						<c:choose>
+							<%-- <c:when test="${sessionScope.id eq 'scott'}"> --%>
+							<c:when test="${ sessionScopte.id == list.id }">
+								<td>
+									<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button>
+									<button type="button" onclick="replyDel(${ list.num })">삭제</button>
+								</td>
+							</c:when>
+						</c:choose>
+					</tr>
+				</c:forEach>
+			</table>
+
+			<div class="replyMenu">
+				<c:if test="${ map.page.listTotal > 5 }">
+					<a href="#none" onClick="nextReply(); return false;">다음댓글보기</a>
+					<br>
+				</c:if>
+				<a href="#none" onClick="allReply(); return false;">전체댓글보기</a>
+				<br>
+			</div>
+		</div>
 	</section>
 	<jsp:include page="../include/footer.jsp" />
 </body>

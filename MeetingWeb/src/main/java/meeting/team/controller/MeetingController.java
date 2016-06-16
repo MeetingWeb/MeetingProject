@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import meeting.team.service.MeetingService;
+import meeting.team.vo.MeetingPageVo;
 import meeting.team.vo.MeetingVo;
 import meeting.team.vo.ReplyVo;
 
@@ -60,8 +61,8 @@ public class MeetingController {
 	}
 	
 	@RequestMapping(value = "notNowList", method = RequestMethod.GET)
-	public String getList(Model model) throws Exception {
-		model.addAttribute("list", meeting_svc.getNotNowMeetingList());
+	public String getList(Model model, MeetingPageVo page ) throws Exception {
+		model.addAttribute("map", meeting_svc.getNotNowMeetingList(page));
 		return "MeetingList";
 	}
 	

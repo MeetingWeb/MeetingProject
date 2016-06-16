@@ -56,6 +56,7 @@
 						</td>
 					</tr>
 				</table>
+				<div class="pull-left" id="reply-btn" onclick="javascript:location.href='/NowMeetingWeb/meeting/notNowList'">LIST</div>
 				<c:if test="${map.data.master == sessionScope.id }">
 					<div class="pull-left" id="reply-btn" onclick="javascript:location.href='modifyForm?num=${map.data.num}'">MODIFY</div>
 					<div class="pull-left" id="reply-btn">DELETE</div>
