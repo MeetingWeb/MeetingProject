@@ -107,7 +107,7 @@
 }
 
 #meeting-location {
-	width: 200px;
+	width: 100%;
 }
 
 #meeting-title {
@@ -205,9 +205,10 @@
 }
 
 #rough-map-img {
-	width: 200px;
-	height: 200px;
+	width: 150px;
+	height: 150px;
 	visibility: hidden;
+	margin: 0px auto;
 }
 
 /* 由ъ뒪�듃 */
@@ -234,6 +235,10 @@
 
 #not-now-list table td:nth-child(3) {
 	text-align: left;
+}
+
+#not-now-list-btn:last-child {
+	border-bottom: 3px solid #000;
 }
 
 /* �씫湲� */

@@ -11,6 +11,7 @@
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
 <script type="text/javascript" src='<c:url value="/resources/js/map.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/join.js"/>'></script>
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
 	crossorigin="anonymous">
@@ -27,14 +28,7 @@
 	
 	$(function() {
 
-		window.name = "my";
-		$("#pwc").keyup(function() {
-			if ($('input#pw').val() == $('input#pwc').val()) {
-				$('#pw_checktext').text("맞다.");
-			} else if ($('input#pw').val() != $('input#pwc').val()) {
-				$('#pw_checktext').text("아니야.");
-			}
-		});
+
 		$("#show_Infomation").css("height", $(window).height() - 64);
 
 		if ("${sessionScope.id}" != "") {		
@@ -52,88 +46,11 @@
 		$("input[name='pw']").prop('disabled', false);
 		$("input[name='pwc']").prop('disabled', false);
 		$("input[name='name']").prop('disabled', false);
-		$("input[name='interests']").prop('disabled', false);
+		$("input[name='interest']").prop('disabled', false);
 		$("input[name='email']").val(email);
 		$('form#joinform').css("display", "block")
 		</c:if>
-
-		$('#id').keyup(function() {
-			var id = $('#id').val();
-			$.ajax({
-				type : 'post',
-				dataType : 'json',
-				url : 'check',
-				data : {
-					id : id
-				},
-				success : function(evt) {
-					if (evt.idErr) {
-						$('#id_checktext').text(evt.idErr);
-					}
-				},
-				complete : function(data) {
-
-				},
-				error : function(xhr, status, error) {
-					alert(error);
-				}
-			});
-
-		});
-
-		$('input#pw').keyup(function() {
-			var pw = $('input#pw').val();
-			var pwc = $('#pwc').val();
-			$.ajax({
-				type : 'post',
-				dataType : 'json',
-				url : 'check',
-				data : {
-					pw : pw,
-					pwc : pwc
-				},
-				success : function(evt) {
-					if (evt.pwdErr) {
-						$('#pwc_checktext').text(evt.pwdErr);
-						$('#pw_checktext').text(evt.pwdErr2);
-					}
-				},
-				complete : function(data) {
-
-				},
-				error : function(xhr, status, error) {
-					alert(error);
-				}
-			});
-		});
-
-		$('#pwc').keyup(function() {
-			var pw = $('input#pw').val();
-			var pwc = $('#pwc').val();
-			$.ajax({
-				type : 'post',
-				dataType : 'json',
-				url : 'check',
-				data : {
-					pw : pw,
-					pwc : pwc
-				},
-				success : function(evt) {
-					if (evt.pwdErr2) {
-						$('#pw_checktext').text(evt.pwdErr2);
-					}
-				},
-				complete : function(data) {
-
-				},
-				error : function(xhr, status, error) {
-					alert(error);
-				}
-			});
-
-		});
-		
-		
+	
 	});
 	
 	function getRecommend() {
@@ -173,32 +90,6 @@
 				alert(error);
 			}
 		});
-	}
-
-	
-
-	function email_check() {
-		var email = $('#email').val();
-		$.ajax({
-			type : 'get',
-			dataType : 'json',
-			url : 'eamil_check',
-			data : {
-				email : email
-			},
-			success : function(evt) {
-				if (evt.ok == true) {
-					alert("확인되었ㅅ브니다.")
-				}
-			},
-			complete : function(data) {
-
-			},
-			error : function(xhr, status, error) {
-				alert(error);
-			}
-		});
-
 	}
 
 	var id_checks = null;
@@ -389,8 +280,10 @@
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
    <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
  <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">검색</button>  
-</ul>
-</div>	
+</ul>		
+</div> 
+
+
 			
 	
 

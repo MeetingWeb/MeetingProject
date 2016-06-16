@@ -34,10 +34,10 @@ $(function() {
 		
 		if(master == json.master) {
 			if(json.sender == user_id) {
-				$(".chat-lid-in-console").append('<span class="user-msg pull-right">' + json.msg + '</span><br>');
+				$(".chat-lid-in-console").append('<span class="user-msg mine">'+ json.sender+" -> " + json.msg + '</span><br>');
 				
 			} else {
-				$(".chat-lid-in-console").append('<span class=user-msg>' + json.msg + '</span><br>');
+				$(".chat-lid-in-console").append('<span class=user-msg>'+ json.sender+" -> " + json.msg + '</span><br>');
 			}
 		}
 		

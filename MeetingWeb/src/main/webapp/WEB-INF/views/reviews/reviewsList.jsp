@@ -27,7 +27,9 @@
 	<jsp:include page="../include/navi.jsp" />
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents" style="overflow: visible">
-		<a href="#" onclick="javascript:location.href='writeForm'">글쓰기</a>
+		<div id="reviews-write">
+			<a href="#" onclick="javascript:location.href='writeForm'" class="glyphicon glyphicon-pencil">글쓰기</a>
+		</div>
 		<div class="container-fluid">
 			<div id="list-box" class="row">
 				<c:forEach var="list" items="${list }">
@@ -35,18 +37,23 @@
 						<div class="img" style="background:url(../resources/images/${list.mod_file_name }); background-size: cover; background-position: center;"></div>
 						<div class="title">${list.title }</div>
 					</div> --%>
-				 <div class="col-sm-6 col-md-4">
-				    <div class="thumbnail img-box" data-num="${list.num }">
-				      <img src="../resources/images/${list.mod_file_name }" alt="..." class="">
-				      <div class="caption">
-				        <h3>${list.title }</h3>
-				        <p>${list.contents}</p>
-				        <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-				      </div>
-				    </div>
-				  </div>
+					<div class="col-sm-4 col-md-3">
+						<div class="thumbnail img-box" data-num="${list.num }">
+							<%-- <img src="../resources/images/${list.mod_file_name }" alt="..." class="img-responsive reviews-img"> --%>
+							<div class="reviews-img" style="background:url(../resources/images/${list.mod_file_name }); background-size: cover; background-position: center;"></div>
+							<div class="caption">
+								<h3>${list.title }</h3>
+								<p>
+									<a href="#" class="btn btn-primary" role="button">VIEW DETAIL</a>
+								</p>
+							</div>
+						</div>
+					</div>
 				</c:forEach>
 				<div class="clear_f"></div>
+				<div id="more-btn-box">
+					<div>더보기</div>
+				</div>
 			</div>
 		</div>
 		<jsp:include page="../include/loginForm.jsp" />

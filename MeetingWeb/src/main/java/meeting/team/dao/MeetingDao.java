@@ -29,4 +29,7 @@ public interface MeetingDao {
 	int replyDelete(HashMap<String, Object> pageMap);
 	int replyModify(HashMap<String, Object> pageMap);
 	int complete(int num);
+	String getMyLocation(String id);
+	int chatDelete(String master);
+	int updateMeeting(MeetingVo meeting);
 }

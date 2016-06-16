@@ -431,9 +431,17 @@ public class MeetingService {
 		return regionAddress;
 	}
 
-	public MeetingVo modifyForm(int num) {
+	public MeetingVo modifyForm(int num) throws Exception {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		return meeting_dao.selectOne(num);
+		MeetingVo meeting = meeting_dao.selectOne(num);
+		String area = meeting.getArea();
+		String[] addr = area.split(",");
+		this.latitude = Double.parseDouble(addr[0]);
+		this.longitude = Double.parseDouble(addr[1]);
+		this.regionAddress = getRegionAddress(getJSONData(getApiAddress()));
+		meeting.setArea(this.regionAddress + "/" + area);
+		
+		return meeting;
 	}
 
 	public String complete(int num){
@@ -449,4 +457,53 @@ public class MeetingService {
 	}
 	
 
+	public String getMyLocation(HttpSession session) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		return meeting_dao.getMyLocation((String) session.getAttribute("id"));
+	}
+
+
+	@SuppressWarnings("unchecked")
+	public String modify(MeetingVo meeting, HttpServletRequest request) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		JSONObject json = new JSONObject();
+
+		String master = (String) request.getSession().getAttribute("id");
+		String sTime = request.getParameter("s_time");
+		String eTime = request.getParameter("e_time");
+		String meetingDay = request.getParameter("meetingDay");
+		sTime = sTime.replaceAll("-", "0");
+		eTime = eTime.replaceAll("-", "0");
+		String sDate = meetingDay + " " + sTime + ":00";
+		String eDate = meetingDay + " " + eTime + ":00";
+
+		java.sql.Timestamp s_stamp = java.sql.Timestamp.valueOf(sDate);
+		java.sql.Timestamp e_stamp = java.sql.Timestamp.valueOf(eDate);
+
+		meeting.setStart_time(s_stamp);
+		meeting.setEnd_time(e_stamp);
+		meeting.setMaster(master);
+		meeting.setMap_name(roughMapSave(request));
+		//meeting.setDivision("now");
+
+		Map<String, String> chatMap = new HashMap<String, String>();
+		chatMap.put("master", master);
+		chatMap.put("member", master);
+		int chatOk = 0;
+		if (meeting.getDivision().equals("now")) {
+			chatOk = meeting_dao.chatInsert(chatMap);
+			meeting_dao.updateUser(master);
+		} else {
+			chatOk = meeting_dao.chatDelete(master);
+		}
+		
+		int ok = meeting_dao.updateMeeting(meeting);
+		
+		if (ok > 0) {
+			json.put("ok", true);
+		} else {
+			json.put("ok", false);
+		}
+		return json.toJSONString();
+	}
 }
