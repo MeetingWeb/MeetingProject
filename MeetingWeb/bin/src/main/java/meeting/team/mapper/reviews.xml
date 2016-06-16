@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meeting.team.dao.ReviewsDao"> <!--이 sql 문장과 매핑될 인터페이스의 완전한 경로 -->
+
+	<insert id="insert" parameterType="meeting.team.vo.ReviewsVo">
+		insert into reviews
+		values(REVIEWS_NUM_SEQ.NEXTVAL,#{id},#{title},SYSDATE,#{contents},#{ori_file_name},#{mod_file_name},#{ref})
+	</insert>
+	
+	<update id="modify" parameterType="meeting.team.vo.ReviewsVo">
+		update reviews set title=#{title},contents=#{contents},cre_date=sysdate,mod_file_name=#{mod_file_name},ori_file_name=#{ori_file_name} where num=#{num}
+	</update>
+
+	<select id="fileOverLapCnt" resultType="java.lang.Integer">
+		SELECT COUNT(ori_file_name) AS cnt FROM reviews WHERE ori_file_name=#{file_name}
+	</select>
+	<select id="currNum" resultType="java.lang.Integer">
+		SELECT MAX(num) FROM reviews WHERE id = #{id}
+	</select>
+	<select id="selectOne" resultType="meeting.team.vo.ReviewsVo">
+		SELECT * FROM reviews WHERE num=#{num}
+	</select>
+	<select id="getList" resultType="meeting.team.vo.ReviewsVo">
+		SELECT * FROM reviews  where ref=0 ORDER BY cre_date DESC 
+	</select>
+	<delete id="delete">
+		DELETE FROM reviews WHERE num=#{num}
+	</delete>
+	
+	
+	<select id="getReplyList" parameterType="java.util.Map" resultType="meeting.team.vo.NoticeVO">
+ 	select *
+	from 
+	(
+	select floor((rownum-1)/5)+1 page,num,title,contents,CRE_DATE,ID,REF
+	from reviews
+	where ref=#{num}
+	)	
+	where page=#{page}
+	</select>
+	
+	<select id="getReplyTotal" resultType="java.lang.Integer">
+		select count(num) from reviews where ref=#{num}
+	</select>
+
+	<select id="getAllReply" resultType="meeting.team.vo.NoticeVO">
+		select * from reviews where ref=#{num}
+	</select>
+	
+	<select id="getLatelyNum" resultType="java.lang.Integer">
+		select num from reviews where cre_date = (
+		select max(cre_date) from reviews )
+	</select>
+	
+	<update id="replyModify" parameterType="meeting.team.vo.NoticeVO">
+		update reviews set contents=#{contents} where num=#{num}
+	</update>
+	
+	<select id="latelyRead" resultType="meeting.team.vo.ReviewsVo">
+	select * from reviews where CRE_DATE = ( select max(cre_date) from reviews )
+	</select>
+	
+	
+	
+</mapper>
+

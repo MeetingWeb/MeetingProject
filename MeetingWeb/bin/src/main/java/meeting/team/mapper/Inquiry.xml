@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meeting.team.dao.InquiryDao"> 
+	<insert id="iwrite" parameterType="meeting.team.vo.InquiryVo">
+		insert into inquiry(id, num, title, cre_date, contents, img_name,ref) 
+		values(#{id}, INQUIRY_NUM_SEQ.NEXTVAL, #{title}, sysdate, #{contents}, #{img_name}, #{ref})
+	</insert>
+	
+	<select id="iread" resultType="meeting.team.vo.InquiryVo" >
+		select * from inquiry where num=#{num}
+	</select>
+	
+	<select id="lread" resultType="meeting.team.vo.InquiryVo">
+		select * from inquiry where CRE_DATE = ( select max(cre_date) from inquiry )
+	</select>
+	
+	<delete id="idelete">
+		delete from inquiry where num=#{num}
+	</delete>
+	
+	<update id="iupdate" parameterType="meeting.team.vo.InquiryVo">
+		update inquiry set title=#{title},contents=#{contents},cre_date=sysdate where num=#{num}
+	</update>
+	
+	<update id="repleiupdate" parameterType="meeting.team.vo.InquiryVo">
+		update inquiry set contents=#{contents},cre_date=sysdate where num=#{num}
+	</update>
+	
+	<select id="ilist" resultType="meeting.team.vo.InquiryVo">
+        SELECT * FROM(
+        SELECT TRUNC((rn-1)/10+1) AS page, t2.* FROM( 
+		SELECT ROWNUM rn, t1.* FROM( 
+		select num, title,id,cre_date
+		FROM inquiry where ref=0
+		START WITH ref=0 CONNECT BY PRIOR num=ref
+		ORDER SIBLINGS BY cre_date DESC,num DESC
+		)t1 
+		)t2 
+		) 
+		WHERE page=#{page}
+ 	</select>
+ 	
+ 	<select id="pageTotals"  resultType="java.lang.Integer">
+        select count(num) from (select id,ref,num from(select id,ref,num from inquiry where ref=0))where id=#{id}
+ 	</select>
+ 
+ 	<select id="serchlist" resultType="meeting.team.vo.InquiryVo" parameterType="meeting.team.vo.InquiryVo">
+        SELECT * FROM( 
+		SELECT TRUNC((rn-1)/10+1) AS page, t2.* FROM(
+		SELECT ROWNUM rn, t1.* FROM(
+		select num,title AS title,id,cre_date,contents
+		FROM inquiry where ref=0
+		START WITH ref=0 CONNECT BY PRIOR num=ref
+		ORDER SIBLINGS BY cre_date DESC,num DESC
+		)t1 where ${select} like '%${serch}%'
+		)t2 
+		)
+		WHERE page=#{page}
+ 	</select>
+ 
+ 
+  <select id="serchlisttotal" resultType="java.lang.Integer" parameterType="meeting.team.vo.InquiryVo">
+        SELECT count(*) FROM(
+		SELECT TRUNC((rn-1)/10+1) AS page, t2.* FROM(
+		SELECT ROWNUM rn, t1.* FROM(
+		select num, title,id,cre_date,contents
+		FROM inquiry where ref=0
+		START WITH ref=0 CONNECT BY PRIOR num=ref
+		ORDER SIBLINGS BY cre_date DESC,num DESC
+		)t1 where ${select} like '%${serch}%'
+		)t2 
+		)
+		WHERE page=page
+ 	</select>
+ 
+ 	<select id="repleilist" parameterType="java.util.Map" resultType="meeting.team.vo.InquiryVo">
+        SELECT * FROM(
+        SELECT TRUNC((rn-1)/10+1) AS page, t2.* FROM( 
+		SELECT ROWNUM rn, t1.* FROM( 
+		select num, title,id,cre_date,contents
+		FROM inquiry where ref=#{num}
+		START WITH ref=0 CONNECT BY PRIOR num=ref
+		ORDER SIBLINGS BY cre_date DESC,num DESC
+		)t1 
+		)t2 
+		) 
+		WHERE page=#{page}
+ 	</select>
+ 	
+ 	<select id="replepageTotals"  resultType="java.lang.Integer">
+        select count(num) from inquiry where ref=#{num}
+ 	</select>
+ 
+ 
+	
+	
+</mapper>

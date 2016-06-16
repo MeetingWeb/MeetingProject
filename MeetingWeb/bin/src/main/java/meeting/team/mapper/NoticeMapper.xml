@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meeting.team.dao.NoticeDAO"> <!--이 sql 문장과 매핑될 인터페이스의 완전한 경로-->
+
+<insert id="insert" parameterType="meeting.team.vo.NoticeVO"  >
+	insert into notice (num,id,title,cre_date,hit,contents,ref) 
+		values(NOTICE_NUM_SEQ.NEXTVAL,#{id},#{title},SYSDATE,0,#{contents},#{ref})
+</insert>
+
+<select id="latelyRead" resultType="meeting.team.vo.NoticeVO">
+	select * from notice where CRE_DATE = ( select max(cre_date) from notice )
+</select>
+
+<select id="read" resultType="meeting.team.vo.NoticeVO" >
+	select * from notice where num=#{num}
+</select>
+
+<update id="modify" parameterType="meeting.team.vo.NoticeVO">
+	update notice set title=#{title},contents=#{contents},cre_date=sysdate where num=#{num}
+</update>
+
+<update id="replyModify" parameterType="meeting.team.vo.NoticeVO">
+	update notice set contents=#{contents} where num=#{num}
+</update>
+
+<delete id="delete">
+	delete from notice where num=#{num}
+</delete>
+
+<select id="getList" resultType="meeting.team.vo.NoticeVO">
+	select * from (select floor((rownum-1)/5)+1 page,num,title,contents,CRE_DATE,HIT,ID,REF from notice where ref=0) where page=#{num} 
+</select>
+
+<select id="getSearchList" resultType="meeting.team.vo.NoticeVO">
+	select * from (	
+	select floor ( ( rownum-1 ) / 5 ) + 1  page,num,title,contents,CRE_DATE,HIT,ID,REF
+	from (
+		select *
+		from notice
+		where title like '%${key}%' and ref=0
+		)
+	) where page = #{page} 
+</select>
+
+
+<update id="hitUp">
+	update notice set hit=#{hit} where num=#{num}
+</update>
+
+<select id="getTotal" resultType="java.lang.Integer">
+	select count(num) from notice where ref=0
+</select>
+
+<select id="getSearchTotal"  parameterType="meeting.team.vo.SearchVO" resultType="java.lang.Integer">
+	select count(num) from notice where contents like '%${key}%' and ref=0
+</select>
+
+<select id="getReplyList" parameterType="java.util.Map" resultType="meeting.team.vo.NoticeVO">
+ 	select *
+	from 
+	(
+	select floor((rownum-1)/5)+1 page,num,title,contents,CRE_DATE,HIT,ID,REF
+	from notice
+	where ref=#{num}
+	)	
+	where page=#{page}
+</select>
+
+
+
+
+<select id="getReplyTotal" resultType="java.lang.Integer">
+	select count(num) from notice where ref=#{num}
+</select>
+
+<select id="getAllReply" resultType="meeting.team.vo.NoticeVO">
+	select * from notice where ref=#{num}
+</select>
+
+<select id="getLatelyNum" resultType="java.lang.Integer">
+	select num from notice where cre_date = (
+	select max(cre_date) from notice )
+</select>
+
+</mapper>
+
