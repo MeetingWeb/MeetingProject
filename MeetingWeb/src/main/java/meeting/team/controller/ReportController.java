@@ -23,6 +23,8 @@ import meeting.team.service.ReportService;
 import meeting.team.vo.BoardResVo;
 import meeting.team.vo.BoardVo;
 
+
+
 @RequestMapping("/")
 @Controller
 public class ReportController {
