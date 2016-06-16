@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="meeting.team.dao.UserSearchDao">
+    
+    <!-- ID 찾기 -->
+    <select id="searchID" resultType="java.util.Map">
+        SELECT ID, NAME, EMAIL FROM USERS 
+        WHERE NAME = #{name} AND EMAIL = #{email}
+    </select>
+    
+    <!-- PW 찾기 -->
+    <select id="searchPW" resultType="java.util.Map">
+        SELECT ID, EMAIL FROM USERS 
+        WHERE ID = #{id} AND EMAIL = #{email}
+    </select>
+    
+    <!-- 변경된 PW 저장 -->
+    <update id="updatePassword" parameterType="meeting.team.vo.UserVo">
+        UPDATE USERS SET 
+        	PW = #{pw}
+        WHERE ID = #{id}
+    </update>
+    
+</mapper>
