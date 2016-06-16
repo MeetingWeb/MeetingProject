@@ -91,4 +91,9 @@ public class MeetingController {
 		model.addAttribute("location", meeting_svc.getMyLocation(session));
 		return "modifyMeetingForm";
 	}
+	
+	@RequestMapping("modify")
+	public @ResponseBody String modify(MeetingVo meeting, HttpServletRequest request) {
+		return meeting_svc.modify(meeting, request);
+	}
 }

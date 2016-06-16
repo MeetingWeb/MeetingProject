@@ -119,6 +119,7 @@ function getAddress(latlng) {
 				ADR = address;
 				LOC = latlng;
 				console.log(LOC);
+				console.log(ADR);
 			}
 		} else if (status == google.maps.GeocoderStatus.ERROR) {
 			alert("통신중 에러발생！");
@@ -219,7 +220,7 @@ function adrSave() {
 			$("input[name=area]").val(LOC.toString().replace(/[()]/gi, ''));
 		}
 		else {
-			$("input[name=area]").val(LOC.lat +"," + LOC.lng);
+			$("input[name=area]").val(LOC.lat() +"," + LOC.lng());
 		}
 		$("#view-map").css("visibility", "hidden");
 	}
@@ -229,7 +230,7 @@ function setMyLocation() {
 	if (confirm("내 위치로 지정 하시겠습니까?")) {
 		var lat = LOC.lat();
 		var lng = LOC.lng();
-		var latlng = lat + ',' + lng;
+		var latlng = "("+lat + ',' + lng+")";
 		location.href = "changeMyLOC?latlng=" + latlng;
 
 	}

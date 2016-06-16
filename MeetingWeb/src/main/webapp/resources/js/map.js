@@ -158,7 +158,8 @@ function attachMeetingInfo(marker,meeting){
 	//simpleInfoWindow.open(marker.get('map'), marker);		
 	
 	marker.addListener('click', function() {
-		simpleInfoWindow.open(marker.get('map'), marker);		
+		simpleInfoWindow.open(marker.get('map'), marker);
+		console.log(marker.position.lat());
 	 });
 }
 
@@ -179,6 +180,7 @@ function drawMeetings(){
 				var latlng = new google.maps.LatLng(lat,lng);
 				makeMarker(latlng,data[i]);
 			}
+			//markers.click();
 			setMapOnAll(map); 
 		},
 		complete : function(data) {

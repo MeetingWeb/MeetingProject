@@ -218,7 +218,7 @@
 </body>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
-	var myLoc = "${data}";
+	var myLoc = "${data}".replace(/[()]/gi, '');
 	var lat = myLoc.split(",")[0];
 	var lng = myLoc.split(",")[1];
 	console.log(lat);

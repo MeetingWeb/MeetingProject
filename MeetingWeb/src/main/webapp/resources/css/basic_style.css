@@ -210,6 +210,10 @@ footer {
 	box-sizing: initial;
 }
 
+.chat-lid-in .mine {
+	color: #129994;
+}
+
 .chat-lid-in-title {
 	background: #33B573;
 	height: 30px;

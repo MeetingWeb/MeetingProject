@@ -43,10 +43,13 @@
 		var startTime = startArr[1].substring(0, 5);
 		var endTime = endArr[1].substring(0, 5);
 		var date = startArr[0];
+		var areaArr = "${data.area}".split("/");
 		
 		$("input[name=s_time]").val(startTime);
 		$("input[name=e_time]").val(endTime);
 		$("input[name=meetingDay]").val(date);
+		$("input[name=area]").val(areaArr[1]);
+		$("input[name=locaion]").val(areaArr[0]);
 	});
 	
 	function modify() {
@@ -122,7 +125,7 @@
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Division</label>
-							<div class="col-sm-3">
+							<div class="col-sm-4">
 								<select class="form-control" name="field" >
 									<option>농구</option>
 									<option>야구</option>
@@ -142,11 +145,11 @@
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Location</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="locaion" value="${data.area }">
+							<div class="col-sm-4">
+								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="locaion">
 								<input type="hidden" name="area">
 							</div>
-							<div class="col-sm-2" style="width: 300px;">
+							<div class="col-sm-3" style="width: 300px;">
 								<button type="button" class="btn btn-default" id="set-location">Set Location</button>
 								<button type="button" class="btn btn-default" id="set-location" onclick="roughMap(16)">Create Map</button>
 							</div>
@@ -187,10 +190,11 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 			<form action="#" onsubmit="searchMap(document.getElementById('address').value); return(false);">
-				주소/건물：
-				<input id="address" style="width: 400px;" type="text" value="">
-				<input type="submit" value="검색">
-				<button type="button" class="btn btn-success" onclick="adrSave()">저장</button>
+				<span class="pull-left">주소/건물：</span>
+				<input id="address" style="width: 400px; margin-right: 50px;" type="text" value="" class="form-control pull-left">
+				<input type="submit" value="검색" class="btn btn-success">
+				<button type="button" class="btn btn-info" onclick="adrSave()">저장</button>
+				<button type="button" class="btn btn-primary" onclick="myLocation()">내 위치</button>
 			</form>
 			<div id="location-map" style="height: 100%; width: 100%;"></div>
 		</div>
@@ -214,7 +218,7 @@
 </body>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
-	var myLoc = "${location}";
+	var myLoc = "${location}".replace(/[()]/gi, '');
 	var lat = myLoc.split(",")[0];
 	var lng = myLoc.split(",")[1];
 </script>
