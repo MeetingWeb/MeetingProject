@@ -27,6 +27,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.code.geocoder.Geocoder;
+import com.google.gson.JsonObject;
 
 import meeting.team.controller.MeetingController;
 import meeting.team.dao.MeetingDao;
@@ -89,6 +90,7 @@ public class MeetingService {
 		jsonObj.put("master", meeting.getMaster());
 		jsonObj.put("type", meeting.getField());
 		jsonObj.put("startTime", meeting.getStart_time().toString());
+		jsonObj.put("mapname", meeting.getMap_name());
 		jsonObj.put("title", meeting.getTitle());
 
 		return jsonObj.toJSONString();
@@ -434,6 +436,17 @@ public class MeetingService {
 		return meeting_dao.selectOne(num);
 	}
 
+	public String complete(int num){
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		int res=meeting_dao.complete(num);
+		JSONObject jsonObj=new JSONObject();
+		if(res==1){
+			jsonObj.put("ok", true);
+		}
+		else jsonObj.put("ok", false);
+		return jsonObj.toJSONString();
+		
+	}
 	
 
 }
