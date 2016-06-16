@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 *.MF
 pom.properties
 
@@ -10,4 +11,6 @@ hs_err_pid*
 =======
 
 >>>>>>> branch 'POWER' of https://github.com/MeetingWeb/MeetingProject.git
+=======
+>>>>>>> refs/heads/JUN
 /bin/
