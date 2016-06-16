@@ -1,5 +1,9 @@
 package meeting.team.service;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -34,6 +39,7 @@ import meeting.team.dao.MeetingDao;
 import meeting.team.dao.UserDao;
 import meeting.team.validator.JoinValidator;
 import meeting.team.vo.EmailVo;
+import meeting.team.vo.MeetingVo;
 import meeting.team.vo.UserVo;
 
 @Service("userservice")
@@ -49,6 +55,10 @@ public class UserService implements UserDetailsService {
 
 	@Autowired
 	private MessageSource messageSource;
+
+	double latitude;
+	double longitude;
+	String regionAddress;
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
@@ -335,7 +345,7 @@ return json.toJSONString();
 			{
 			
 			map.put("id", id);
-			map.put("interests", arr[i]);
+			map.put("interest", arr[i]);
 			user_dao.interestschange(map);
 			
 			}
@@ -350,6 +360,46 @@ return json.toJSONString();
 		return jsonObj.toJSONString();
 		
 	
+	}
+
+	public List<MeetingVo> create_join(String id) throws Exception {
+		UserDao user_dao = sqlSessionTemplate.getMapper(UserDao.class);
+		List<MeetingVo> list = user_dao.create_join(id);
+		for (int i = 0; i < list.size(); i++) {
+			MeetingVo meeting = list.get(i);
+			String[] addr = meeting.getArea().split(",");
+			this.latitude = Double.parseDouble(addr[0]);
+			this.longitude = Double.parseDouble(addr[1]);
+			this.regionAddress = getRegionAddress(getJSONData(getApiAddress()));
+			meeting.setArea(this.regionAddress);
+		}
+		return list;
+		
+	}
+	
+	private String getApiAddress() {
+		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude
+				+ "&language=ko";
+		return apiURL;
+	}
+	
+	private String getJSONData(String apiURL) throws Exception {
+		String jsonString = new String();
+		String buf;
+		URL url = new URL(apiURL);
+		URLConnection conn = url.openConnection();
+		BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+		while ((buf = br.readLine()) != null) {
+			jsonString += buf;
+		}
+		return jsonString;
+	}
+	
+	private String getRegionAddress(String jsonString) {
+		JSONObject jObj = (JSONObject) JSONValue.parse(jsonString);
+		JSONArray jArray = (JSONArray) jObj.get("results");
+		jObj = (JSONObject) jArray.get(0);
+		return (String) jObj.get("formatted_address");
 	}
 
 }

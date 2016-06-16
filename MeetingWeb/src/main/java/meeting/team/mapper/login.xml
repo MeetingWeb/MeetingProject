@@ -63,4 +63,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="java.lang.String">
 		delete from interests where id=#{id}
 	</delete>
+	
+		<select id="create_join" resultType="meeting.team.vo.MeetingVo" parameterType="java.lang.String">
+		select * from MEETING where master=#{id}
+	</select>
 </mapper>
