@@ -18,16 +18,14 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor {
 	@Override
 	public boolean beforeHandshake(ServerHttpRequest request, ServerHttpResponse response, WebSocketHandler wsHandler, Map<String, Object> attributes) throws Exception {
 		ServletServerHttpRequest ssreq = (ServletServerHttpRequest) request;
-
 		HttpServletRequest req = ssreq.getServletRequest();
 		
 		Object id = req.getSession().getAttribute("id");
 		
-		user_list.add((String) id);
 		req.getServletContext().setAttribute("user_list", user_list);
 		
 		if (req.getSession().getAttribute("id") != null) {
-			
+			user_list.add((String) id);
 			attributes.put("userId", id);
 			attributes.put("user_list", user_list);
 			return true;

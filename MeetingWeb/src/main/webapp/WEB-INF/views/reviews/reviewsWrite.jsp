@@ -17,12 +17,8 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/reviews_style.css"/>'>
 <title>여기여기 붙어라</title>
-<style type="text/css">
-input.title {
-	width: 720px;
-}
-</style>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
 
@@ -32,14 +28,14 @@ input.title {
 			url : "insert",
 			type : "post",
 			data : form,
-			processData: false,
-            contentType: false,
+			processData : false,
+			contentType : false,
 			dataType : "text",
 			success : function(obj) {
 				var json = JSON.parse(obj);
-				if(json.ok) {
+				if (json.ok) {
 					alert("글쓰기 성공");
-					location.href="selectOne?num=0";
+					location.href = "selectOne?num=0";
 				} else {
 					alert("글쓰기 실패");
 				}
@@ -58,31 +54,32 @@ input.title {
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
 		<form enctype="multipart/form-data" name="insert-form" id="insertForm">
-			<table>
-				<caption>글 쓰기</caption>
-				<tr>
-					<th>제목</th>
-					<td>
-						<input type="text" name="title" class="title">
-					</td>
-				</tr>
-				<tr>
-					<th>내용</th>
-					<td>
-						<textarea rows="40" cols="100" name="contents"></textarea>
-					</td>
-				</tr>
-			</table>
-			<div class="form-group">
-				<label for="inputfile">File input</label>
-				<input type="file" id="inputfile" name="file">
+			<div class="reviews-write-table">
+				<h2>REVIEWS WRITE</h2>
+				<table class="table">
+					<tr>
+						<th style="border-top: 3px solid #000;" class="title">제목</th>
+						<td style="border-top: 3px solid #000;">
+							<input type="text" name="title" class="title form-control">
+						</td>
+					</tr>
+					<tr style="border-bottom: 3px solid #000;">
+						<th class="contents">내용</th>
+						<td>
+							<textarea rows="15" name="contents" class="form-control" style="overflow-y: auto;"></textarea>
+						</td>
+					</tr>
+				</table>
+				<div class="form-group">
+					<label for="inputfile">File input</label>
+					<input type="file" id="inputfile" name="file">
+				</div>
+				<button type="button" class="btn" onclick="insert()">글쓰기</button>
+				<button type="button" class="btn" onclick="javascript:location.href='list'">취소</button>
 			</div>
-			<button type="button" onclick="insert()">글쓰기</button>
-			<button type="button" onclick="javascript:location.href='list'">취소</button>
 		</form>
 		<jsp:include page="../include/loginForm.jsp" />
 		<jsp:include page="../include/joinForm.jsp" />
-		<jsp:include page="../include/chat_view.jsp" />
 	</section>
 	<jsp:include page="../include/footer.jsp" />
 </body>

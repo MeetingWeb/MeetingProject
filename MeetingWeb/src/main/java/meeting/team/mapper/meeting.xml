@@ -6,20 +6,110 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getMeetingList" resultType="meeting.team.vo.MeetingVo">
 		select * from meeting
 	</select>
+	<select id="getMyLocation" resultType="java.lang.String">
+		SELECT location FROM my_location WHERE id=#{id}
+	</select>
 	<select id="getAllMeeting" resultType="meeting.team.vo.MeetingVo">
-		select * from meeting
+		select * from meeting WHERE division='now'
 	</select>
 	<select id="getMeeting" resultType="meeting.team.vo.MeetingVo">
 		select * from meeting where num=#{num}
 	</select>
-<<<<<<< Upstream, based on origin/GO
+
+	<select id="getRecommend" resultType="meeting.team.vo.MeetingVo" parameterType="java.lang.String">
+		select * from meeting where field=#{interest}
+	</select>
+
+	<insert id="insert" parameterType="meeting.team.vo.MeetingVo">
+		INSERT INTO meeting
+		VALUES(MEETING_NUM_SEQ.NEXTVAL,#{title},#{field},#{contents},#{master},#{area},#{start_time},#{end_time},#{map_name},#{division})
+	</insert>
+
+	<insert id="chatInsert" parameterType="java.util.Map">
+		INSERT INTO chatList VALUES(#{master},#{member})
+	</insert>
+
+	<select id="userExit" resultType="java.lang.Integer" parameterType="java.util.Map">
+		SELECT COUNT(master) FROM chatList WHERE member = #{member} AND master =
+		#{master}
+	</select>
+	
 	<insert id="insert" parameterType="meeting.team.vo.MeetingVo">
 		INSERT INTO meeting
 		VALUES(MEETING_NUM_SEQ.NEXTVAL,#{title},#{meetingType},#{contents},#{master},#{area},#{start_time},#{end_time},#{map_name},#{division})
 	</insert>
-=======
 	<select id="getRecommend" resultType="meeting.team.vo.MeetingVo" parameterType="java.lang.String">
 		select * from meeting where field=#{interest}	
 	</select>
->>>>>>> c608f52 gudRJ
+
+	<select id="maxNum" resultType="java.lang.Integer">
+		SELECT MAX(num) FROM meeting WHERE master = #{id}
+	</select>
+
+	<select id="selectOne" resultType="meeting.team.vo.MeetingVo">
+		SELECT * FROM meeting WHERE num = #{num}
+	</select>
+
+	<select id="getChatList" resultType="java.lang.String">
+		SELECT master FROM chatList WHERE member = #{id}
+	</select>
+
+	<select id="getChatGroup" resultType="java.lang.String">
+		SELECT member FROM chatList WHERE master = #{master}
+	</select>
+
+	<update id="updateUser">
+		UPDATE users SET power='MASTER' WHERE id=#{master}
+	</update>
+
+	<select id="getNotNowMeetingList" resultType="meeting.team.vo.MeetingVo">
+		SELECT * FROM meeting WHERE division = 'notnow'
+	</select>
+
+	<insert id="addReply" parameterType="meeting.team.vo.ReplyVo">
+		INSERT INTO res_meeting VALUES(MEETING_REPLY_NUM_SEQ.NEXTVAL, #{ref},#{id},#{contents},sysdate)
+	</insert>
+
+	<select id="getReplyList" resultType="meeting.team.vo.ReplyVo" parameterType="HashMap">
+		SELECT r2.* FROM
+		(
+		SELECT r1.*, TRUNC((rn -1) / #{showRow} + 1) AS
+		page FROM
+		(
+		SELECT ROWNUM rn, id, contents, ref, num FROM
+		(
+		SELECT * FROM res_meeting ORDER BY cre_date DESC
+		) WHERE ref = #{ref}
+		)r1
+		)r2 WHERE page =
+		#{page}
+	</select>
+
+	<select id="getRowCount" resultType="java.lang.Integer">
+		SELECT CEIL(COUNT(*)/2) FROM res_meeting WHERE ref=#{ref}
+	</select>
+
+	<delete id="replyDelete" parameterType="HashMap">
+		DELETE FROM res_meeting WHERE num=#{num} AND ref=#{ref}
+	</delete>
+
+	<update id="replyModify" parameterType="HashMap">
+		UPDATE res_meeting SET contents=#{contents} WHERE num=#{num}
+	</update>
+
+	<delete id="chatDelete">
+		DELETE FROM chatList WHERE master=#{master}
+	</delete>
+
+	<update id="updateMeeting" parameterType="meeting.team.vo.MeetingVo">
+		UPDATE meeting SET contents=#{contents}, title=#{title}, field=#{field}, area=#{area},
+		start_time=#{start_time}, end_time=#{end_time},
+		division=#{division}
+		<choose>
+			<when test="map_name != 'none'">
+				, map_name=#{map_name}
+			</when>
+		</choose>
+		WHERE master=#{master}
+	</update>
 </mapper>

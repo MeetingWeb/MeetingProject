@@ -1,0 +1,13 @@
+@import 
+url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+
+#header {
+	display: table;
+	margin-left: 10%;
+	font-family: 'Nanum Gothic Coding';
+}
+
+#tbl {
+	display: table;
+	margin-left: 10%;
+}

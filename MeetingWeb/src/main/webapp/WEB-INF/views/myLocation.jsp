@@ -10,7 +10,7 @@
 <script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.8.18/jquery-ui.min.js" type="text/javascript"></script>
-<%-- <script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script> --%>
+<script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
 
 <link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7"
@@ -31,18 +31,24 @@
 			<form action="#" onsubmit="searchMap(document.getElementById('address').value); return(false);">
 				주소/건물：
 				<input id="address" style="width: 400px;" type="text" value="">
-				<input type="submit" value="검색">
-				<button type="button" onclick="setMyLocation()">내위치로 지정</button>
+				<!-- <input type="submit" value="검색"> -->
+				<button type = "submit" class = "btn btn-success btn-xs" >
+    			  검색
+ 				</button>
+				<button type = "button" class = "btn btn-success btn-xs" onclick="setMyLocation()">
+    			  해당위치로 변경
+ 				</button>
 			</form>
 			<div id="location-map" style="height: 100%; width: 100%;"></div>
 		</div>
-		<jsp:include page="include/loginForm.jsp" />
-		<jsp:include page="include/joinForm.jsp" />
-		<jsp:include page="include/chat_view.jsp" />
 	</section>
 	<jsp:include page="include/footer.jsp" />
 </body>
 <script type="text/javascript">
+var myLoc = JSON.parse('${data}');
+var lat = myLoc.latlng.split(",")[0].replace(/[()]/gi, '');
+var lng = myLoc.latlng.split(",")[1].replace(/[()]/gi, '');
+console.log(myLoc);
 </script>
 <script type="text/javascript" src="../resources/js/set_location.js"></script>
 </html>

@@ -6,30 +6,61 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="login" resultType="meeting.team.vo.UserVo">
 		select id, pw, power from users where id=#{id}
 	</select>
-	
+
 	<insert id="join" parameterType="meeting.team.vo.UserVo">
 		insert into users(id,pw,name,email,power) values(#{id},#{pw},#{name},#{email},#{power})
 	</insert>
-	
+
 	<insert id="joinhabby" parameterType="hashmap">
 		insert into interests(id,interest) values(#{a},#{b})
 	</insert>
-	
+
 	<select id="id_check" resultType="meeting.team.vo.UserVo">
 		select * from users where id=#{id}
 	</select>
-	
+
 	<update id="changeLatlng" parameterType="meeting.team.vo.UserVo">
 		update my_location set location=#{latlng} where id=#{id} 
 	</update>
-	
+
 	<select id="getMyLocation" resultType="java.lang.String" parameterType="java.lang.String">
 		select location from my_location where id=#{id}
+	</select>
+	
+	<select id="getList" resultType="meeting.team.vo.UserVo">
+		select * from users
+	</select>
+	<update id="changeToMember" parameterType="java.lang.String">
+		update users set power='MEMBER'where id=#{id}
+	</update>
+	<update id="changeToBlack" parameterType="java.lang.String">
+		update users set power='BLACK'where id=#{id}
+	</update>
+	
+	
+	<insert id="joinlocation" parameterType="hashmap">
+		insert into my_location(id,location) values(#{id},#{location})
+	</insert>
+	
+	
+	
+	<select id="personal_info" resultType="meeting.team.vo.UserVo" parameterType="java.lang.String">
+		select a.id, a.name, a.email, b.interest, c.location from users a, interests b, my_location c where a.id=#{id}
 	</select>
 	
 	<select id="getInterest" resultType="java.lang.String" parameterType="java.lang.String">
 		select interest from interests where id=#{id}
 	</select>
+
+	<update id="pwchange" parameterType="hashmap">
+		update users set pw=#{pw} where id=#{id} 
+	</update>
 	
+	<insert id="interestschange" parameterType="hashmap">
+		insert into interests(id,interest) values(#{id},#{interest})
+	</insert>
 	
+	<delete id="delete" parameterType="java.lang.String">
+		delete from interests where id=#{id}
+	</delete>
 </mapper>

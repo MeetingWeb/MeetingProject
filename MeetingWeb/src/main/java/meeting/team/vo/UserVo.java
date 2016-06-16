@@ -1,17 +1,88 @@
 package meeting.team.vo;
 
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserVo {
+	@NotEmpty
 	private String id;
+	@NotEmpty
 	private String pw;
+	@NotEmpty
 	private String pwc;
 	private String name;
+	@NotEmpty
 	private String email;
 	private String power;
-	private String interests; 
+	private String interest; 
 	private String latlng;
+	private String location;
+	
+	@NotEmpty
+	private String ids;
+	
+	@NotEmpty
+	private String pws;
+	
+	@NotEmpty
+	private String pwcc;
+	
+	@NotEmpty
+	private String emailfalse;
+	
+	
+	
+	
+	
+
+	public String getInterest() {
+		return interest;
+	}
+
+	public void setInterest(String interest) {
+		this.interest = interest;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getEmailfalse() {
+		return emailfalse;
+	}
+
+	public void setEmailfalse(String emailfalse) {
+		this.emailfalse = emailfalse;
+	}
+
+	public String getIds() {
+		return ids;
+	}
+
+	public void setIds(String ids) {
+		this.ids = ids;
+	}
+
+	public String getPws() {
+		return pws;
+	}
+
+	public void setPws(String pws) {
+		this.pws = pws;
+	}
+
+	public String getPwcc() {
+		return pwcc;
+	}
+
+	public void setPwcc(String pwcc) {
+		this.pwcc = pwcc;
+	}
 
 	public String getLatlng() {
 		return latlng;
@@ -21,13 +92,7 @@ public class UserVo {
 		this.latlng = latlng;
 	}
 
-	public String getInterests() {
-		return interests;
-	}
-
-	public void setInterests(String interests) {
-		this.interests = interests;
-	}
+	
 
 	public String getPwc() {
 		return pwc;

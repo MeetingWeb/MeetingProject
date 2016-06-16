@@ -10,11 +10,15 @@
 	<!-- permitAll 은 로그인을 하지 않아도 들어갈수 있게 한다 위 에서 부터 순서대로 실행, 로그인을 안한 사람이 페이지에 접근하면 순서대로 실행되기 때문에 접근이 불가능해진다 허용 범위가 넓은 것을 아래에 작성한다 -->
 	<context:component-scan base-package="meeting.team.security" />
 	<context:component-scan base-package="meeting.team.service" />
+	<context:component-scan base-package="meeting.team.controller" />
+	
 	
 	<sec:http auto-config='true' use-expressions="true">
 		<sec:intercept-url pattern="/admin/**" access="hasAuthority('ADMIN')" />
-		<sec:intercept-url pattern="/member/**" access="isAuthenticated()" />
+		<!-- <sec:intercept-url pattern="/web/addForm" access="hasAuthority('MEMBER')" /> -->
 		<sec:intercept-url pattern="/blackUser/**" access="hasAuthority('BLACKUSER')" />
+		<!-- <sec:intercept-url pattern="/web/**" access="isAuthenticated()" /> -->
+		<!-- <sec:intercept-url pattern="/meeting/**" access="hasAuthority('MEMBER')" /> -->
 		<sec:intercept-url pattern="/**" access="permitAll" />
 		<sec:form-login login-page="/mainPage" 
 		    			login-processing-url="/user/login" 
@@ -69,6 +73,16 @@
 	    </props>
 	    </property>
 	</bean>
+	
+	<bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean" />
+
+	<bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basename" value="messages/messages" />
+	</bean>
+	
+	 <bean id="multipartResolver" 
+  		class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+  		
 	
 	
 </beans>

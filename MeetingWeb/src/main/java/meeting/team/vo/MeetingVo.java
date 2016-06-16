@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class MeetingVo {
 	private int num;
 	private String title;
-	private String meetingType;
+	private String field;
 	private String contents;
 	private String master;
 	private String area;
@@ -21,27 +21,6 @@ public class MeetingVo {
 	public void setNum(int num) {
 		this.num = num;
 	}
-<<<<<<< Upstream, based on origin/GO
-=======
-
-	private String title;
-	private String field;
-	public String getField() {
-		return field;
-	}
-
-	public void setField(String field) {
-		this.field = field;
-	}
-
-	private String contents;
-	private String master;
-	private String area;
-	private Date start_time;
-	private Date end_time;
-	private String map_name;
-	private String division;
->>>>>>> c608f52 gudRJ
 
 	public String getTitle() {
 		return title;
@@ -51,7 +30,13 @@ public class MeetingVo {
 		this.title = title;
 	}
 
+	public String getField() {
+		return field;
+	}
 
+	public void setField(String field) {
+		this.field = field;
+	}
 
 	public String getContents() {
 		return contents;

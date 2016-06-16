@@ -6,7 +6,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 <insert id="insert" parameterType="meeting.team.vo.NoticeVO"  >
 	insert into notice (num,id,title,cre_date,hit,contents,ref) 
-		values(NOTICE_NUM_SEQ.NEXTVAL,'scott',#{title},SYSDATE,0,#{contents},#{ref})
+		values(NOTICE_NUM_SEQ.NEXTVAL,#{id},#{title},SYSDATE,0,#{contents},#{ref})
 </insert>
 
 <select id="latelyRead" resultType="meeting.team.vo.NoticeVO">
