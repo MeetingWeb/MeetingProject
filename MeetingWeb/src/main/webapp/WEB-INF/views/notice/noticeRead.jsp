@@ -540,17 +540,17 @@ $(function(){
 			</tr>
 			<tr>
 			<td colspan="5">
-			<button type="button" onclick="list()">목록</button>
+			<button type="button" class = "btn btn-default " onclick="list()">목록</button>
 			<c:if test="${sessionScope.id eq data.id}">
-			<button type="button" onclick="modify()">수정</button>
-			<button type="button" onclick="del()">삭제</button>
+			<button type="button" onclick="modify()" class = "btn btn-default ">수정</button>
+			<button type="button" onclick="del()" class = "btn btn-default ">삭제</button>
 			</c:if>
 			</td>
 			<tr>
 			<td colspan="5">
 			<div class="replyForm">
 			<textarea class="reply form-control" cols="40"></textarea>			
-			<button type="button" onclick="replyWrite()">글쓰기</button>
+			<button type="button" onclick="replyWrite()" class = "btn btn-default ">글쓰기</button>
 			</td>
 			</tr>
 			<div class="reply">
@@ -569,13 +569,13 @@ $(function(){
 				<tr>
 					<th style="width:10%">${ list.id }</th>
 					<td class="${ list.num }">${ list.contents }</td>
-					<td style="width:10%">
+					<td style="width:20%">
 					<c:choose>
 						<c:when test="${sessionScope.id eq list.id}"> 
 						
 							
-								<button type="button" class="${ list.num }" onclick="replyModify(${ list.num })">수정</button>
-								<button type="button" onclick="replyDel(${ list.num })">삭제</button>							
+								<button type="button" class="${ list.num } btn btn-default btn-sm" onclick="replyModify(${ list.num })">수정</button>
+								<button type="button"  class = "btn btn-default btn-sm" onclick="replyDel(${ list.num })">삭제</button>							
 						</c:when>
 					</c:choose>
 					</td>

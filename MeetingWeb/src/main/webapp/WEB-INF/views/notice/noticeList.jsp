@@ -172,28 +172,29 @@
 			<p class="buttons">
 			
 		
-			<button type="button" onclick="allList()">전체보기</button>		
-			<button type="button" onclick="writeForm()">글쓰기</button>
+			<button type="button" onclick="allList()" class = "btn btn-default ">전체보기</button>		
+			<button type="button" onclick="writeForm()" class = "btn btn-default ">글쓰기</button>
 			</p>
 			
 			</td></tr>	
 					
 		</tfoot>
-		
+
 		</table>
 		</div>
-		<table>
+		<table>	
 		<tr><td>
+			<ul class = "pagination pagination-lg">
 			<c:choose>
 			<c:when test="${map.condition eq 'normal'}">
 				<c:if test="${ map.page.currPage > 3 }">
-					<a href="getPage?page=${ map.page.startPage-1 }">PREV</a>
+					<li><a href="getPage?page=${ map.page.startPage-1 }">&laquo;</a></li>
 				</c:if>
 			</c:when>
 			<c:when test="${map.condition eq 'search'}">
 				<c:if test="${ map.page.currPage > 3 }">
-					<a
-						href="searchPage?key=${ map.key }&page=${ map.page.startPage-1 }">PREV</a>
+					<li><a
+						href="searchPage?key=${ map.key }&page=${ map.page.startPage-1 }">&laquo;</a></li>
 				</c:if>
 			</c:when>
 		</c:choose>
@@ -204,7 +205,7 @@
 				<c:forEach var="no" begin="${ map.page.startPage }"
 					end="${ map.page.endPage }">
 					<c:if test="${ no <= map.page.totalPage }">
-						<a href="getPage?page=${ no }">${ no }</a>
+						<li><a href="getPage?page=${ no }">${ no }</a></li>
 					</c:if>
 				</c:forEach>
 			</c:when>
@@ -212,7 +213,7 @@
 				<c:forEach var="no" begin="${ map.page.startPage }"
 					end="${ map.page.endPage }">
 					<c:if test="${ no <= map.page.totalPage }">
-						<a href="searchPage?key=${ map.key }&page=${ no }">${ no }</a>
+						<li><a href="searchPage?key=${ map.key }&page=${ no }">${ no }</a></li>
 					</c:if>
 				</c:forEach>
 			</c:when>
@@ -222,19 +223,20 @@
 		<c:choose>
 			<c:when test="${map.condition eq 'normal'}">
 				<c:if test="${ map.page.endPage < map.page.totalPage }">
-					<a href="getPage?page=${ map.page.endPage+1 }">NEXT</a>
+					<li><a href="getPage?page=${ map.page.endPage+1 }">&raquo;</a></li>
 				</c:if>
 			</c:when>
 			<c:when test="${map.condition eq 'search'}">
 				<c:if test="${ map.page.endPage < map.page.totalPage }">
-					<a href="searchPage?key=${ map.key }&page=${ map.page.endPage+1 }">NEXT</a>
+					<li><a href="searchPage?key=${ map.key }&page=${ map.page.endPage+1 }">&raquo;</a></li>
 				</c:if>
 			</c:when>
 		</c:choose>
+		</ul>
 		</td></tr>
 		<tr><td>
 			<input type="text" class="key">
-			<button type="button" onclick="search()">검색</button>
+			<button type="button" onclick="search()" class = "btn btn-default">검색</button>
 		</td></tr>
 		</table>
 		
