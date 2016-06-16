@@ -37,8 +37,64 @@
 			showMonthAfterYear : true,
 			yearSuffix : '년'
 		});
+		
+		var startArr = "${data.start_time}".split(" ");
+		var endArr = "${data.end_time}".split(" ");
+		var startTime = startArr[1].substring(0, 5);
+		var endTime = endArr[1].substring(0, 5);
+		var date = startArr[0];
+		
+		$("input[name=s_time]").val(startTime);
+		$("input[name=e_time]").val(endTime);
+		$("input[name=meetingDay]").val(date);
 	});
+	
+	function modify() {
+		var division = null;
+		for ( var txt in mobileArr) {
+			if (navigator.userAgent.match(mobileArr[txt]) != null) {
+				division = $("input[name=division]").val("now");
+				$.ajax({
+					url : "/NowMeetingWeb/meeting/insert",
+					type : "post",
+					data : $("#add-meeting-form").serialize(),
+					dataType : "json",
+					success : function(obj) {
+						if (obj.ok) {
+							alert("모임 만들기 성공");
+						} else {
+							alert("모임 만들기 실패");
+						}
+					},
+					error : function(xhr, error, status) {
 
+					}
+				});
+				break;
+			} else {
+				division = $("input[name=division]").val("notnow");
+				$.ajax({
+					url : "/NowMeetingWeb/meeting/insert",
+					type : "post",
+					data : $("#add-meeting-form").serialize(),
+					dataType : "json",
+					success : function(obj) {
+						if (obj.ok) {
+							alert("모임 만들기 성공");
+							location.href="/NowMeetingWeb/meeting/meetingView?num=0";
+						} else {
+							alert("모임 만들기 실패");
+						}
+					},
+					error : function(xhr, error, status) {
+
+					}
+				});
+				break;
+			}
+		}
+	}
+	
 </script>
 <title>여기여기 붙어라</title>
 </head>
@@ -56,13 +112,13 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label" id="title">Title</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="meeting-title" placeholder="제목" name="title">
+								<input type="text" class="form-control" id="meeting-title" placeholder="제목" name="title" value="${data.title }">
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Contents</label>
 							<div class="col-sm-10">
-								<textarea class="form-control" id="meeting-contents" rows="10" placeholder="내용" name="contents"></textarea>
+								<textarea class="form-control" id="meeting-contents" rows="10" placeholder="내용" name="contents">${data.contents }</textarea>
 							</div>
 						</div>
 						<div class="form-group">
@@ -75,16 +131,20 @@
 									<option>족구</option>
 									<option>배드민턴</option>
 									<option>보드타기</option>
-									<option>자전거타기</option>
+									<option>자전거</option>
 									<option>술먹기</option>
-									<option>동현이 죽빵 때리기</option>
+									<option>영화보기</option>
+									<option>밥 먹기</option>
+									<option>배구</option>
+									<option>수영</option>
+									<option>코딩하기</option>
 								</select>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Location</label>
 							<div class="col-sm-3">
-								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="locaion">
+								<input type="text" class="form-control" id="meeting-location" placeholder="장소" name="locaion" value="${data.area }">
 								<input type="hidden" name="area">
 							</div>
 							<div class="col-sm-2" style="width: 300px;">
@@ -95,7 +155,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Date</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" id="datepicker1" name='meetingDay' placeholder="모임 날짜 선택">
+								<input type="text" class="form-control" id="datepicker1" name='meetingDay' placeholder="모임 날짜 선택" value="">
 							</div>
 						</div>
 						<div class="form-group">
@@ -111,7 +171,7 @@
 						<div class="fomr-group"></div>
 						<div class="form-group">
 							<div class="col-sm-offset-2 col-sm-10">
-								<button type="button" class="btn btn-default" onclick="insert()">CREATE MEETING</button>
+								<button type="button" class="btn btn-default" onclick="modify()">MODIFY MEETING</button>
 							</div>
 						</div>
 						<div id="rough-map-img">

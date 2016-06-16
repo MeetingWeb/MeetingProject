@@ -43,7 +43,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	</select>
  	
  	<select id="pageTotals"  resultType="java.lang.Integer">
-        select count(num) from inquiry where ref=0
+        select count(num) from (select id,ref,num from(select id,ref,num from inquiry where ref=0))where id=#{id}
  	</select>
  
  	<select id="serchlist" resultType="meeting.team.vo.InquiryVo" parameterType="meeting.team.vo.InquiryVo">

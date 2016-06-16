@@ -39,7 +39,7 @@
 		});
 	});
 	function insert() {
-		/* var division = null;
+		var division = null;
 		for ( var txt in mobileArr) {
 			if (navigator.userAgent.match(mobileArr[txt]) != null) {
 				division = $("input[name=division]").val("now");
@@ -81,9 +81,9 @@
 				});
 				break;
 			}
-		} */
+		}
 
-		$.ajax({
+		/* $.ajax({
 			url : "/NowMeetingWeb/meeting/insert",
 			type : "post",
 			data : $("#add-meeting-form").serialize(),
@@ -99,7 +99,7 @@
 			error : function(xhr, error, status) {
 
 			}
-		});
+		}); */
 	}
 </script>
 <title>여기여기 붙어라</title>
@@ -190,10 +190,11 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 			<form action="#" onsubmit="searchMap(document.getElementById('address').value); return(false);">
-				주소/건물：
-				<input id="address" style="width: 400px;" type="text" value="">
-				<input type="submit" value="검색">
-				<button type="button" class="btn btn-success" onclick="adrSave()">저장</button>
+				<span class="pull-left">주소/건물：</span>
+				<input id="address" style="width: 400px; margin-right: 50px;" type="text" value="" class="form-control pull-left">
+				<input type="submit" value="검색" class="btn btn-success">
+				<button type="button" class="btn btn-info" onclick="adrSave()">저장</button>
+				<button type="button" class="btn btn-primary" onclick="myLocation()">내 위치</button>
 			</form>
 			<div id="location-map" style="height: 100%; width: 100%;"></div>
 		</div>
@@ -217,11 +218,7 @@
 </body>
 <script type="text/javascript">
 	var user_id = '<c:out value="${sessionScope.id}"/>';
-	/* $(function() {
-		$('#meeting-form-lid').modal({
-			keyboard : true
-		})
-	}); */
+	
 </script>
 <script type="text/javascript" src="../resources/js/set_location.js"></script>
 </html>

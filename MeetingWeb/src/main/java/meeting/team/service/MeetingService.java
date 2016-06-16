@@ -118,7 +118,7 @@ public class MeetingService {
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(master);
 		meeting.setMap_name(roughMapSave(request));
-		meeting.setDivision("now");
+		//meeting.setDivision("now");
 
 		Map<String, String> chatMap = new HashMap<String, String>();
 		int chatOk = 0;
@@ -431,9 +431,16 @@ public class MeetingService {
 		return regionAddress;
 	}
 
-	public MeetingVo modifyForm(int num) {
+	public MeetingVo modifyForm(int num) throws Exception {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		return meeting_dao.selectOne(num);
+		MeetingVo meeting = meeting_dao.selectOne(num);
+		String[] addr = meeting.getArea().split(",");
+		this.latitude = Double.parseDouble(addr[0]);
+		this.longitude = Double.parseDouble(addr[1]);
+		this.regionAddress = getRegionAddress(getJSONData(getApiAddress()));
+		meeting.setArea(this.regionAddress);
+		
+		return meeting;
 	}
 
 	public String complete(int num){
@@ -447,6 +454,4 @@ public class MeetingService {
 		return jsonObj.toJSONString();
 		
 	}
-	
-
 }

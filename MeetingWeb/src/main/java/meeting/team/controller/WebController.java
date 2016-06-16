@@ -83,7 +83,8 @@ public class WebController {
         session.setAttribute("email", email2);
         email.setReceiver(email2);
         email.setSubject("이메일 확인입니다.");
-        email.setContent("<form target='my' method='post' action='http://localhost:7777/NowMeetingWeb/web/email_join'>"
+        email.setContent("<form target='my' method='post' action='http://192.168.8.19:7777/NowMeetingWeb/web/email_join'>"
+
         		+ "<input type='hidden' name='sess' value='"+session.getId()+"'> "
         				+ "<button type='submit'>인증확인</button></form>");
         
@@ -199,6 +200,31 @@ public class WebController {
 	 @ResponseBody
 	 public String complete(@RequestParam("num")int num){
 		 return ms.complete(num);
+	 }
+	 
+	 
+	 @RequestMapping(value="personal_info")
+	 @ResponseBody
+	 public String personal_info(@RequestParam("id")String id){
+		 return us.personal_info(id);
+	 }
+	 
+	 @RequestMapping(value="personal_form", method = RequestMethod.GET)
+		public String personal_form() {
+			return "parsonal/personal_info";
+		}
+	 
+	 
+	 @RequestMapping(value="pwchange")
+	 @ResponseBody
+	 public String pwchange(@RequestParam("id")String id, @RequestParam("pw")String pw){
+		 return us.pwchange(id,pw);
+	 }
+	 
+	 @RequestMapping(value="interests")
+	 @ResponseBody
+	 public String interests(@RequestParam("id")String id, @RequestParam("interests")String interests){
+		 return us.interests(id,interests);
 	 }
 	 
     
