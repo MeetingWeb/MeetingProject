@@ -30,8 +30,9 @@ $(function() {
 	});
 
 	$("#login-btn").on("click", function() {
-		// location.href="/user/login";
-		$("form[name=loginForm]").submit();
+		login();
+		$("#login-form").toggle(flip++ % 2 == 0);
+		$("#loginform").css('display', 'none');
 	});
 
 	$("#logoutbtn").on("click", function() {
@@ -79,6 +80,11 @@ $(function() {
 	$(".img-box").on("click",function(){
 		console.log($(this).attr("data-num"));
 		location.href="selectOne?num=" + $(this).attr("data-num");
+	});
+	
+	//////////////아이디/패스워드 찾기////////////////////////
+	$("#searchID").on("click", function() {
+		location.href = "../sarchForm";
 	});
 	
 });

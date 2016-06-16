@@ -4,7 +4,25 @@
 	<c:if test="${param.error==true }">
 		<span>로그인 실패</span>
 	</c:if>
-	<form name="loginForm" action="<c:url value='/user/login' />" method="post">
+	
+	<script type="text/javascript">
+		function login() {
+			$.ajax({
+				url : '<c:url value="/user/login" />', 
+				data : $('#loginForm').serialize(), 
+				type : 'POST', 
+				success : function(res) {
+					alert("로그인 성공");
+				}, 
+				error : function(error) { 
+					alert("시스템 에러!"); 
+				}
+				
+			});
+		}
+	</script>
+	
+	<form id="loginForm" name="loginForm" action="<c:url value='/user/login' />" method="post">
 		<input type="hidden" name="_csrf" value="${_csrf.token }">
 		<div id="login-title">
 			Enter <b>여기여기 붙어라</b>
@@ -20,6 +38,7 @@
 		<div id="login-btn-group">
 			<div id="facebookLogin">FACEBOOK LOGIN</div>
 			<div id="login-btn">LOGIN</div>
-		</div>
+		</div><p>
+		<div id="searchID">아이디 / 패스워드 찾기</div>
 	</form>
 </div>

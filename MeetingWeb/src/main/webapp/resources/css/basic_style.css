@@ -420,3 +420,20 @@ footer {
 #login-btn:hover {
 	background-color: #2E827E;
 }
+
+#searchID {
+	display: block;
+	padding: 24px 0 0 24px;
+	width: 160px;
+	height: 64px;
+	background-color: #33B573;
+	color: #fff;
+	text-align: center;
+	text-transform: uppercase;
+	font-weight: 300;
+	font-size: 15px;
+	line-height: 40px;
+	transition: background-color .2s, color .2s;
+	cursor: pointer;
+	box-sizing: initial;
+}

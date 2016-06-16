@@ -1,27 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<title>»ç°Ç»ç°í ±Û ¼öÁ¤</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Bootstrap -->
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
+
+
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/report.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" 
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	 integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+
+<title>ì‚¬ê±´ì‚¬ê³  ê¸€ ìˆ˜ì •</title>
+
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 
-<!-- ckEdit.js °æ·Î -->
+<!-- ckEdit.js ê²½ë¡œ -->
 <script type="text/javascript" src='<c:url value="/resources/ckeditor/ckeditor.js"/>' ></script>
 
 <script>
 	//ckeditor setting
 	var ckeditor_config = {
-			resize_enabled : false, // ¿¡µğÅÍ Å©±â¸¦ Á¶ÀıÇÏÁö ¾ÊÀ½
-			enterMode : CKEDITOR.ENTER_BR , // ¿£ÅÍÅ°¸¦ <br> ·Î Àû¿ëÇÔ.
-	     	shiftEnterMode : CKEDITOR.ENTER_P ,  // ½¬ÇÁÆ® +  ¿£ÅÍ¸¦ <p> ·Î Àû¿ëÇÔ.
+			resize_enabled : false, // ì—ë””í„° í¬ê¸°ë¥¼ ì¡°ì ˆí•˜ì§€ ì•ŠìŒ
+			enterMode : CKEDITOR.ENTER_BR , // ì—”í„°í‚¤ë¥¼ <br> ë¡œ ì ìš©í•¨.
+	     	shiftEnterMode : CKEDITOR.ENTER_P ,  // ì‰¬í”„íŠ¸ +  ì—”í„°ë¥¼ <p> ë¡œ ì ìš©í•¨.
 	     	toolbarCanCollapse : true , 
-	     	removePlugins : "elementspath", // DOM Ãâ·ÂÇÏÁö ¾ÊÀ½
-	     	filebrowserUploadUrl: '/file_upload', // ÆÄÀÏ ¾÷·Îµå¸¦ Ã³¸® ÇÒ °æ·Î ¼³Á¤.
+	     	removePlugins : "elementspath", // DOM ì¶œë ¥í•˜ì§€ ì•ŠìŒ
+	     	filebrowserUploadUrl: '/file_upload', // íŒŒì¼ ì—…ë¡œë“œë¥¼ ì²˜ë¦¬ í•  ê²½ë¡œ ì„¤ì •.
 	
-	     	// ¿¡µğÅÍ¿¡ »ç¿ëÇÒ ±â´Éµé Á¤ÀÇ
+	     	// ì—ë””í„°ì— ì‚¬ìš©í•  ê¸°ëŠ¥ë“¤ ì •ì˜
 	     	toolbar : [
 	       		[ 'Source', '-' , 'NewPage', 'Preview' ],
 	       		[ 'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo' ],
@@ -38,11 +60,11 @@
 	var editor = null;
 	
 	$(function() {
-		// ckeditor Àû¿ë
+		// ckeditor ì ìš©
 	    editor = CKEDITOR.replace("ckEditor" , ckeditor_config, {
 	    	width:'100%',
 	        height:'400px',
-	        filebrowserImageUploadUrl: '/imgUpload' //¿©±â °æ·Î·Î ÆÄÀÏÀ» Àü´ŞÇÏ¿© ¾÷·Îµå ½ÃÅ²´Ù.
+	        filebrowserImageUploadUrl: '/imgUpload' //ì—¬ê¸° ê²½ë¡œë¡œ íŒŒì¼ì„ ì „ë‹¬í•˜ì—¬ ì—…ë¡œë“œ ì‹œí‚¨ë‹¤.
 	    });
 		
 	    CKEDITOR.on('dialogDefinition', function(ev){
@@ -63,59 +85,82 @@
 	function saved() {
 		editor.updateElement();
 		
-		$.ajax({
-			url : "./reportEdit",
-			type : "post",
-			data : $('form').serialize(),
-			success : function(save) {
-				if(save.code = 200) {
-					alert(save.msg);
-					location.href = save.url;
-				} else if(save.code == 201) {
-					alert(save.msg);
-					location.href = save.url;
+		var title = $('input[name=title]').val();
+		var contents = $('textarea[name=contents]').val();
+		
+		if(title == "") {
+			confirm('ì œëª©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”.');
+			return;
+			
+		} else if(contents == "") {
+			confirm('ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”.');
+			return;
+		
+		} else {
+			$.ajax({
+				url : "./reportEdit",
+				type : "post",
+				data : $('form').serialize(),
+				success : function(save) {
+					if(save.code = 200) {
+						alert(save.msg);
+						location.href = save.url + ${info.num};
+					} else if(save.code == 201) {
+						alert(save.msg);
+						location.href = save.url + ${info.num};
+					}
+				},
+				error : function(error) {
+					alert("ì‹œìŠ¤í…œ ì—ëŸ¬!");
 				}
-			},
-			error : function(error) {
-				alert("½Ã½ºÅÛ ¿¡·¯!");
-			}
-		}); // end of ajax({})
+			}); // end of ajax({})
+		} // end of else
+		
 	} // end of saved()
 </script>
 
 </head>
 <body>
+	<jsp:include page="../include/navi.jsp" />
+	<jsp:include page="../include/header.jsp" />
+	<section id="contents">
 	
-	<div align="center">
-		<h1>»ç°Ç»ç°í µî·Ï</h1>
-		
+		<div id="header">
+			<h1>ì‚¬ê±´ì‚¬ê³  ìˆ˜ì •</h1>
+		</div>
 		<form>
-			<table>
+			<table id="tbl" class="table col-xs-4">
 				<tr>
-					<th>±Û ¹øÈ£</th>
+					<th id="thCenter">ê¸€ ë²ˆí˜¸</th>
 					<td><input type="text" name="num" value="${info.num}" 
 							readonly="readonly" size="5" /></td>
 				</tr>
+			
 				<tr>
-					<th>Á¦¸ñ</th>
+					<th id="thCenter">ì œëª©</th>
 					<td><input type="text" name="title" value="${info.title}" size="80" /></td>
 				</tr>
-				
+					
 				<tr>
-					<th>»ó¼¼³»¿ë</th>
+					<th id="thCenter">ìƒì„¸ë‚´ìš©</th>
 					<td height="50">
 						<textarea id="ckEditor" name="contents" cols="100" rows="30">${info.contents}</textarea>
 					</td>
 				</tr>
-
+	
 			</table>
-			
-			<button type="button" onclick="saved()">µî·Ï</button>
-			<input type="reset"	value="´Ù½ÃÀÛ¼º"> <input type="button" 
-				value="¸ñ·Ï" onclick="location='./reportList'">
 		</form>
 		
-	</div>
+		<div align="right">		
+			<button type="button" class="btn btn-default xs-4" onclick="saved()">ë“±ë¡</button>
+			<input type="reset" class="btn btn-default xs-4" value="ë‹¤ì‹œì‘ì„±"> <input type="button" 
+				value="ëª©ë¡" class="btn btn-default xs-4" onclick="location='./reportList'">
+		</div>
+	
+		<jsp:include page="../include/loginForm.jsp" />
+		<jsp:include page="../include/joinForm.jsp" />
+	</section>
+	<jsp:include page="../include/footer.jsp" />
 	
 </body>
 </html>

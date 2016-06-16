@@ -1,11 +1,10 @@
 package meeting.team.service;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,14 +36,16 @@ public class ReportService {
 		int result = reportDao.insertReport(bvo);
 		Map<String, Object> map = new HashMap<String, Object>();
 		
+		int maxNum = reportDao.getNum(bvo.getId());
+		
 		if(result > 0) {
 			map.put("code", 200);
 			map.put("msg", "등록을 완료하였습니다.");
-			map.put("url", "./reportList");
+			map.put("maxNum", maxNum);
 		} else {
 			map.put("code", 201);
 			map.put("msg", "등록을 실패하였습니다.");
-			map.put("url", "./reportForm");
+			map.put("url", "./reportList");
 		}
 		
 		return map;
@@ -65,11 +66,11 @@ public class ReportService {
 		if(result > 0) {
 			map.put("code", 200);
 			map.put("msg", "수정을 완료하였습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		} else {
 			map.put("code", 201);
 			map.put("msg", "수정을 실패하였습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		}
 		
 		return map;
@@ -105,11 +106,11 @@ public class ReportService {
 		if(result > 0) {
 			map.put("code", 200);
 			map.put("msg", "등록을 완료하였습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		} else {
 			map.put("code", 201);
 			map.put("msg", "등록을 실패하였습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		}
 		
 		return map;
@@ -130,11 +131,11 @@ public class ReportService {
 		if(result > 0) {
 			map.put("code", 200);
 			map.put("msg", "수정을 완료하였습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		} else {
 			map.put("code", 201);
 			map.put("msg", "수정을 실패하였습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		}
 		
 		return map;
@@ -149,11 +150,11 @@ public class ReportService {
 		if(result > 0) {
 			map.put("code", 200);
 			map.put("msg", "삭제가 완료되었습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		} else {
 			map.put("code", 201);
 			map.put("msg", "삭제에 실패했습니다.");
-			map.put("url", "./reportList");
+			map.put("url", "./reportInfo?num=");
 		}
 		return map;
 	}
@@ -179,13 +180,15 @@ public class ReportService {
 	}
 	
 	// 이미지 업로드
-	/*
-	public Map<String, Object> imgUpload(MultipartHttpServletRequest mRequest) {
-		Map<String, Object> firstMap = new HashMap<String, Object>();
-		Map<String, Object> secondMap = new HashMap<String, Object>();
+	public void imgUpload (HttpServletRequest request, HttpServletResponse response, 
+    		MultipartHttpServletRequest mRequest, MultipartFile upload) {
+		System.out.println("이미지 업로드 컨트롤러");
 		
-		String fileName = null;
-		
+		OutputStream out = null;
+        PrintWriter printWriter = null;
+        response.setCharacterEncoding("utf-8");
+        response.setContentType("text/html;charset=utf-8");
+        
 		String path = this.getClass().getClassLoader().getResource("").getPath();
 		System.out.println(path);
 		path = path.substring(0, path.indexOf("/WEB-INF"));
@@ -195,43 +198,64 @@ public class ReportService {
 			dir.mkdirs();
 		}
 		
-		Iterator<String> htmlName = mRequest.getFileNames();
-		while(htmlName.hasNext()) {
-			String html = htmlName.next();
-			MultipartFile mFile = mRequest.getFile(html);
+        try{
+ 
+            String fileName = upload.getOriginalFilename();
+            byte[] bytes = upload.getBytes();
+            
+            Iterator<String> htmlName = mRequest.getFileNames();
+    		while(htmlName.hasNext()) {
+    			String html = htmlName.next();
+    			upload = mRequest.getFile(html);
 
-			fileName = mFile.getOriginalFilename();
-			
-			if(fileName != null && !fileName.equals("")) {
-				String name = fileName.substring(0, fileName.lastIndexOf("."));
-				String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
-				
-				fileName = name + System.currentTimeMillis() + "." + ext;
-	
-				try {
-					mFile.transferTo(new File(path + "/temp/" + fileName));
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		
-		Map<String, String> linkMap = new HashMap<String, String>();
-		linkMap.put("original", "http://localhost:8088/NowMeetingWeb/temp/" + fileName);
-		
-		Map<String, Object> imageMap = new HashMap<String, Object>();
-		imageMap.put("width", 1024);
-		imageMap.put("height", 768);
-		
-		secondMap.put("links", linkMap);
-		secondMap.put("image", imageMap);
-		
-		firstMap.put("upload", secondMap);
-		
-		return firstMap;
-	} // end of imgUpload
-	*/
+    			fileName = upload.getOriginalFilename();
+    			
+    			if(fileName != null && !fileName.equals("")) {
+    				String name = fileName.substring(0, fileName.lastIndexOf("."));
+    				String ext = fileName.substring(fileName.lastIndexOf(".") + 1);
+    				
+    				fileName = name + System.currentTimeMillis() + "." + ext;
+    	
+    				try {
+    					String uploadPath =  path + "/temp/" + fileName; //저장경로
+    		            out = new FileOutputStream(new File(uploadPath));
+    		            
+    				} catch (Exception e) {
+    					e.printStackTrace();
+    				} 
+    			}
+    		}
+            
+            out.write(bytes);
+            String callback = request.getParameter("CKEditorFuncNum");
+ 
+            printWriter = response.getWriter();
+            String fileUrl = "http://localhost:8088/NowMeetingWeb/temp/" + fileName; //url경로
+ 
+            printWriter.println("<script type='text/javascript'>window.parent.CKEDITOR.tools.callFunction("
+                    + callback
+                    + ",'"
+                    + fileUrl
+                    + "','이미지를 업로드 하였습니다.'"
+                    + ")</script>");
+            printWriter.flush();
+ 
+        }catch(IOException e){
+            e.printStackTrace();
+        } finally {
+            try {
+                if (out != null) {
+                    out.close();
+                }
+                if (printWriter != null) {
+                    printWriter.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+ 
+        return;
+    }
 	
 }

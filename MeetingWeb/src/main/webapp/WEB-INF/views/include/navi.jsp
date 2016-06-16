@@ -29,6 +29,9 @@
 					<div class="menu-btn-name">
 						<a href="/NowMeetingWeb/reviews/list">REVIEWS</a>
 					</div>
+					<div class="menu-btn-name">
+						<a href="/NowMeetingWeb/reportList">REPORT</a>
+					</div>
 				</li>
 			</ul>
 		</nav>
