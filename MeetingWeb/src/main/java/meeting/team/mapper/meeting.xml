@@ -73,8 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM res_meeting ORDER BY cre_date DESC
 		) WHERE ref = #{ref}
 		)r1
-		)r2 WHERE page =
-		#{page}
+		)r2 WHERE page =#{page}
 	</select>
 
 	<select id="getRowCount" resultType="java.lang.Integer">
