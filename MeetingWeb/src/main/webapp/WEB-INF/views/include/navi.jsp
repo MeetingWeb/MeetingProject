@@ -46,11 +46,6 @@
 				</li>
 				<li>
 					<div class="glyphicon glyphicon-phone-alt menu-btn-icon"></div>
-					<div class="menu-btn-name"><a href="/NowMeetingWeb/Inquiry/list">INQUIRY</a></div>
-					<div class="menu-btn-name"><a href="#">USE</a></div>
-				</li>
-				<li>
-					<div class="glyphicon glyphicon-phone-alt menu-btn-icon"></div>
 					<div class="menu-btn-name">
 						<a href="/NowMeetingWeb/inquiry/list?page=1&start=1&check=1">INQUIRY</a>
 					</div>

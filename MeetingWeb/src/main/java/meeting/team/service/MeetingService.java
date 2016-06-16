@@ -1,11 +1,6 @@
 package meeting.team.service;
 
-
-import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +9,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,8 +25,6 @@ import org.json.simple.JSONValue;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.google.code.geocoder.Geocoder;
 
 import meeting.team.controller.MeetingController;
 import meeting.team.dao.MeetingDao;

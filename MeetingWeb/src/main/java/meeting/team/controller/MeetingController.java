@@ -43,15 +43,6 @@ public class MeetingController {
 		return null;
 	}
 	
-	@RequestMapping("meetingList")
-	public String getMeetingList(Model model, HttpServletRequest request) throws UnknownHostException {
-		meeting_svc.getMeetingList(request);
-		String[] ipArr = meeting_svc.getPosition();
-		model.addAttribute("id", request.getParameter("id"));
-		model.addAttribute("ip", ipArr);
-		return "mainPage";
-	}
-
 	@RequestMapping(value="addForm", method = RequestMethod.GET)
 	public ModelAndView addMeetingForm(HttpSession session) {
 		return new ModelAndView("addMeetingForm").addObject("data", meeting_svc.getMyLocation(session));
