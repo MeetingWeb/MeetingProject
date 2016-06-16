@@ -28,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import meeting.team.controller.MeetingController;
 import meeting.team.dao.MeetingDao;
+import meeting.team.vo.ChatVo;
 import meeting.team.vo.MeetingPageVo;
 import meeting.team.vo.MeetingVo;
 import meeting.team.vo.ReplyVo;
@@ -115,6 +116,7 @@ public class MeetingService {
 			// MeetingController.chatMap.put(meeting.getMaster(), null);
 			chatMap.put("master", master);
 			chatMap.put("member", master);
+			chatMap.put("title", meeting.getTitle());
 			chatOk = meeting_dao.chatInsert(chatMap);
 			meeting_dao.updateUser(master);
 		}
@@ -371,9 +373,9 @@ public class MeetingService {
 		return navi;
 	}
 
-	public ArrayList<String> getChatList(HttpSession session) {
+	public ArrayList<ChatVo> getChatList(HttpSession session) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
-		ArrayList<String> list = meeting_dao.getChatList((String) session.getAttribute("id"));
+		ArrayList<ChatVo> list = meeting_dao.getChatList((String) session.getAttribute("id"));
 		return list;
 	}
 

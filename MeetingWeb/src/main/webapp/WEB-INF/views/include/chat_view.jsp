@@ -15,6 +15,7 @@
 	crossorigin="anonymous">
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/chat_style.css"/>'>
 <script type="text/javascript">
 	var user_id = "${sessionScope.id}";
 </script>
@@ -24,13 +25,14 @@
 	<jsp:include page="../include/navi.jsp" />
 	<jsp:include page="../include/header.jsp" />
 	<section id="contents">
-		
 		<div id="chat-list-lid" class="pull-left">
 			<div id="chat-list-lid-in">
-				<span>LIST</span>
-				<c:forEach var="list" items="${list }">
-					<div style="width: 100%; height: 100px; background: #ddd;" class="chat-group">${list }
-						<input type="hidden" class="master" value="${list }">
+				<span>CHAT LIST</span>
+				<c:forEach var="info" items="${map }">
+					<div class="chat-group">
+						<span class="master">주최자 : ${info.master }</span>
+						<div class="title">모임이름 : ${info.title}</div>
+						<input type="hidden" class="master" value="${info.master }">
 					</div>
 				</c:forEach>
 			</div>

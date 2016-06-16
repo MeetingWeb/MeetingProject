@@ -45,8 +45,7 @@ public class WebController {
 	
 	@RequestMapping("chatForm")
 	public String chatForm(Model model, HttpSession session){
-		ArrayList<String> list = ms.getChatList(session);
-		model.addAttribute("list", list);
+		model.addAttribute("map", ms.getChatList(session));
 		return "include/chat_view";
 	}
 	

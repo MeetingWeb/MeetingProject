@@ -11,9 +11,9 @@
 		</div>
 		<div id="info-group">
 			<label>id</label>
-			<input type="text" name="id">
+			<input type="text" name="id" required>
 			<label>password</label>
-			<input type="password" name="pw">
+			<input type="password" name="pw" required>
 			<div class="clear_f"></div>
 		</div>
 

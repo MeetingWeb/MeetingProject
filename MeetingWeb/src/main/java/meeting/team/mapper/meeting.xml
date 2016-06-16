@@ -26,7 +26,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</insert>
 
 	<insert id="chatInsert" parameterType="java.util.Map">
-		INSERT INTO chatList VALUES(#{master},#{member})
+		INSERT INTO chatList VALUES(#{master},#{member},#{title})
 	</insert>
 
 	<select id="userExit" resultType="java.lang.Integer" parameterType="java.util.Map">
@@ -41,8 +41,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT * FROM meeting WHERE num = #{num}
 	</select>
 
-	<select id="getChatList" resultType="java.lang.String">
-		SELECT master FROM chatList WHERE member = #{id}
+	<select id="getChatList" resultType="meeting.team.vo.ChatVo">
+		SELECT master, title, member FROM chatList WHERE member = #{id}
 	</select>
 
 	<select id="getChatGroup" resultType="java.lang.String">
@@ -120,4 +120,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</choose>
 		WHERE master=#{master}
 	</update>
+	
+	<select id="getInfoList" resultType="meeting.team.vo.MeetingVo">
+		SELECT * FROM meeting WHERE division='now' AND master=#{master}
+	</select>
 </mapper>
