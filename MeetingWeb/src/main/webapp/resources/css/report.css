@@ -1,0 +1,46 @@
+@import 
+url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+
+#ulPaging {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#writeBtn {
+	display: table;
+	margin-left: auto;
+}
+
+#divSearch {
+	left: 32%;
+}
+
+button[name="searchBtn"] {
+	display: table;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#header {
+	display: table;
+	margin-left: 10%;
+	font-family: 'Nanum Gothic Coding';
+}
+
+#thCenter {
+	text-align: center;
+	font-family: 'Nanum Gothic Coding';
+	width: 80px;
+}
+
+#thLeft {
+	text-align: left;
+	font-family: 'Nanum Gothic Coding';
+	width: 80px;
+}
+
+#tbl {
+	display: table;
+	margin-left: 10%;
+}

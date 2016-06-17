@@ -45,13 +45,13 @@
 	
 	function writesave() {
 
-		var form = new FormData(document.getElementById('writeform')); 
+		var form = new FormData(document.getElementById('updateform')); 
 		
 
 		$.ajax({
 			type : 'post',
 			dataType : 'json',
-			url : 'writesave',
+			url : 'updates',
 			data : form,
 			contentType: false,
 			processData: false,
@@ -93,7 +93,6 @@
 <tr style="border-top: 2px solid #333333;"><td id="wtitle">제목</td><td><input type="text" name="title" value="${ivo.title}"></td></tr>
 <tr><td id="wcontents">내용</td><td><textarea cols="180" rows="20" name="contents">${ivo.contents }</textarea></td></tr>
 <tr><td id="wfile">첨 부</td><td><input type="file" name="file" value="../resources/images/${ivo.img_name }"></td></tr>
-여기 ${ivo.img_name }
 </table>
 <input type="hidden" name="id" value="${ivo.id }">
 <input type="hidden" name="num" value="${ivo.num}">

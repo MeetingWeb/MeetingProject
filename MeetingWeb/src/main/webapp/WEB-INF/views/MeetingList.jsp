@@ -53,17 +53,17 @@
 					</tr>
 				</c:forEach>
 			</table>
-			<div>
+			<!-- <div>
 				<select>
 					<option>분야</option>
 				</select>
 				<input type="text">
-			</div>
+			</div> -->
 			<nav id="meeting-navi">
 				<ul class="pagination">
 					<c:if test="${map.page.startPage > 5 }">
 						<li>
-							<a href="#" aria-label="Previous">
+							<a href="#" aria-label="Previous" onclick="navi(${map.page.startPage - 1})">
 								<span aria-hidden="true">&laquo;</span>
 							</a>
 						</li>
@@ -76,11 +76,11 @@
 						</c:if>
 					</c:forEach>
 					<c:if test="${map.page.endPage <= map.page.maxPage }">
-					<li>
-						<a href="#" aria-label="Next">
-							<span aria-hidden="true">&raquo;</span>
-						</a>
-					</li>
+						<li>
+							<a href="#" aria-label="Next" onclick="navi(${map.page.endPage + 1})">
+								<span aria-hidden="true">&raquo;</span>
+							</a>
+						</li>
 					</c:if>
 				</ul>
 			</nav>
@@ -96,8 +96,8 @@
 	</script>
 </c:if>
 <script type="text/javascript">
-	function navi(page, status) {
-		location.href = "/NowMeetingWeb/meeting/notNowList?page=" + page + "&status=" + status;
+	function navi(page) {
+		location.href = "/NowMeetingWeb/meeting/notNowList?currPage=" + page/*  + "&status=" + status */;
 	}
 </script>
 </html>

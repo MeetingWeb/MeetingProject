@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import meeting.team.service.MeetingService;
 import meeting.team.service.UserService;
 import meeting.team.vo.EmailVo;
+import meeting.team.vo.MeetingVo;
 import meeting.team.vo.UserVo;
 
 @RequestMapping({"/web/"})
@@ -36,6 +37,11 @@ public class WebController {
 	@ResponseBody
 	public String check(@Valid UserVo uvo,BindingResult result,HttpServletRequest request){
 		return us.check(uvo,result,request);
+	}
+	
+	@RequestMapping(value="addForm", method = RequestMethod.GET)
+	public String addMeetingForm() {
+		return "addMeetingForm";
 	}
 	
 	@RequestMapping("mobileLogin")
@@ -196,12 +202,18 @@ public class WebController {
 	 @RequestMapping(value="personal_info")
 	 @ResponseBody
 	 public String personal_info(@RequestParam("id")String id){
+		
+
 		 return us.personal_info(id);
 	 }
-	 
+	  
 	 @RequestMapping(value="personal_form", method = RequestMethod.GET)
-		public String personal_form() {
-			return "parsonal/personal_info";
+		public String personal_form(HttpServletRequest request,Model model) throws Exception {
+		 String id = (String) request.getSession().getAttribute("id");
+		 List<MeetingVo> list =  us.create_join(id);
+		 //System.out.println("Á¦¸ñ¶ß³Ä"+list.get(0).getTitle());
+		 model.addAttribute("mlist", list);
+		 return "parsonal/personal_info";
 		}
 	 
 	 
@@ -217,5 +229,10 @@ public class WebController {
 		 return us.interests(id,interests);
 	 }
 	 
+	 @RequestMapping(value="complete")
+	    @ResponseBody
+	    public String complete(@RequestParam("num")int num,@RequestParam("master")String master){
+	       return ms.complete(num,master);
+	    }
     
 }

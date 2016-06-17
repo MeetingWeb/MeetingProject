@@ -200,97 +200,113 @@ $(function() {
 	
 	
 /////게인정보///////
-	
-	var flips = 0;
-	$('div#member-info-btn').on("click",function(){
+	   
+	   var flips = 0;
+	   $('div#member-info-btn').on("click",function(){
 
-		location.href='/NowMeetingWeb/web/personal_form';
+	      location.href='/NowMeetingWeb/web/personal_form';
+	   });
+	   
+
+	   
+
+	   $('div#pass_changebtn').on("click",function(){
+
+	      $('div#pass_changeform').css("display","block");
+	      $('#pass_changebtn').text("저 장").attr('onclick','javascript:pwchangesave();').attr('id','ii');
+	   });
+	   
+	   
+	   $('div#interests_changebtn').on("click",function(){
+
+	      $('input[name=interest]').prop('disabled', false);
+	      $('#interests_changebtn').text("저 장").attr('onclick','interestssave()').attr('id','i');
+	      
+	   });
+	   
+	   //////////////아이디/패스워드 찾기////////////////////////
+	   $("#searchID").on("click", function() {
+	      location.href = "../searchForm";
+	   });
+	   
+	   
 	});
-	
-
-	
-
-	$('div#pass_changebtn').on("click",function(){
-
-		$('div#pass_changeform').css("display","block");
-		$('#pass_changebtn').text("저 장").attr('onclick','javascript:pwchangesave();').attr('id','ii');
-	});
-	
-	
-	$('div#interests_changebtn').on("click",function(){
-
-		$('input[name=interest]').prop('disabled', false);
-		$('#interests_changebtn').text("저 장").attr('onclick','interestssave()').attr('id','i');
-		
-	});
-	
-	
-});
 
 
-function pwchangesave() {
-	var id = $('div#pid').text();
-	var pw = $('input#pw').val();
+	function pwchangesave() {
+	   var id = $('div#pid').text();
+	   var pw = $('input#pw').val();
+	   var pwc = $('input#pwc').val();
+	   if (confirm("정말 저장하시겠습니까?") == true)
+	   {
+	      
+	   
+	   
+	   if(pw!=pwc || pw=="" || pwc=="")alert("비밀번호를 확인해 주세요.");
+	   if(pw==pwc && pw!="" && pwc!="")
+	   {
+	      $.ajax({
+	         type : 'post',
+	         dataType : 'json',
+	         data : {id:id,pw:pw},
+	         url : 'pwchange',         
+	         success : function(data) {
+	            if(data.ok==true)
+	            {
+	               alert("변경 되었습니다.");
+	               $('#ii').text("비밀번호 변경").attr('onclick','#').attr('id','pass_changebtn');
+	               $('div#pass_changeform').css("display","none");
+	            }
+	            
+	            
+	         },
+	         complete : function(data) {
 
-	$.ajax({
-		type : 'post',
-		dataType : 'json',
-		data : {id:id,pw:pw},
-		url : 'pwchange',			
-		success : function(data) {
-			if(data.ok==true)
-			{
-				alert("변경 되었습니다.");
-				$('#ii').text("비밀번호 변경").attr('onclick','#').attr('id','pass_changebtn');
-				$('div#pass_changeform').css("display","none");
-			}
-			
-			
-		},
-		complete : function(data) {
+	         },
+	         error : function(xhr, status, error) {
+	            alert(error);
+	         }
+	      });
+	   }
 
-		},
-		error : function(xhr, status, error) {
-			alert(error);
-		}
-	});
-	
-}
+	   }
+	   
+	}
 
-function interestssave() {
-	var id = $('div#pid').text();
-	var interests = "";
-		$("input[name=interest]:checked").each(function(i) {
-			interests += $(this).val();
-			if(i+1!=$('input[name=interest]:checked').length)
-			{
-				interests +=",";
-			}
-			
-		});
+	function interestssave() {
+	   var id = $('div#pid').text();
+	   var interests = "";
+	      $("input[name=interest]:checked").each(function(i) {
+	         interests += $(this).val();
+	         if(i+1!=$('input[name=interest]:checked').length)
+	         {
+	            interests +=",";
+	         }
+	         
+	      });
 
-	$.ajax({
-		type : 'post',
-		dataType : 'json',
-		data : {interests:interests,id:id},
-		url : 'interests',			
-		success : function(data) {
-			if(data.ok==true)
-			{
-				alert("변경 되었습니다.");
-				$('input[name=interest]').prop('disabled', true);
-				$('#i').text("관심분야 변경").attr('onclick','#').attr('id','interests_changebtn');
-			}
-			
-			
-			
-		},
-		complete : function(data) {
+	   $.ajax({
+	      type : 'post',
+	      dataType : 'json',
+	      data : {interests:interests,id:id},
+	      url : 'interests',         
+	      success : function(data) {
+	         if(data.ok==true)
+	         {
+	            alert("변경 되었습니다.");
+	            $('input[name=interest]').prop('disabled', true);
+	            $('#i').text("관심분야 변경").attr('onclick','#').attr('id','interests_changebtn');
+	         }
+	         
+	         
+	         
+	      },
+	      complete : function(data) {
 
-		},
-		error : function(xhr, status, error) {
-			alert(error);
-		}
-	});
-	
-}
+	      },
+	      error : function(xhr, status, error) {
+	         alert(error);
+	      }
+	   });
+	   
+	}

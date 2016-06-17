@@ -37,16 +37,6 @@
 			}
 		}
 
-		<c:if test="${ok == true}">
-		var email = '<c:out value="${requestScope.email}"/>';
-		$("input[name='id']").prop('disabled', false);
-		$("input[name='pw']").prop('disabled', false);
-		$("input[name='pwc']").prop('disabled', false);
-		$("input[name='name']").prop('disabled', false);
-		$("input[name='interests']").prop('disabled', false);
-		$("input[name='email']").val(email);
-		$('form#joinform').css("display", "block")
-		</c:if>
 	
 	});
 
@@ -54,7 +44,23 @@
 	function writesave() {
 
 		var form = new FormData(document.getElementById('writeform')); 
+		var contents = $('textarea[name=contents]').val();
+		var title = $('input[name=title]').val();
+		if(title=="" || title==null)
+		{
+			alert("제목을 입력해 주세요.")	
+		}
 		
+		if(contents=="" || contents==null)
+		{
+			alert("내용을 입력해 주세요.")	
+		}
+		
+		
+		
+		
+		if (confirm("정말 저장하시겠습니까??") == true)
+		{
 
 		$.ajax({
 			type : 'post',
@@ -66,12 +72,12 @@
 			success : function(evt) {
 				if(evt.ok==true)
 				{
-					alert("저장 성공");
+					alert("글이 써졌습니다.");
 					location.href='lateread';
 				}
 				else if(evt.ok==false)
 				{
-					alert("저장실패");
+					alert("글쓰기에 실패했습니다.");
 				}
 					
 			},
@@ -82,6 +88,7 @@
 				alert(error);
 			}
 		});
+		}
 		
 		
 	}

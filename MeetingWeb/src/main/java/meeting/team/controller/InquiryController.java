@@ -80,9 +80,9 @@ public class InquiryController {
 	
 	@RequestMapping(value="updates", method=RequestMethod.POST)
 	@ResponseBody
-	public String updates(InquiryVo ivo)
+	public String updates(InquiryVo ivo, HttpServletRequest request)
 	{
-		return is.updates(ivo);
+		return is.updates(ivo,request);
 		
 	}
 	
@@ -110,6 +110,12 @@ public class InquiryController {
 	public String list(HttpServletRequest request,@RequestParam("page") int page, @RequestParam("start") int start, @RequestParam("check") int check)
 	{
 		String id = (String) request.getSession().getAttribute("id");
+		if(id==null)
+		{
+
+			return "redirect:/web/main";
+		}
+		System.out.println(id);
 		request.setAttribute("start", start);
 		List<InquiryVo> list = is.ilist(page,request,check,id);
 		request.setAttribute("list", list);

@@ -13,26 +13,54 @@ import meeting.team.vo.ReplyVo;
 public interface MeetingDao {
 
 	List<MeetingVo> getMeetingList(String id);
+
 	List<MeetingVo> getAllMeeting();
+
 	MeetingVo getMeeting(int num);
+
 	List<MeetingVo> getRecommend(String interest);
+
 	int insert(MeetingVo meeting);
+
 	int chatInsert(Map<String, String> chatMap);
+
 	int userExit(Map<String, String> chatMap);
+
 	int maxNum(String id);
+
 	MeetingVo selectOne(int num);
+
 	ArrayList<ChatVo> getChatList(String id);
+
 	ArrayList<String> getChatGroup(String master);
+
 	int updateUser(String master);
+
 	ArrayList<MeetingVo> getNotNowMeetingList(MeetingPageVo page);
+
 	int addReply(ReplyVo reply);
+
 	List<ReplyVo> getReplyList(HashMap<String, Object> pageMap);
+
 	int getRowCount(int ref);
+
 	int replyDelete(HashMap<String, Object> pageMap);
+
 	int replyModify(HashMap<String, Object> pageMap);
+
 	String getMyLocation(String id);
+
 	int chatDelete(String master);
+
 	int updateMeeting(MeetingVo meeting);
+
 	int getMeetingRowCount();
+
 	MeetingVo getInfoList(String master);
+
+	int changeToMember(String master);
+
+	int removeMeeting(int num);
+
+	int removeChat(String master);
 }

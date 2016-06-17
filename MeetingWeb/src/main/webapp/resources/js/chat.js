@@ -6,6 +6,7 @@ $(function() {
 		$(".chat-group").css("background","#ddd");
 		$(this).css("background","#fff");
 		master = $(this).find("input[type=hidden]").val();
+		$(".chat-lid-in-title").text($(this).find(".title").text().substring(6));
 		$(".chat-lid-in-console").empty();
 	});
 	
@@ -39,6 +40,7 @@ $(function() {
 			} else {
 				$(".chat-lid-in-console").append('<span class=user-msg>'+ json.sender+" -> " + json.msg + '</span><br>');
 			}
+			console.log(json.userList);
 		}
 		
 		if(location.pathname != "/NowMeetingWeb/web/chatForm") {
@@ -85,18 +87,20 @@ $(function() {
 	 
 	$("#contents .chat-btn").on("click", function() {
 		var master = $(".modal-footer input[name=master]").val();
+		var title =$("#myModalLabel").text();
 		console.log("방장 -> " + master);
 		console.log("방장 -> " + user_id);
+		console.log(title);
 		$.ajax({
 			url : "/NowMeetingWeb/meeting/chatInsert",
 			type : "post",
-			data :{member : user_id, master : master},
+			data :{member : user_id, master : master, title : title},
 			dataType : "json",
 			success : function(obj){
 				location.href = "/NowMeetingWeb/web/chatForm";
 			},
 			error : function(error, xhr, status) {
-				alert("error");
+				alert("권한이 없습니다.");
 			}
 		});
 		

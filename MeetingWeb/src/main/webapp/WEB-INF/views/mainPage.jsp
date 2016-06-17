@@ -192,9 +192,12 @@
 <ul class = "list-group">
    <li class = "list-group-item"><input type="checkbox" name="search" value="롱보드"><span class="searchtext">롱보드</span></li>
    <li class = "list-group-item"><input type="checkbox" name="search" value="농구"><span class="searchtext">농구</span></li>
-   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
-   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
-   <li class = "list-group-item"><input type="checkbox" name="search" value=""><span class="searchtext">선택1</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value="야구"><span class="searchtext">야구</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value="배구"><span class="searchtext">배구</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value="수영"><span class="searchtext">수영</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value="영화보기"><span class="searchtext">영화보기</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value="밥 먹기"><span class="searchtext">밥 먹기</span></li>
+   <li class = "list-group-item"><input type="checkbox" name="search" value="자전거"><span class="searchtext">자전거</span></li>
  <button type = "button" class = "btn btn-success btn-lg" onclick="goSearch()" style="width:100%">검색</button>  
 </ul>		
 </div> 

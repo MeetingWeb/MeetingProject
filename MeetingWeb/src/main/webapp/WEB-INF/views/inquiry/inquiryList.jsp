@@ -26,9 +26,11 @@
 	$(function() {
 		
 		
+		
+		
 		$('.list_huvor').hover(
 				  function () {
-				    $(this).css("background-color","#000");
+				    $(this).css("background-color","#BDBDBD");
 				  },
 				  function () {
 				    $(this).css("background-color","#fff");
@@ -43,11 +45,11 @@
 		
 		if(start==1)
 		{
-			$('button[name=left]').css("opacity","0").prop("disabled", true);
+			$('a#left').css("opacity","0").prop("disabled", true);
 		}
 		if(end>pages)
 		{
-			$('button[name=right]').css("opacity","0").prop("disabled", true);
+			$('a#right').css("opacity","0").prop("disabled", true);
 		}
 
 
@@ -97,11 +99,11 @@
 
 
 <div id="pageNavi">
-<button type="button" name="left" onclick="location.href='list?page=${start-5}&start=${start-5}&check=${check}&serch=${serch}&select=${select}'"><<</button>
+<a id="left" onclick="location.href='list?page=${start-5}&start=${start-5}&check=${check}&serch=${serch}&select=${select}'" style="margin: auto 20px; cursor: pointer; text-decoration: none;"><<</a>
 <c:forEach var="i" begin="${start}" end="${en}">
-<a href="list?page=${i}&start=${start}&check=${check}&serch=${serch}&select=${select}">${i}</a>
+<a style="margin: auto 10px auto 10px; cursor: pointer; text-decoration: none;" href="list?page=${i}&start=${start}&check=${check}&serch=${serch}&select=${select}">${i}</a>
 </c:forEach>
-<button type="button" name="right" onclick="location.href='list?page=${start+5}&start=${start+5}&check=${check}&serch=${serch}&select=${select}'">>></button>
+<a id="right" onclick="location.href='list?page=${start+5}&start=${start+5}&check=${check}&serch=${serch}&select=${select}'" style="margin: auto 20px; cursor: pointer; text-decoration: none;">>></a>
 </div>
 
 
@@ -110,7 +112,7 @@
 
 
 <div id="search_btn">
-<form method="get">
+<form id="myForm" method="get">
 <input type="hidden" name="page" value="1">
 <input type="hidden" name="start" value="1">
 <input type="hidden" name="check" value="2">
@@ -118,8 +120,7 @@
 <input type="radio" name="select" value="내 용">내 용
 <input type="radio" name="select" value="작성자">작성자
 <input type="text" name="serch">
-<button type="submit">확 인</button>
-<a type="submit"></a>
+<a onclick="document.getElementById('myForm').submit();" style="cursor: pointer; position: relative; left: -25px; top:-2px;"><img src="/NowMeetingWeb/resources/images/search_icon.png"></a>
 </form>
 </div>
 

@@ -157,6 +157,9 @@ function showDetail(num){
 			var title=meeting.title;
 			var mapname=meeting.mapname;
 			
+			if(mapname == 'none')
+				mapname = "none.jpg";
+			
 			var startTimeArr=start_time.split(" ");
 			var s=startTimeArr[1].split(":");
 			var start=s[0]+"시 "+s[1]+"분";
@@ -171,11 +174,12 @@ function showDetail(num){
 				
 			}else{
 				$('#complete-btn').on('click',function(){
-					complete(num);
+					complete(num,master);
 				});
+				$("#modify-btn").attr("onclick","javascript:location.href='/NowMeetingWeb/meeting/modifyForm?num=83'");
 			}
 			var html="<table class='table'><tr><td colspan='2'>"+contents+"</td></tr>" +
-					"<tr><td>주최자</td><td>"+master+"</td></tr>"+
+					"<tr><td>주최자</td><td class='master'>"+master+"</td></tr>"+
 					"<tr><td>종목</td><td>"+type+"</td></tr>"+
 					"<tr><td>시작시간</td><td>"+start+"</td></tr>"+
 					"<tr><td>끝나는시간</td><td>"+end+"</td></tr>"+					
@@ -306,34 +310,35 @@ function myMarker(latlng){
 	
 }
 
-function complete(mettingnum){
-	if(confirm('모임을 끝내시겠습니까??'))
-	{
-		
-		 $.ajax({
-			type : 'post',
-			dataType : 'json',
-			url : 'complete',
-			data : {
-				num:mettingnum
-				
-			},
-			success : function(evt) {
-				if(evt.ok){
-					alert('완료처리 되었습니다.');
-					location.href="main";
-				}else alert('완료처리가 되지 않았습니다.')
-				
-			},
-			complete : function(data) {
+function complete(mettingnum,meetingmaster){
+    if(confirm('모임을 끝내시겠습니까??'))
+    {
+       
+        $.ajax({
+          type : 'post',
+          dataType : 'json',
+          url : 'complete',
+          data : {
+             num:mettingnum,
+             master:meetingmaster
+             
+          },
+          success : function(evt) {
+             if(evt.ok){
+                alert('완료처리 되었습니다.');
+                location.href="main";
+             }else alert('완료처리가 되지 않았습니다.')
+             
+          },
+          complete : function(data) {
 
-			},
-			error : function(xhr, status, error) {
-				alert(error);
-			}
-		});			 
-	}		
-}
+          },
+          error : function(xhr, status, error) {
+             alert(error);
+          }
+       });          
+    }      
+ }
 
 function makeMarker(latlng,meeting){
 	var num=String(meeting.num);

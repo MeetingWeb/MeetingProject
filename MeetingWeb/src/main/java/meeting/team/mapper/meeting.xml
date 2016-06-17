@@ -58,12 +58,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		(
 		SELECT r1.*, TRUNC((rn -1) / 10 + 1) AS currPage FROM
 		(
-		SELECT ROWNUM rn, master, title, contents, division, area,num, field, start_time FROM
+		SELECT ROWNUM rn, r.* FROM
 		(
-		SELECT * FROM meeting ORDER BY start_time DESC
-		)
+		SELECT * FROM meeting WHERE division='notnow' ORDER BY start_time DESC
+		)r
 		)r1
-		)r2 WHERE currPage =#{currPage} AND division='notnow'
+		)r2 WHERE currPage =#{currPage}
 		<choose>
 			<when test="search != null">
 				AND #{search}=#{searchComm}
@@ -124,4 +124,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getInfoList" resultType="meeting.team.vo.MeetingVo">
 		SELECT * FROM meeting WHERE division='now' AND master=#{master}
 	</select>
+	
+	<delete id="removeMeeting" parameterType="java.lang.Integer" >
+      delete from meeting where num=#{num}
+   </delete>
+   
+   <delete id="removeChat" parameterType="java.lang.String">
+      delete from chatList where master=#{master}
+   </delete>
+   <update id="changeToMember" parameterType="java.lang.String">
+      update users set power='MEMBER' where id=#{master}
+   </update>
+   
 </mapper>

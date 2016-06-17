@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,8 @@ public class ChatController extends TextWebSocketHandler {
 		Iterator<String> id_it = session_map.keySet().iterator();
 		JSONObject jsonObj = new JSONObject();
 		jsonObj.put("cmd", "list");
-		jsonObj.put("msg", user_id + " -> EXIT");
+		jsonObj.put("msg", "EXIT");
+		jsonObj.put("sender", (String) map.get("userId"));
 		
 		for(int i = 0; i < user_list.size(); i++) {
 			if(id_it.hasNext()){
@@ -82,9 +84,16 @@ public class ChatController extends TextWebSocketHandler {
 
 		JSONObject jsonObj = (JSONObject) jsonParser.parse(payloadMessage);
 		String master = (String) jsonObj.get("master");
-
+		JSONArray jsonArr = new JSONArray();
 		if (master != null) {
 			ArrayList<String> list = chat_svc.getChatMember(master);
+			for (int i = 0; i < list.size(); i++) {
+				String id = list.get(i);
+				WebSocketSession userPath = session_map.get(id);
+				if (userPath != null)
+					jsonArr.add(id);
+			}
+			jsonObj.put("userList", jsonArr);
 			for (int i = 0; i < list.size(); i++) {
 				WebSocketSession userPath = session_map.get(list.get(i));
 				if (userPath != null)
