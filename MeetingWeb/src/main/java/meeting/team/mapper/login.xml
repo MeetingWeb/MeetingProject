@@ -49,8 +49,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	
 	<select id="personal_info" resultType="meeting.team.vo.UserVo" parameterType="java.lang.String">
-		select a.id, a.name, a.email, b.interest, c.location from users a, interests b, my_location c where a.id=#{id}
-	</select>
+      select * from users where id=#{id}
+   </select>
+   
+   <select id="personal_info2" resultType="meeting.team.vo.UserVo" parameterType="java.lang.String">
+      select * from interests where id=#{id}
+   </select>
 	
 	<update id="pwchange" parameterType="hashmap">
 		update users set pw=#{pw} where id=#{id} 
@@ -63,4 +67,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="delete" parameterType="java.lang.String">
 		delete from interests where id=#{id}
 	</delete>
+	
+	<select id="create_join" resultType="meeting.team.vo.MeetingVo" parameterType="java.lang.String">
+		select * from MEETING where master=#{id}
+	</select>
 </mapper>

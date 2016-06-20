@@ -82,6 +82,7 @@ public class MeetingService {
 		jsonObj.put("type", meeting.getField());
 		jsonObj.put("startTime", meeting.getStart_time().toString());
 		jsonObj.put("title", meeting.getTitle());
+		jsonObj.put("mapname", meeting.getMap_name());
 
 		return jsonObj.toJSONString();
 
@@ -108,7 +109,7 @@ public class MeetingService {
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(master);
 		meeting.setMap_name(roughMapSave(request));
-		//meeting.setDivision("now");
+		// meeting.setDivision("now");
 
 		Map<String, String> chatMap = new HashMap<String, String>();
 		int chatOk = 0;
@@ -194,11 +195,13 @@ public class MeetingService {
 	public String chatInsert(HttpServletRequest request) {
 		String member = request.getParameter("member");
 		String master = request.getParameter("master");
+		String title = request.getParameter("title");
 		ArrayList<String> list = MeetingController.chatMap.get(master);
 		Map<String, String> chatMap = new HashMap<String, String>();
 
 		chatMap.put("member", member);
 		chatMap.put("master", master);
+		chatMap.put("title", title);
 
 		JSONObject json = new JSONObject();
 		int userInOk = meeting_dao.userExit(chatMap);
@@ -314,8 +317,8 @@ public class MeetingService {
 		pageMap.put("ref", ref);
 		pageMap.put("num", num);
 		pageMap.put("showRow", SHOWROW);
-		
-		if(meeting_dao.replyDelete(pageMap) > 0) {
+
+		if (meeting_dao.replyDelete(pageMap) > 0) {
 			List<ReplyVo> list = meeting_dao.getReplyList(pageMap);
 			int maxPage = meeting_dao.getRowCount(ref);
 			for (int i = 0; i < list.size(); i++) {
@@ -334,7 +337,7 @@ public class MeetingService {
 		}
 		return arr.toJSONString();
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	public String replyModify(int ref, int num, int page, String contents) {
 		JSONArray arr = new JSONArray();
@@ -343,8 +346,8 @@ public class MeetingService {
 		pageMap.put("num", num);
 		pageMap.put("showRow", SHOWROW);
 		pageMap.put("contents", contents);
-		
-		if(meeting_dao.replyModify(pageMap) > 0) {
+
+		if (meeting_dao.replyModify(pageMap) > 0) {
 			List<ReplyVo> list = meeting_dao.getReplyList(pageMap);
 			int maxPage = meeting_dao.getRowCount(ref);
 			for (int i = 0; i < list.size(); i++) {
@@ -402,8 +405,7 @@ public class MeetingService {
 	}
 
 	private String getApiAddress() {
-		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude
-				+ "&language=ko";
+		String apiURL = "http://maps.googleapis.com/maps/api/geocode/json?latlng=" + latitude + "," + longitude + "&language=ko";
 		return apiURL;
 	}
 
@@ -429,7 +431,7 @@ public class MeetingService {
 	public String getAddress() {
 		return regionAddress;
 	}
-	
+
 	public List<MeetingVo> getMeetingList(HttpServletRequest request) {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
 		HttpSession session = request.getSession();
@@ -437,7 +439,6 @@ public class MeetingService {
 		session.setAttribute("id", id);
 		return meeting_dao.getMeetingList(id);
 	}
-
 
 	public MeetingVo modifyForm(int num) throws Exception {
 		meeting_dao = sql_temp.getMapper(MeetingDao.class);
@@ -448,7 +449,7 @@ public class MeetingService {
 		this.longitude = Double.parseDouble(addr[1]);
 		this.regionAddress = getRegionAddress(getJSONData(getApiAddress()));
 		meeting.setArea(this.regionAddress + "/" + area);
-		
+
 		return meeting;
 	}
 
@@ -478,7 +479,7 @@ public class MeetingService {
 		meeting.setEnd_time(e_stamp);
 		meeting.setMaster(master);
 		meeting.setMap_name(roughMapSave(request));
-		//meeting.setDivision("now");
+		// meeting.setDivision("now");
 
 		Map<String, String> chatMap = new HashMap<String, String>();
 		chatMap.put("master", master);
@@ -490,9 +491,9 @@ public class MeetingService {
 		} else {
 			chatOk = meeting_dao.chatDelete(master);
 		}
-		
+
 		int ok = meeting_dao.updateMeeting(meeting);
-		
+
 		if (ok > 0) {
 			json.put("ok", true);
 		} else {
@@ -500,4 +501,19 @@ public class MeetingService {
 		}
 		return json.toJSONString();
 	}
+
+	public String complete(int num, String master) {
+		meeting_dao = sql_temp.getMapper(MeetingDao.class);
+		int res = meeting_dao.removeMeeting(num);
+		int res2 = meeting_dao.removeChat(master);
+		int res3 = meeting_dao.changeToMember(master);
+		JSONObject jsonObj = new JSONObject();
+		if (res == 1 && res2 == 1 && res3 == 1) {
+			jsonObj.put("ok", true);
+		} else
+			jsonObj.put("ok", false);
+		return jsonObj.toJSONString();
+
+	}
+
 }

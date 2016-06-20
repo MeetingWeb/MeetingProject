@@ -32,48 +32,56 @@
 						</div>
 					</li>
 				</sec:authorize>
-				<li>
-					<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>
-					<div class="menu-btn-name">
-						<a href="/NowMeetingWeb/notice/getList">NOTICE</a>
-					</div>
-					<div class="menu-btn-name">
-						<a href="/NowMeetingWeb/reviews/list">REVIEWS</a>
-					</div>
-				</li>
+				<sec:authorize access="! hasAuthority('BLACK')">
+					<li>
+						<div class="glyphicon glyphicon-list-alt menu-btn-icon"></div>
+						<div class="menu-btn-name">
+							<a href="/NowMeetingWeb/notice/getList">NOTICE</a>
+						</div>
+						<div class="menu-btn-name">
+							<a href="/NowMeetingWeb/reviews/list">REVIEWS</a>
+						</div>
+						<div class="menu-btn-name">
+							<a href="/NowMeetingWeb/reportList">REPORT</a>
+						</div>
+					</li>
+				</sec:authorize>
 				<li>
 					<div class="glyphicon glyphicon-phone-alt menu-btn-icon"></div>
 					<div class="menu-btn-name">
 						<a href="/NowMeetingWeb/inquiry/list?page=1&start=1&check=1">INQUIRY</a>
 					</div>
 				</li>
-				<li id="message-btn">
-					<div class="glyphicon glyphicon-envelope menu-btn-icon" style="width: 100%;">
-						<span class="badge" style="position: absolute; top: -10px; left: 35px; display: none;">0</span>
-					</div>
-					<div class="menu-btn-name">
-						<a href="/NowMeetingWeb/web/chatForm">MESSAGE</a>
-					</div>
-				</li>
-				<li>
-			<div id="search-btn" class="glyphicon glyphicon-search menu-btn-icon"></div>
-					<div class="menu-btn-name" id="search-btn-name">
-						<a href="#">SEARCH</a>
-					</div>
-				</li>
-				<li>
-					<div id="mylocation-btn" class="glyphicon glyphicon-flag menu-btn-icon"></div>
-					<div class="menu-btn-name" id="myLocation-btn-name">
-						<a href="/NowMeetingWeb/web/myLocation">내위치</a>
-					</div>
-				</li>
+				<sec:authorize access="! hasAuthority('BLACK')">
+					<li id="message-btn">
+						<div class="glyphicon glyphicon-envelope menu-btn-icon" style="width: 100%;">
+							<span class="badge" style="position: absolute; top: -10px; left: 35px; display: none;">0</span>
+						</div>
+						<div class="menu-btn-name">
+							<a href="/NowMeetingWeb/web/chatForm">MESSAGE</a>
+						</div>
+					</li>
+
+					<li>
+						<div id="search-btn" class="glyphicon glyphicon-search menu-btn-icon"></div>
+						<div class="menu-btn-name" id="search-btn-name">
+							<a href="#">SEARCH</a>
+						</div>
+					</li>
+					<li>
+						<div id="mylocation-btn" class="glyphicon glyphicon-flag menu-btn-icon"></div>
+						<div class="menu-btn-name" id="myLocation-btn-name">
+							<a href="/NowMeetingWeb/web/myLocation">내위치</a>
+						</div>
+					</li>
+				</sec:authorize>
 				<sec:authorize access="hasAuthority('ADMIN')">
-				<li>
-					<div id="mylocation-btn" class="glyphicon glyphicon-cog menu-btn-icon"></div>
-					<div class="menu-btn-name" id="myLocation-btn-name">
-						<a href="/NowMeetingWeb/web/blackList">블랙리스트</a>
-					</div>
-				</li>
+					<li>
+						<div id="mylocation-btn" class="glyphicon glyphicon-cog menu-btn-icon"></div>
+						<div class="menu-btn-name" id="myLocation-btn-name">
+							<a href="/NowMeetingWeb/web/blackList">블랙리스트</a>
+						</div>
+					</li>
 				</sec:authorize>
 			</ul>
 		</nav>

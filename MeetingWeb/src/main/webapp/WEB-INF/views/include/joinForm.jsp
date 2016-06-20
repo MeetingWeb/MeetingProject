@@ -56,8 +56,8 @@
 				수영
 				</td>
 				<td>
-				<input type="checkbox" name="interest" value="여행" disabled>
-				여행
+				<input type="checkbox" name="interest" value="롱보드" disabled>
+				롱보드
 				</td>
 				
 				</tr>

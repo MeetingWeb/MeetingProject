@@ -30,7 +30,7 @@
 				<span>CHAT LIST</span>
 				<c:forEach var="info" items="${map }">
 					<div class="chat-group">
-						<span class="master">주최자 : ${info.master }</span>
+						<div id="chat-list-title"><span class="master">주최자 : ${info.master }</span></div>
 						<div class="title">모임이름 : ${info.title}</div>
 						<input type="hidden" class="master" value="${info.master }">
 					</div>

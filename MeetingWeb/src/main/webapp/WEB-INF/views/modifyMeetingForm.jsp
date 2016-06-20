@@ -132,14 +132,10 @@
 									<option>축구</option>
 									<option>족구</option>
 									<option>배드민턴</option>
-									<option>보드타기</option>
-									<option>자전거</option>
-									<option>술먹기</option>
+									<option>롱보드</option>
+									<option>자전거타기</option>
 									<option>영화보기</option>
 									<option>밥 먹기</option>
-									<option>배구</option>
-									<option>수영</option>
-									<option>코딩하기</option>
 								</select>
 							</div>
 						</div>

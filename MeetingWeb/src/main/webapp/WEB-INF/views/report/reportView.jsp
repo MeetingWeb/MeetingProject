@@ -3,11 +3,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<!-- Bootstrap -->
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/navi.js"/>'></script>
+<script type="text/javascript" src='<c:url value="/resources/js/chat.js"/>'></script>
+
+
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/report.css"/>'>
+<link rel="stylesheet" type="text/css" href='<c:url value="/resources/css/basic_style.css"/>'>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" 
+	integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" 
+	integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"
+	 integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+<!-- Bootstrap -->
+
 <title>사건사고 게시판</title>
+
 <script type="text/javascript" src='<c:url value="/resources/js/jquery-2.2.2.min.js"/>'></script>
 
 <script type="text/javascript">
@@ -47,10 +69,10 @@
 			success : function(save) {
 				if(save.code = 200) {
 					alert(save.msg);
-					location.href = save.url;
+					location.href = save.url + ${info.num};
 				} else if(save.code == 201) {
 					alert(save.msg);
-					location.href = save.url;
+					location.href = save.url + ${info.num};
 				}
 			},
 			error : function(error) {
@@ -59,33 +81,37 @@
 		}); // end of ajax({})
 	} // end of saved()
 	
-	// 댓글 수정 조회
-	function editReply(num, index, contents) {
+	// 댓글 수정 전 사용할 함수
+	function editReplyPre(index) {
 		
-		var html = "<input type='text' id='contents' value='"+contents+"'>";
-		$("#reBtn"+index).html(html);
+		$("#replyContents"+index).css("display", "none");
+		$("#divEdit"+index).css("display", "none");
 		
-		var html = "<button type='button' onclick='replySaved("+num+",\""+contents+"\" )'>등록</button>";
-		$("#editBtn"+index).html(html);
+		var text = document.getElementById("contents"+index);
+		text.type= "text";
+		
+		var btn = document.getElementById("replyEditSaveBtn"+index);
+		btn.type = "button";
 	}
 	
 	// 댓글 수정 등록
-	function replySaved(num, contents) {
-		
+	function replySaved(index, num, contents) {
 		$.ajax({
 			url : "./replyEdit",
 			type : "post",
 			data : {
 				num : num,
-				contents : $('#contents').val()
+				contents : $('#contents'+index).val()
 			},
 			success : function(saved) {
 				if(saved.code = 200) {
 					alert(saved.msg);
-					location.href = saved.url;
+					$("#replyContents"+index).text($('#contents'+index).val() );
+					editReplyNext(index);
+					
 				} else if(saved.code == 201) {
 					alert(saved.msg);
-					location.href = saved.url;
+					location.href = save.url + ${info.num};
 				}
 			},
 			error : function(error) {
@@ -94,9 +120,21 @@
 		}); // end of ajax({})
 	}
 	
+	// 댓글 수정 후 사용할 함수
+	function editReplyNext(index) {
+		
+		$("#replyContents"+index).css("display", "");
+		$("#divEdit"+index).css("display", "");
+		
+		var text = document.getElementById("contents"+index);
+		text.type= "hidden";
+		
+		var btn = document.getElementById("replyEditSaveBtn"+index);
+		btn.type = "hidden";
+	}
 	
 	// 댓글 삭제
-	function replyRemoved(num) {
+	function replyRemoved(index, num) {
 		if (!confirm('댓글를 정말로 삭제하시겠어요?'))
 			return;
 			
@@ -107,10 +145,11 @@
 			success : function(del) {
 				if(del.code = 200) {
 					alert(del.msg);
-					location.href = del.url;
+					$("#tdReplyContents"+index).parent().remove();
+					
 				} else if (del.code == 201) {
 					alert(del.msg);
-					location.href = del.url;
+					location.href = save.url + ${info.num};
 				}
 			},
 			error : function(error) {
@@ -123,99 +162,142 @@
 		
 </head>
 <body>
+	<jsp:include page="../include/navi.jsp" />
+	<jsp:include page="../include/header.jsp" />
+	<section id="contents">
 	
-	<div align="center">
-	<h1>상세보기 페이지</h1>
-
-	<form id="viewForm">
-		<table>
-			<tr>
-				<th>글 번호</th>
-				<td><input type="hidden" name="num" value="${info.num}">${info.num}</td>
-			</tr>
-		
-			<tr>
-				<th>작성자</th>
-				<td>${info.id}</td>
-			</tr>
-			
-			<tr>
-				<th>작성일</th>
-				<td><fmt:formatDate value="${info.cre_date}" pattern="yyyy-MM-dd"/></td>
-			</tr>
-			
-			<tr>
-				<th>제목</th>
-				<td>${info.title}</td>
-			</tr>
-			
-			<tr>
-				<th>내용</th>
-				<td>${info.contents}</td>
-			</tr>
-			<tr>
-				<th>이전글</th>
-				<td><a href="reportInfo?num=${prev.num}">${prev.title}</a></td>
-			</tr>
-			<tr>
-				<th>다음글</th>
-				<td><a href="reportInfo?num=${next.num}">${next.title}</a></td>
-			</tr>
-		</table>
-		<sec:authentication property='name' var="currentUserName"/>
-		<c:if test="${currentUserName == info.id}">
-			<button type="button" onclick="editForm()">수정</button>
-			<button type="button" onclick="removed()">삭제</button>
-		</c:if>
-	</form>
-	
+	<div id="header">
+		<h1>상세보기 페이지</h1>
 	</div>
-	
-	<!-- 댓글 등록 -->
-	<div align="center">
-		<h3>댓글</h3>
-		<form id="replyForm">
-				<input type="hidden" name="id" value="<sec:authentication property='name'/>" />
-				<input type="hidden" name="ref" value="${info.num}">
-			<table>
+
+		<form id="viewForm">
+			<table id="tbl" class="table col-xs-4">
 				<tr>
-					<th>내용</th>
-					<td><input type="text" name="contents"></td>
+					<th id="thLeft">글 번호</th>
+					<td align="left"><input type="hidden" name="num" value="${info.num}">${info.num}</td>
+				</tr>
+			
+				<tr>
+					<th id="thLeft">제목</th>
+					<td align="left">${info.title}</td>
+				</tr>
+				
+				<tr>
+					<th id="thLeft">작성자</th>
+					<td align="left">${info.id}</td>
+				</tr>
+				<tr>
+					<th id="thLeft">작성일</th>
+					<td align="left"><fmt:formatDate value="${info.cre_date}" pattern="yyyy-MM-dd"/></td>
+				</tr>
+				
+				<tr>
+					<th></th>
+					<td align="left">${info.contents}</td>
+				</tr>
+				
+				<tr>
+					<th id="thLeft">이전글</th>
+					<td align="left"><a href="reportInfo?num=${prev.num}">${prev.title}</a></td>
+				</tr>
+					
+				<tr>
+					<th id="thLeft">다음글</th>
+					<td align="left"><a href="reportInfo?num=${next.num}">${next.title}</a></td>
 				</tr>
 			</table>
-			
-			<sec:authorize access="isAuthenticated()">
-				<button type="button" onclick="saved()">등록</button><p>
-			</sec:authorize>
-			
-			<sec:authorize access="! isAuthenticated()">
-				댓글을 등록하시려면 로그인 후 사용하세요~<p>
-			</sec:authorize>
-			
 		</form>
-	</div>
 	
+		<div align="left" style="margin-left: 10%;">
+			<sec:authentication property='name' var="currentUserName"/>
+			<c:if test="${currentUserName == info.id}">
+				<button type="button" class="btn btn-default xs-4" onclick="editForm()">수 정</button>&nbsp;
+				<button type="button" class="btn btn-default xs-4" onclick="removed()">삭 제</button>&nbsp;
+			</c:if>
+				<button type="button" class="btn btn-default xs-4" onclick="location='./reportList'">목 록</button>&nbsp;
+		</div><br><br>
+	
+	<!-- 댓글 등록 -->
+	<div id="header">
+		<h3>댓글</h3>
+	</div><br>
+	
+	<form id="replyForm">
+		<input type="hidden" name="id" value="<sec:authentication property='name'/>" />
+		<input type="hidden" name="ref" value="${info.num}">
+		
+		<table id="tbl" class="col-xs-4">
+			<tr>
+				<th id="thLeft">내용</th>
+			</tr>
+			
+			<tr>
+				<td>
+					<sec:authorize access="! isAuthenticated()">
+						<textarea name="contents" rows="5" cols="100"> 댓글을 등록하시려면 로그인 후 사용하세요~</textarea>
+					</sec:authorize>
+						
+					<sec:authorize access="isAuthenticated()">
+						<textarea name="contents" rows="5" cols="100"></textarea>
+					</sec:authorize>
+				</td>
+			</tr>
+			
+			<tr>
+			</tr>
+		</table>
+	</form>
+	
+	<br><br><br><br><br><br><br>
+	<div style="margin-left: 10%;">
+		<sec:authorize access="isAuthenticated()">
+			<button type="button" class="btn btn-default xs-4" onclick="saved()">등 록</button>
+		</sec:authorize>
+	</div>
+	<br><br>
+		
 	<!-- 댓글 조회(리스트) -->
-	<table border="1" align="center">
+	<table id="tbl" class="table col-xs-4">
 		<c:forEach var="list" items="${replyList}" varStatus="status">
-			<form id="replyView${status.index}">
-				<tr>
-					<td id="reBtn${status.index}">
-						<input type="hidden" id="num" name="num" value="${list.num}">
-						${list.contents}
-					</td>
-					<td>${list.id}</td>
-					<td>${list.cre_date}</td>
+			<tr>
+				<td id="tdReplyContents${status.index}" width="350">
+					<input type="hidden" id="num" name="num" value="${list.num}">
 					
-					<sec:authentication property='name' var="currentUserName"/>
-					<c:if test="${currentUserName == list.id}">
-						<td id="editBtn${status.index}"><button type="button" onclick="editReply(${list.num}, ${status.index}, '${list.contents}')">수정</button></td>
-						<td><button type="button" onclick="replyRemoved(${list.num})">삭제</button></td>
-					</c:if>
-				</tr>
-			</form>
+					<div id="replyContents${status.index}">
+						${list.contents}
+					</div>
+					
+					<!-- 수정할 댓글 내용 입력 -->
+					<input type="hidden" id="contents${status.index}" value="${list.contents}">
+				</td>
+				<td width="150" align="center">${list.id}</td>
+				<td width="150" align="center">${list.cre_date}</td>
+					
+				<sec:authentication property='name' var="currentUserName"/>
+				<c:if test="${currentUserName == list.id}">
+				
+				<td id="tdEdit${status.index}" width="150">
+					<div id="divEdit${status.index}">
+						<button type="button" id="replyEditBtn${status.index}" 
+							onclick="editReplyPre(${status.index})">수정</button>
+					</div>
+							
+					<!-- 댓글 수정 후 등록 -->
+					<input type="hidden" id="replyEditSaveBtn${status.index}" 
+						onclick="replySaved(${status.index}, ${list.num}, '${list.contents}' )" value="등 록" >
+				</td>
+				<td>
+					<button type="button" onclick="replyRemoved(${status.index}, ${list.num})">삭제</button>
+				</td>
+				</c:if>
+			</tr>
 		</c:forEach>
 	</table>
+	
+		<jsp:include page="../include/loginForm.jsp" />
+		<jsp:include page="../include/joinForm.jsp" />
+	</section>
+	<jsp:include page="../include/footer.jsp" />
 	
 </body>
 </html>

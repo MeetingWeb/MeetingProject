@@ -98,6 +98,63 @@ public class InquiryService {
 		return json.toJSONString();		
 	}
 	
+	
+	public String updates(InquiryVo ivo, HttpServletRequest request) {
+		if(ivo.getFile().getSize()==0||ivo.getImg_name()=="") ivo.setImg_name("null");
+		if(ivo.getFile().getSize()!=0)
+		{
+			MultipartFile file2 = ivo.getFile();  
+		    String fileName = file2.getOriginalFilename();  
+		 
+		    ivo.setImg_name(fileName);
+		    
+		    InputStream inputStream = null;  
+		    OutputStream outputStream = null;  
+			
+			try {  
+		        inputStream = file2.getInputStream();  
+		        String path = request.getSession().getServletContext().getRealPath("/resources/images/" + ivo.getImg_name());
+		        File newFile = new File(path);  
+		        if (!newFile.exists()) {  
+		            newFile.createNewFile();  
+		        }  
+		        outputStream = new FileOutputStream(newFile);  
+		        int read = 0;  
+		        byte[] bytes = new byte[1024];  
+		   
+		        while ((read = inputStream.read(bytes)) != -1) {  
+		            outputStream.write(bytes, 0, read);  
+		        }  
+		    } catch (IOException e) {  
+		        e.printStackTrace();  
+		    } finally {
+		        try {
+		            outputStream.close();
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+		    }
+		}
+		InquiryDao idao = sqlSessionTemplate.getMapper(InquiryDao.class);
+		int n = idao.iupdate(ivo);
+		boolean tf = n > 0 ? true:false;
+		JSONObject json = new JSONObject();
+		if(tf==true)
+		{
+			json.put("ok", true);
+		}
+		else
+		{
+			json.put("ok", false);
+		}
+		return json.toJSONString();	
+	}
+
+	
+	
+	
+	
+	
 	public InquiryVo read(int num)
 	{
 		InquiryDao idao = sqlSessionTemplate.getMapper(InquiryDao.class);
@@ -127,21 +184,6 @@ public class InquiryService {
 		return json.toJSONString();		
 	}
 
-	public String updates(InquiryVo ivo) {
-		InquiryDao idao = sqlSessionTemplate.getMapper(InquiryDao.class);
-		int n = idao.iupdate(ivo);
-		boolean tf = n > 0 ? true:false;
-		JSONObject json = new JSONObject();
-		if(tf==true)
-		{
-			json.put("ok", true);
-		}
-		else
-		{
-			json.put("ok", false);
-		}
-		return json.toJSONString();	
-	}
 
 	public InquiryVo update(int num) {
 		InquiryDao idao = sqlSessionTemplate.getMapper(InquiryDao.class);

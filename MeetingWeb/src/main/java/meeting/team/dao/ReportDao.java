@@ -23,6 +23,9 @@ public interface ReportDao {
 	// 글 삭제
 	public int deleteReport(BoardVo bvo);
 	
+	// 자신의 글을 가져오기 위한 메소드
+	public int getNum(String id);
+	
 	/* ------댓글------- */
 	
 	// 댓글 등록

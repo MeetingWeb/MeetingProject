@@ -39,9 +39,8 @@
 		}
 		
 		
-		$('button[name=replebtn]').each(function(){
-			$(this).click(function(index){
-				//$(this).css("border","1px solid red").css("width","30px");;
+		$('button[name=reple]').each(function(){
+			$(document).on("click", "button[name=reple]",function() {			
 				var num = $(this).val()
 				$.ajax({
 					type : 'post',
@@ -52,11 +51,10 @@
 						if(evt.ok==true)
 						{
 							alert("삭제되었습니다.");
+							$('#retr'+num+'').remove();
+							
 						}
-						else if(evt.ok==false)
-						{
-							alert("삭제가 안됨");
-						}
+
 					},
 					complete : function(data) {
 
@@ -65,13 +63,17 @@
 						alert(error);
 					}
 				});
-			})
-		})
+				
+			});
+		});
+	
+		
 		
 		$('button[name=repleubtn]').each(function(){
-			$(this).click(function(index){
-				//$(this).css("border","1px solid red").css("width","30px");;
+			$(document).on("click",'button[name=repleubtn]',function() {
 				var num = $(this).val()
+				var cont = $(".cont"+num+"").text();
+				
 				$.ajax({
 					type : 'post',
 					dataType : 'json',
@@ -80,8 +82,9 @@
 					success : function(evt) {
 						if(evt.ok==true)
 						{
-							$('#cont').html("<input type='text' id='ucontents' name=contents value="+evt.contents+">");
-							$('#btn').html("<button class='glyphicon glyphicon-ok' type='button' id='repleybtn' name='repleybtn' value="+evt.num+"></button>");
+							
+							$('.cont'+num+'').html("<input type='text' id='ucontents' name=contents value="+evt.contents+">");
+							$('#btn'+num+'').html("<button class='glyphicon glyphicon-ok' type='button' id='repleybtn' name='repleybtn' value="+evt.num+"></button>");
 						}
 					},
 					complete : function(data) {
@@ -91,14 +94,14 @@
 						alert(error);
 					}
 				});
-			})
+			});
 		});
+
 
 		
 		$(document).on("click", "#repleybtn",function() {
 				var num = $(this).val()
 				var contents = $('#ucontents').val();
-				alert(contents)
 				$.ajax({
 					type : 'post',
 					dataType : 'json',
@@ -108,7 +111,8 @@
 						if(evt.ok==true)
 						{
 							alert("저장되었습니다.");
-							location.href='readForm?num='+${ivo.num}+'&page=1&start=1';
+							$('.cont'+num+'').html(""+contents+"");
+							$('#btn'+num+'').html("<button type='button' class='glyphicon glyphicon-erase' name='repleubtn' value='"+num+"'></button><button class='glyphicon glyphicon-trash' name='reple' value='"+num+"' type='button'></button>");
 						}
 						else if(evt.ok==false)
 						{
@@ -187,7 +191,7 @@
 			if (confirm("정말 저장하시겠습니까??") == true)
 			{
 				var form = new FormData(document.getElementById('reply')); 
-				alert(form);
+
 				$.ajax
 				({
 					dataType:'json',
@@ -284,10 +288,10 @@
 <table>
 <caption >Reply</caption>
 <tr><th id="replenum">번호</th><th id="repletitle">내용</th><th id="repleid">작성자</th><th id="repleday">작성일</th><th></th></tr>
-<c:forEach var="replylist" items="${replylist}" >
-<tr><td id="replenum" style="border-bottom: 0px solid #333333;">${replylist.num}</td><td id="cont" style="border-bottom: 0px solid #333333;">${replylist.contents}</td><td id="repleid" style="border-bottom: 0px solid #333333;">${replylist.id}</td><td id="repleday" style="border-bottom: 0px solid #333333;">${replylist.cre_date}</td><td id="btn" style="border-bottom: 0px solid #333333;">
+<c:forEach var="replylist" items="${replylist}" varStatus="status">
+<tr id="retr${replylist.num}"><td id="replenum" style="border-bottom: 0px solid #333333;">${replylist.num}</td><td class="cont${replylist.num}" id="cont" style="border-bottom: 0px solid #333333;">${replylist.contents}</td><td id="repleid" style="border-bottom: 0px solid #333333;">${replylist.id}</td><td id="repleday" style="border-bottom: 0px solid #333333;">${replylist.cre_date}</td><td id="btn${replylist.num}" style="border-bottom: 0px solid #333333;">
 <c:if test="${replylist.id == sessionScope.id || sessionScope.id=='admin'}">
-<button type="button" class="glyphicon glyphicon-erase" name="repleubtn" value="${replylist.num}"></button><button class="glyphicon glyphicon-trash" name="replebtn" value="${replylist.num}" type="button"></button></td></tr>
+<button type="button" class="glyphicon glyphicon-erase" name="repleubtn" value="${replylist.num}"></button><button class="glyphicon glyphicon-trash" name="reple" value="${replylist.num}" type="button"></button></td></tr>
 </c:if>
 </c:forEach>
 </table>

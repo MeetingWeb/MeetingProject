@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import meeting.team.vo.LoginVo;
+import meeting.team.vo.MeetingVo;
 import meeting.team.vo.UserVo;
 
 public interface UserDao {
@@ -21,8 +22,10 @@ public interface UserDao {
 	public int changeToBlack(String id);
 	
 	public int joinlocation(HashMap<String, Object> maps);
-	public List<UserVo> personal_info(String id);
+	public UserVo personal_info(String id);
+	public List<UserVo> personal_info2(String id);
 	public int pwchange(HashMap<String, Object> map);
 	public int interestschange(HashMap<String, Object> map);
 	public int delete(String id);
+	public List<MeetingVo> create_join(String id);
 } 

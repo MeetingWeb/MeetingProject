@@ -18,7 +18,7 @@
 		</div>
 
 		<div id="login-btn-group">
-			<div id="facebookLogin">FACEBOOK LOGIN</div>
+			<div id="searchID" class="pull-left">SEARCH ID & PW</div>
 			<div id="login-btn">LOGIN</div>
 		</div>
 	</form>
